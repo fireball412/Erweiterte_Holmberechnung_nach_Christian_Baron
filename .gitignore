@@ -7,3 +7,19 @@ benchmark_results/
 results_before_*/
 results_partial_section_supports/
 results_uniform_load/
+
+# Generated FEM solver, mesh and CAD data; keep plots and report summaries.
+results*/**/*.12d
+results*/**/*.cvg
+results*/**/*.dat
+results*/**/*.FCStd
+results*/**/*.frd
+results*/**/*.inp
+results*/**/*.log
+results*/**/*.msh
+results*/**/*.out
+results*/**/*.sta
+results*/**/*.step
+results*/**/*.vtk
+results*/**/mesh_si.json
+results*/**/*.parsed.json
