@@ -178,6 +178,7 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
             lines += ['[Krümmungsdaten A als CSV](flight_rear_curvature_A.csv) · [Krümmungsdaten B als CSV](flight_rear_curvature_B.csv).','']
         if name=='stegannahmen':
             lines += ['[Skizze als verlustfrei vergrößerbare SVG öffnen](images/stegannahmen.svg).','']
+    lines += ['', '## FEM-Anhänge', '']
     fem_folder = out/(('fem_sandwich_q20' if cfg['fem'].get('sandwich_element')=='C3D20R' else 'fem_sandwich') if sandwich_mode else 'fem')
     if sandwich_mode:
         lines += ['', '**Geänderte Spitzengeometrie:** Hinterer Steg bis 1,40 m; Gurt mindestens 6 mm. Die CFK-Mindestwanddicke 0,10 mm bleibt eine Annahme. Die reale Flügelschale ist nicht enthalten. Frühere Messwerte dienen nur bei identischem tatsächlichem Bauzustand zur Validierung dieser neuen Variante.','']
@@ -226,7 +227,7 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
                 relative = (manifest_path.parent/item['file']).relative_to(out).as_posix()
                 lines += ['', '**'+item['caption']+'**','',f"![Synthetischer FEM-Prüffall: {item['caption']}]({relative})"]
                 lines += explanation(reference_notes(item['file'],manifest))
-    lines += ['', '## Versionen und Reproduzierbarkeit','', '```json', __import__('json').dumps(diagnostics,ensure_ascii=False,indent=2),'```',
+    lines += ['', '## Anhang', '', '## Versionen und Reproduzierbarkeit','', '```json', __import__('json').dumps(diagnostics,ensure_ascii=False,indent=2),'```',
         '', '## Offizielle technische Quellen','',
         '- [CalculiX 2.22 Handbuch](https://www.dhondt.de/ccx_2.22.pdf): C3D10, C3D20R, *ELASTIC / ENGINEERING CONSTANTS, *ORIENTATION, *SOLID SECTION, *EQUATION, *FREQUENCY, *MASS, *NODE PRINT und *EL PRINT.',
         '- [FreeCAD Part-Scripting](https://github.com/FreeCAD/FreeCAD-documentation/blob/main/wiki/Topological_data_scripting.md): Part-Geometrie und Export.',
@@ -304,5 +305,6 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
             lines += [f'| {variant} | {before:.6g} | {after:.6g} | {(after/before-1)*100:.3g} % |']
     measurement = out/'phyphox_measurement.md'
     if measurement.exists():
-        lines += ['', measurement.read_text(encoding='utf-8'), '']
+        appendix_index = lines.index('## FEM-Anhänge')
+        lines[appendix_index:appendix_index] = [measurement.read_text(encoding='utf-8').strip(), '']
     (out/'report.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')

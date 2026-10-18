@@ -141,8 +141,10 @@ Reproduzierbar mit `.venv/Scripts/python.exe tests/analyze_phyphox.py`. [Fitpara
             before, rest = text.split(heading, 1)
             next_heading = rest.find('\n## ')
             text = before + (rest[next_heading+1:] if next_heading >= 0 else '')
-        marker = next((line for line in text.splitlines() if line.startswith('## Anhang')), None)
-        text = text.replace(marker, section+'\n'+marker, 1) if marker else text+'\n'+section
+        marker = '## FEM-Anhänge'
+        if marker not in text:
+            text = text.replace('**Geänderte Spitzengeometrie:**', marker+'\n\n**Geänderte Spitzengeometrie:**', 1)
+        text = text.replace(marker, section.strip()+'\n\n'+marker, 1) if marker in text else text.rstrip()+'\n\n'+section
         report.write_text(text, encoding='utf-8')
     print(json.dumps(result, indent=2, ensure_ascii=True))
 
