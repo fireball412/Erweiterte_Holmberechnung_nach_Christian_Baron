@@ -1,0 +1,27 @@
+{
+  "label": "Biest A, test, static: bestätigte Annahmen",
+  "nodes": 67528,
+  "elements": 12434,
+  "deformation_scale": 42.95752363502801,
+  "max_displacement_m": 0.003259033299718481,
+  "max_abs_sigma_xx_integration_point_Pa": 74425380.0,
+  "images": [
+    {
+      "file": "static_model.png"
+    },
+    {
+      "file": "static_mesh.png"
+    },
+    {
+      "file": "static_deformation.png"
+    },
+    {
+      "file": "static_stress_xx.png"
+    }
+  ],
+  "image_policy": "Vorhandene Bilder aus demselben Solverlauf wiederverwendet; alle Bilddateien neuer als DAT.",
+  "scope": "Biest_assumed_materials",
+  "solver_dat": "results\\fem_sandwich_q20\\A\\level_3\\test\\static.dat",
+  "input_sha256": "0dae8803bb8d17dbda494cc671e25b9d60b2809b0a6c1fd5d020b07dca6e091e",
+  "dat_sha256": "4e462c261ec7e8ff00ed5589931a236d3d7795983bce2a6d4d970eb0e36eef0a"
+}

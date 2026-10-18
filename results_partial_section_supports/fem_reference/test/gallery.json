@@ -1,0 +1,32 @@
+{
+  "label": "Synthetischer Prueffall: Auflagenversuch-Vollmodell",
+  "images": [
+    {
+      "caption": "Parametrisches räumliches Modell",
+      "file": "model.png"
+    },
+    {
+      "caption": "Quadratisches Volumennetz",
+      "file": "mesh.png"
+    },
+    {
+      "caption": "Verformung aus CalculiX",
+      "file": "deformation.png"
+    },
+    {
+      "caption": "Längsspannung σxx aus CalculiX",
+      "file": "stress_xx.png"
+    }
+  ],
+  "nodes": 3630,
+  "elements": 1721,
+  "deformation_scale": 7708.33418111164,
+  "max_displacement_m": 1.945945731926844e-06,
+  "max_abs_sigma_xx_integration_point_Pa": 467188.3,
+  "stress_policy": "Globale Cauchy-Spannung; Darstellung mittelt Integrationspunkte nur innerhalb desselben Elements. Kein CFK-Versagenskriterium.",
+  "source_directory": "C:\\Users\\USER\\Documents\\ChatGPT\\Erweiterte_Holmberechnung_nach_Christian_Baron\\benchmark_results\\fem\\A\\level_3\\test",
+  "solver_input_sha256": "05a525f95753e5177992fc17e2fc0bb125964d3145b0b448b2c1bcddab1c00a1",
+  "solver_dat_sha256": "4d6f88ff13d56476eae3d84dd160505a67285451abe54efe8499abc060a72767",
+  "scope": "synthetic_benchmark",
+  "solver_dat": "gallery_static.dat"
+}

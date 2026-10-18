@@ -1,0 +1,61 @@
+status: accepted_model_implemented
+confirmed_by_user:
+  half_span_m: 1.4
+  core_material: Depron
+  core_width_m: 0.005
+  cap_planform: Keilförmig; hintere Gurtkante parallel zur Spannweitenrichtung
+  rear_web_direction: Parallel zur geraden hinteren Gurtkante
+  rear_web_end_rule: Durchgehend bis zur Flügelspitze x=1.40 m
+  connector_with_pocket_width_m: 0.035
+  front_web_root_position: Unmittelbar vor der 35 mm breiten Verbindertasche
+  front_web_extent_m:
+  - 0.0
+  - 0.7
+  vertical_walls_per_web: 2
+  wall_thickness_source: Berechnung der Werte!R111:R121
+  wall_thickness_interpretation: Excel-R gilt je einzelner senkrechter Wand beider
+    Stege
+  minimum_cap_width_m: 0.006
+derived_geometry:
+  rear_web_extent_m:
+  - 0.0
+  - 1.4
+  cap_width_at_rear_web_end_m: 0.006
+  wall_thickness_at_rear_web_end_m: 0.0001
+  width_6mm_crossing_x_m: 1.2861788617886178
+proposed_assumptions:
+  crosswise_coordinate: y=0 hintere Gurtkante; positive y nach vorne, Gurt 0<=y<=b(x)
+  rear_core_center_y_m: 0.003
+  root_rear_web_front_outer_surface_y_m: 0.005879882430596972
+  root_connector_pocket_y_m:
+  - 0.005879882430596972
+  - 0.040879882430596974
+  root_front_core_center_y_m: 0.04375976486119395
+  front_web_path: Im Taschenbereich vor der Tasche; außerhalb an Keilkontur anpassen,
+    Ende x=0.70 m; genauer Übergang offen
+  height_rule: Schlauch-Außenhöhe entspricht lichtem Gurtabstand; Depronhöhe um oberen/unteren
+    Schlauch reduziert
+  bonding: Idealer durchgehender Verbund zwischen Gurt und CFK-Schlauch sowie Schlauch
+    und Kern
+  sleeve_fiber_angles_deg:
+  - -45
+  - 45
+  sleeve_top_bottom_thickness_rule: vorläufig gleich der senkrechten Wanddicke R(x)
+  sleeve_material: vorhandene vorläufige CFK-Lamina aus config.yaml, um ±45 Grad orientiert;
+    keine isotrope UD-Ersetzung
+  core_density_kg_m3: 40
+  core_E_Pa: 20000000
+  core_nu: 0.3
+  core_G_Pa: 7692307.692307692
+  connector_stiffness: excluded_until_load_transfer_confirmed
+  minimum_sleeve_wall_m: 0.0001
+unresolved_geometry:
+  cap_width_change: max(Excel-Keil, 6 mm), Nutzerentscheidung
+  rear_end_check: 5-mm-Kern plus CFK innerhalb 6-mm-Gurt
+  rear_end_after_x_1_29: Hinterer Steg läuft bis 1.40 m durch
+  remaining_questions: Tatsächliche Taschenlänge, Übergang des vorderen Stegs, Verklebung
+    und Endausläufe
+  tip_wall_issue: 'ANNAHME: max(Excel R, 0.10 mm) je Schlauchwand'
+sources:
+  depron_density: https://www.depron-daemmplatte.de/site/assets/files/1044/pdb-depron-d_mmplatte_gb_20160301.pdf
+  sleeve_angle_examples: https://www.r-g.de/list/faserverstaerkungen/schlaeuche/

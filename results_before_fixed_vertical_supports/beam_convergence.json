@@ -1,0 +1,164 @@
+{
+  "A": {
+    "relative_changes": {
+      "flight_tip_m": 6.835183448433501e-06,
+      "test_root_m": 1.0484777091158145e-06,
+      "frequencies_Hz": [
+        5.247862306577728e-07,
+        1.2029610015418445e-07,
+        1.5058528006482248e-07,
+        1.3151058575707674e-08,
+        5.985898996020863e-08,
+        1.5357008953148882e-07
+      ]
+    },
+    "refined_summary": {
+      "half_spar_mass_kg": 0.14046535643009983,
+      "half_model_mass_kg": 0.14046535643009972,
+      "half_shell_mass_kg": 0.0,
+      "half_nonstructural_mass_kg": 0.0,
+      "flight_tip_m": 0.4998530278390905,
+      "flight_integral_tip_m": 0.4998565944447813,
+      "flight_bending_tip_m": 0.4998530278390905,
+      "flight_shear_tip_m": 0.0,
+      "flight_max_m": 0.4998530278390905,
+      "flight_max_x_m": 1.4,
+      "flight_reaction_N": -1085.4139860343266,
+      "flight_reaction_Nm": -670.8301244503033,
+      "test_root_m": -0.005640592955993215,
+      "test_left_tip_m": 0.005932229855937773,
+      "test_right_tip_m": 0.0059322098656489144,
+      "test_reactions_N": [
+        18.638958901166916,
+        18.639025532698724
+      ],
+      "test_reaction_residual_N": -1.5566134372591023e-05,
+      "frequencies_Hz": [
+        5.3894334385772416,
+        102.45227437744435,
+        134.63385940606398,
+        170.21785807967515,
+        234.43659526071156,
+        458.39654883823647
+      ],
+      "mode_symmetry": [
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch"
+      ],
+      "rayleigh_Hz": 5.389464377039102,
+      "effective_mass_kg": 5.761886074988504,
+      "spring_Hz": 5.389469032885786,
+      "material_volume_half_m3": {
+        "top": 3.3644115853658534e-05,
+        "bottom": 3.3644115853658534e-05,
+        "rear_core": 8.636594674624427e-05,
+        "rear_left_0": 2.1104350650477237e-06,
+        "rear_left_1": 2.1104350650477233e-06,
+        "rear_right_0": 2.110435065047723e-06,
+        "rear_right_1": 2.1104350650477254e-06,
+        "rear_bottom_0": 7.622633134389172e-07,
+        "rear_bottom_1": 7.622633134389173e-07,
+        "rear_top_0": 7.622633134389173e-07,
+        "rear_top_1": 7.622633134389172e-07,
+        "front_core": 5.077022657614689e-05,
+        "front_left_0": 1.561565983431138e-06,
+        "front_left_1": 1.561565983431149e-06,
+        "front_right_0": 1.5615659834311484e-06,
+        "front_right_1": 1.5615659834311363e-06,
+        "front_bottom_0": 5.146308559632856e-07,
+        "front_bottom_1": 5.146308559632854e-07,
+        "front_top_0": 5.146308559632854e-07,
+        "front_top_1": 5.146308559632856e-07
+      },
+      "constant_EI_flight_m": 0.2565568885294197,
+      "large_deflection": true,
+      "test_central_mass_kg": 5.58,
+      "static_test_force_N": 37.278
+    }
+  },
+  "B": {
+    "relative_changes": {
+      "flight_tip_m": 9.413960819020897e-06,
+      "test_root_m": 1.8332816225920094e-07,
+      "frequencies_Hz": [
+        9.221378273491383e-08,
+        9.052208136242176e-08,
+        9.063943713777721e-08,
+        2.956261556011379e-08,
+        6.11566972942762e-08,
+        1.5600447296387084e-07
+      ]
+    },
+    "refined_summary": {
+      "half_spar_mass_kg": 0.17385429180976125,
+      "half_model_mass_kg": 0.1738542918097611,
+      "half_shell_mass_kg": 0.0,
+      "half_nonstructural_mass_kg": 0.0,
+      "flight_tip_m": 0.39127243846070764,
+      "flight_integral_tip_m": 0.3912752103421381,
+      "flight_bending_tip_m": 0.39127243846070764,
+      "flight_shear_tip_m": 0.0,
+      "flight_max_m": 0.39127243846070764,
+      "flight_max_x_m": 1.4,
+      "flight_reaction_N": -1085.413858749248,
+      "flight_reaction_Nm": -670.829971609132,
+      "test_root_m": -0.0049496801601217845,
+      "test_left_tip_m": 0.004783717674660587,
+      "test_right_tip_m": 0.004783700268896304,
+      "test_reactions_N": [
+        18.638955622911453,
+        18.639057408028748
+      ],
+      "test_reaction_residual_N": 1.3030940188230034e-05,
+      "frequencies_Hz": [
+        5.746546089912164,
+        97.9173628896424,
+        120.35060990717403,
+        169.93016993924903,
+        237.644913738554,
+        468.0276235491638
+      ],
+      "mode_symmetry": [
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch"
+      ],
+      "rayleigh_Hz": 5.746605842244435,
+      "effective_mass_kg": 5.775184766127236,
+      "spring_Hz": 5.74660578303089,
+      "material_volume_half_m3": {
+        "top": 4.473455284552844e-05,
+        "bottom": 4.473455284552844e-05,
+        "rear_core": 8.096594674624434e-05,
+        "rear_left_0": 2.023735194429595e-06,
+        "rear_left_1": 2.0237351944295954e-06,
+        "rear_right_0": 2.023735194429594e-06,
+        "rear_right_1": 2.023735194429597e-06,
+        "rear_bottom_0": 7.622633134389175e-07,
+        "rear_bottom_1": 7.622633134389167e-07,
+        "rear_top_0": 7.622633134389167e-07,
+        "rear_top_1": 7.622633134389175e-07,
+        "front_core": 4.957022657614691e-05,
+        "front_left_0": 1.5309401612854913e-06,
+        "front_left_1": 1.5309401612855023e-06,
+        "front_right_0": 1.530940161285502e-06,
+        "front_right_1": 1.5309401612854898e-06,
+        "front_bottom_0": 5.146308559632857e-07,
+        "front_bottom_1": 5.14630855963285e-07,
+        "front_top_0": 5.14630855963285e-07,
+        "front_top_1": 5.146308559632857e-07
+      },
+      "constant_EI_flight_m": 0.2565568885294197,
+      "large_deflection": true,
+      "test_central_mass_kg": 5.58,
+      "static_test_force_N": 37.278
+    }
+  }
+}

@@ -1,0 +1,950 @@
+{
+  "beam": [
+    {
+      "variant": "A",
+      "half_spar_mass_kg": 0.14046535643009983,
+      "half_model_mass_kg": 0.14046535643009972,
+      "half_shell_mass_kg": 0.0,
+      "half_nonstructural_mass_kg": 0.0,
+      "flight_tip_m": 0.6473196691083201,
+      "flight_integral_tip_m": 0.6473200523833432,
+      "flight_bending_tip_m": 0.6473196691083201,
+      "flight_shear_tip_m": 0.0,
+      "flight_max_m": 0.6473196691083201,
+      "flight_max_x_m": 1.4,
+      "flight_reaction_N": -1085.4163897818169,
+      "flight_reaction_Nm": -759.7913347628128,
+      "test_root_m": -0.0056405988700291955,
+      "test_left_tip_m": 0.005932229305213147,
+      "test_right_tip_m": 0.005932228023169434,
+      "test_reactions_N": [
+        18.63899812847376,
+        18.639002155978233
+      ],
+      "test_reaction_residual_N": 2.84451992627055e-07,
+      "frequencies_Hz": [
+        5.389430610276782,
+        102.4522620528353,
+        134.63383913218655,
+        170.21785584113013,
+        234.43660929384936,
+        458.3966192342355
+      ],
+      "mode_symmetry": [
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch"
+      ],
+      "rayleigh_Hz": 5.389466329921379,
+      "effective_mass_kg": 5.761886081497765,
+      "spring_Hz": 5.389466204540381,
+      "material_volume_half_m3": {
+        "top": 3.3644115853658534e-05,
+        "bottom": 3.3644115853658534e-05,
+        "rear_core": 8.636594674624427e-05,
+        "rear_left_0": 2.1104350650477237e-06,
+        "rear_left_1": 2.1104350650477233e-06,
+        "rear_right_0": 2.110435065047723e-06,
+        "rear_right_1": 2.1104350650477254e-06,
+        "rear_bottom_0": 7.622633134389172e-07,
+        "rear_bottom_1": 7.622633134389173e-07,
+        "rear_top_0": 7.622633134389173e-07,
+        "rear_top_1": 7.622633134389172e-07,
+        "front_core": 5.077022657614689e-05,
+        "front_left_0": 1.561565983431138e-06,
+        "front_left_1": 1.561565983431149e-06,
+        "front_right_0": 1.5615659834311484e-06,
+        "front_right_1": 1.5615659834311363e-06,
+        "front_bottom_0": 5.146308559632856e-07,
+        "front_bottom_1": 5.146308559632854e-07,
+        "front_top_0": 5.146308559632854e-07,
+        "front_top_1": 5.146308559632856e-07
+      },
+      "constant_EI_flight_m": 0.31020705274873334,
+      "large_deflection": true,
+      "test_central_mass_kg": 5.58,
+      "static_test_force_N": 37.278
+    },
+    {
+      "variant": "B",
+      "half_spar_mass_kg": 0.17385429180976125,
+      "half_model_mass_kg": 0.1738542918097611,
+      "half_shell_mass_kg": 0.0,
+      "half_nonstructural_mass_kg": 0.0,
+      "flight_tip_m": 0.49221740935836167,
+      "flight_integral_tip_m": 0.49221640157296853,
+      "flight_bending_tip_m": 0.49221740935836167,
+      "flight_shear_tip_m": 0.0,
+      "flight_max_m": 0.49221740935836167,
+      "flight_max_x_m": 1.4,
+      "flight_reaction_N": -1085.4176476996315,
+      "flight_reaction_Nm": -759.7928426795902,
+      "test_root_m": -0.004949681067537552,
+      "test_left_tip_m": 0.0047837095101932355,
+      "test_right_tip_m": 0.004783712574856863,
+      "test_reactions_N": [
+        18.63900614529848,
+        18.63898789320956
+      ],
+      "test_reaction_residual_N": -5.961491957862108e-06,
+      "frequencies_Hz": [
+        5.746545560001412,
+        97.91735402595891,
+        120.35059899866249,
+        169.9301749628293,
+        237.64492827213206,
+        468.02769656356656
+      ],
+      "mode_symmetry": [
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch",
+        "symmetrisch",
+        "antisymmetrisch"
+      ],
+      "rayleigh_Hz": 5.746605423037228,
+      "effective_mass_kg": 5.775184772581583,
+      "spring_Hz": 5.746605253114052,
+      "material_volume_half_m3": {
+        "top": 4.473455284552844e-05,
+        "bottom": 4.473455284552844e-05,
+        "rear_core": 8.096594674624434e-05,
+        "rear_left_0": 2.023735194429595e-06,
+        "rear_left_1": 2.0237351944295954e-06,
+        "rear_right_0": 2.023735194429594e-06,
+        "rear_right_1": 2.023735194429597e-06,
+        "rear_bottom_0": 7.622633134389175e-07,
+        "rear_bottom_1": 7.622633134389167e-07,
+        "rear_top_0": 7.622633134389167e-07,
+        "rear_top_1": 7.622633134389175e-07,
+        "front_core": 4.957022657614691e-05,
+        "front_left_0": 1.5309401612854913e-06,
+        "front_left_1": 1.5309401612855023e-06,
+        "front_right_0": 1.530940161285502e-06,
+        "front_right_1": 1.5309401612854898e-06,
+        "front_bottom_0": 5.146308559632857e-07,
+        "front_bottom_1": 5.14630855963285e-07,
+        "front_top_0": 5.14630855963285e-07,
+        "front_top_1": 5.146308559632857e-07
+      },
+      "constant_EI_flight_m": 0.31020705274873334,
+      "large_deflection": true,
+      "test_central_mass_kg": 5.58,
+      "static_test_force_N": 37.278
+    }
+  ],
+  "fem": {
+    "status": "ausgeführt",
+    "variants": {
+      "A": {
+        "meshes": [
+          {
+            "level": 1,
+            "flight_nodes": 11835,
+            "flight_elements": 2004,
+            "flight_mesh_mass_kg": 0.14046535643010136,
+            "flight_bottom_tip_m": 0.6821921958333333,
+            "flight_tip_m": 0.6821926513888888,
+            "flight_reaction_N": -1085.417182086032,
+            "flight_reaction_residual_N": -0.0005154193636371929,
+            "test_nodes": 23342,
+            "test_elements": 4008,
+            "test_mesh_mass_kg": 0.28093071286019944,
+            "test_root_m": -0.01127716375,
+            "test_reaction_N": 37.277958359837285,
+            "test_reaction_residual_N": -4.16401625145113e-05,
+            "frequency_Hz": 3.29353,
+            "frequencies_Hz": [
+              3.29353,
+              6.4906,
+              17.60714,
+              77.72581,
+              79.40287,
+              96.54819
+            ],
+            "selected_mode": 1,
+            "vertical_fractions": [
+              0.8631121999251767,
+              0.6119431112406808,
+              0.5097935583075819,
+              0.9919661490172216,
+              0.9925472886507168,
+              0.9175181250378245
+            ],
+            "mode_symmetry": [
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt"
+            ],
+            "errors": [
+              "Nichtlinearer Vergleich: Zeitlimit 600s überschritten; kein abgeschlossenes Volllastergebnis. Siehe C:\\Users\\USER\\Documents\\ChatGPT\\Erweiterte_Holmberechnung_nach_Christian_Baron\\results\\fem_sandwich_q20\\A\\level_1\\flight\\nonlinear.log"
+            ],
+            "flight_reaction_moment_Nm": [
+              -17.34130390869136,
+              759.7920306620089,
+              -0.0001534517949153269
+            ],
+            "flight_moment_balance_residual_Nm": [
+              -7.753542682564785e-06,
+              0.00036399529869868275,
+              -0.0001534517949153269
+            ],
+            "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf. Einzelauflager aus globalem Gleichgewicht rekonstruiert.",
+            "test_averaged_support_reactions": {
+              "source": "Aus Gleichgewicht der drei gemittelten Vertikalbedingungen rekonstruiert; keine direkten RF-Werte der virtuellen Referenzknoten.",
+              "labels": [
+                "links hinten",
+                "links vorne",
+                "rechts"
+              ],
+              "positions_m": [
+                [
+                  -0.8959986255422,
+                  0.002835584700028,
+                  -0.006757205910168
+                ],
+                [
+                  -0.8959166234456,
+                  0.01440742559419,
+                  -0.006757558519184
+                ],
+                [
+                  0.8959367205828,
+                  0.0115713898872,
+                  -0.006757472101494
+                ]
+              ],
+              "reactions_N": [
+                -33.47187209970278,
+                52.112612953238475,
+                18.637259146464107
+              ],
+              "tensile_reaction_required": true,
+              "equilibrium_residual": [
+                7.105427357601002e-15,
+                -2.0816681711721685e-17,
+                -1.1102230246251565e-16
+              ]
+            },
+            "mode_parity_errors": [
+              {
+                "symmetric": 0.252170437288956,
+                "antisymmetric": 1.9840388278855579
+              },
+              {
+                "symmetric": 0.47740328821349726,
+                "antisymmetric": 1.9421859077861057
+              },
+              {
+                "symmetric": 0.5533889083073241,
+                "antisymmetric": 1.9219158972656496
+              },
+              {
+                "symmetric": 1.9266705255229608,
+                "antisymmetric": 0.5366010492731801
+              },
+              {
+                "symmetric": 0.6584301719148122,
+                "antisymmetric": 1.888509917557287
+              },
+              {
+                "symmetric": 1.8084504477408736,
+                "antisymmetric": 0.8541118065369618
+              }
+            ],
+            "mode_root_motion_ratios": [
+              0.9686273080450107,
+              0.8167000579215453,
+              0.8628249962961726,
+              0.03940236475244507,
+              0.38308391906548356,
+              0.002719987161022955
+            ]
+          },
+          {
+            "level": 2,
+            "flight_nodes": 21998,
+            "flight_elements": 3936,
+            "flight_mesh_mass_kg": 0.14046535643010025,
+            "flight_bottom_tip_m": 0.6802329371794872,
+            "flight_tip_m": 0.6802334179487179,
+            "flight_reaction_N": -1085.4168108160304,
+            "flight_reaction_residual_N": -0.00014414936731554917,
+            "test_nodes": 43614,
+            "test_elements": 7872,
+            "test_mesh_mass_kg": 0.2809307128602041,
+            "test_root_m": -0.014326680833333334,
+            "test_reaction_N": 37.27796160859192,
+            "test_reaction_residual_N": -3.839140808281627e-05,
+            "frequency_Hz": 2.63644,
+            "frequencies_Hz": [
+              2.63644,
+              6.128675,
+              17.11926,
+              77.01515,
+              79.61151,
+              96.68085
+            ],
+            "selected_mode": 1,
+            "vertical_fractions": [
+              0.8185074067002008,
+              0.7075752279727776,
+              0.4964647229826833,
+              0.9904526279265244,
+              0.9921227918734136,
+              0.9300750818488738
+            ],
+            "mode_symmetry": [
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt"
+            ],
+            "flight_reaction_moment_Nm": [
+              -17.3412967042328,
+              759.7917977836976,
+              -0.00012449617361198762
+            ],
+            "flight_moment_balance_residual_Nm": [
+              -5.490846284317286e-07,
+              0.00013111698126522242,
+              -0.00012449617361198762
+            ],
+            "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf. Einzelauflager aus globalem Gleichgewicht rekonstruiert.",
+            "test_averaged_support_reactions": {
+              "source": "Aus Gleichgewicht der drei gemittelten Vertikalbedingungen rekonstruiert; keine direkten RF-Werte der virtuellen Referenzknoten.",
+              "labels": [
+                "links hinten",
+                "links vorne",
+                "rechts"
+              ],
+              "positions_m": [
+                [
+                  -0.8959489059089,
+                  0.007203356379234,
+                  -0.006757419704592
+                ],
+                [
+                  -0.8959166234456,
+                  0.01877554410356,
+                  -0.006757558519184
+                ],
+                [
+                  0.8959367205828,
+                  0.0115713898872,
+                  -0.006757472101494
+                ]
+              ],
+              "reactions_N": [
+                -26.435262264912076,
+                45.074947581000174,
+                18.638314683911908
+              ],
+              "tensile_reaction_required": true,
+              "equilibrium_residual": [
+                0.0,
+                -7.074202335033419e-15,
+                0.0
+              ]
+            },
+            "mode_parity_errors": [
+              {
+                "symmetric": 0.22223300684044744,
+                "antisymmetric": 1.987614774213216
+              },
+              {
+                "symmetric": 0.3387358664211678,
+                "antisymmetric": 1.9711057842743758
+              },
+              {
+                "symmetric": 0.4080020718465769,
+                "antisymmetric": 1.9579413447212612
+              },
+              {
+                "symmetric": 1.9295628311817765,
+                "antisymmetric": 0.526105769329483
+              },
+              {
+                "symmetric": 0.45907327897920297,
+                "antisymmetric": 1.9466000422601666
+              },
+              {
+                "symmetric": 1.8001858383754392,
+                "antisymmetric": 0.8713959761856358
+              }
+            ],
+            "mode_root_motion_ratios": [
+              0.9628316517533824,
+              0.8677451404161511,
+              0.856955936516225,
+              0.027493237888084256,
+              0.4231340152417932,
+              0.0035546899368753544
+            ]
+          },
+          {
+            "level": 3,
+            "flight_nodes": 33982,
+            "flight_elements": 6217,
+            "flight_mesh_mass_kg": 0.14046535643010052,
+            "flight_bottom_tip_m": 0.6768701166666666,
+            "flight_tip_m": 0.6768704705128206,
+            "flight_reaction_N": -1085.416369843016,
+            "flight_reaction_residual_N": 0.0002968236497054022,
+            "test_nodes": 67528,
+            "test_elements": 12434,
+            "test_mesh_mass_kg": 0.2809307128602045,
+            "test_root_m": -0.013408614349999999,
+            "test_reaction_N": 37.277995980321776,
+            "test_reaction_residual_N": -4.01967843544071e-06,
+            "frequency_Hz": 2.808936,
+            "frequencies_Hz": [
+              2.808936,
+              6.229424,
+              17.52785,
+              73.7036,
+              78.33867,
+              95.29463
+            ],
+            "selected_mode": 1,
+            "vertical_fractions": [
+              0.8357733790739222,
+              0.680537293527044,
+              0.5225341232095455,
+              0.9910995025635416,
+              0.9928566844636563,
+              0.9602284500001391
+            ],
+            "mode_symmetry": [
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt"
+            ],
+            "flight_reaction_moment_Nm": [
+              -17.34129326228816,
+              759.7913443094826,
+              0.00015263948121457815
+            ],
+            "flight_moment_balance_residual_Nm": [
+              2.892860390346641e-06,
+              -0.0003223572280148801,
+              0.00015263948121457815
+            ],
+            "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf. Einzelauflager aus globalem Gleichgewicht rekonstruiert.",
+            "test_averaged_support_reactions": {
+              "source": "Aus Gleichgewicht der drei gemittelten Vertikalbedingungen rekonstruiert; keine direkten RF-Werte der virtuellen Referenzknoten.",
+              "labels": [
+                "links hinten",
+                "links vorne",
+                "rechts"
+              ],
+              "positions_m": [
+                [
+                  -0.8959570830936,
+                  0.005747373917849,
+                  -0.006757384542697
+                ],
+                [
+                  -0.8959166234456,
+                  0.01731950460043,
+                  -0.006757558519184
+                ],
+                [
+                  0.8959367205828,
+                  0.0115713898872,
+                  -0.006757472101494
+                ]
+              ],
+              "reactions_N": [
+                -28.78060634688246,
+                47.42046525854932,
+                18.638141088333352
+              ],
+              "tensile_reaction_required": true,
+              "equilibrium_residual": [
+                0.0,
+                -3.5457747848965937e-15,
+                0.0
+              ]
+            },
+            "mode_parity_errors": [
+              {
+                "symmetric": 0.21955781451040268,
+                "antisymmetric": 1.9879120619603408
+              },
+              {
+                "symmetric": 0.359439011844691,
+                "antisymmetric": 1.9674357922850019
+              },
+              {
+                "symmetric": 0.42528215212313675,
+                "antisymmetric": 1.9542607530945084
+              },
+              {
+                "symmetric": 1.9319644858703764,
+                "antisymmetric": 0.5172168068959232
+              },
+              {
+                "symmetric": 0.30558585607394884,
+                "antisymmetric": 1.9765164518838572
+              },
+              {
+                "symmetric": 1.8256609579483782,
+                "antisymmetric": 0.8166774556843174
+              }
+            ],
+            "mode_root_motion_ratios": [
+              0.9641005188434131,
+              0.8563131397406121,
+              0.8606678238866459,
+              0.017694824072895358,
+              0.5223337248790111,
+              0.003747876999240058
+            ],
+            "flight_static_sigma_xx_max_abs_Pa": 1229006000.0,
+            "test_static_sigma_xx_max_abs_Pa": 275785200.0
+          }
+        ],
+        "convergence": {
+          "converged": false,
+          "relative_changes": {
+            "flight_tip_m": 0.004968376642800643,
+            "test_root_m": 0.06846840839548313,
+            "frequency_Hz": 0.061409729520359384,
+            "modes_by_index": [
+              0.061409729520359384,
+              0.01617308438147725,
+              0.023310902363952238,
+              0.0449306411084399,
+              0.016247914344218534,
+              0.014546674875593815
+            ]
+          },
+          "reference": "jeweils feinste Netzstufe",
+          "tolerance": 0.02,
+          "reason": "Konvergenzziel NICHT erreicht"
+        }
+      },
+      "B": {
+        "meshes": [
+          {
+            "level": 1,
+            "flight_nodes": 10536,
+            "flight_elements": 1979,
+            "flight_mesh_mass_kg": 0.17385429180976397,
+            "flight_bottom_tip_m": 0.5168959222222222,
+            "flight_tip_m": 0.516896223611111,
+            "flight_reaction_N": -1085.416372946031,
+            "flight_reaction_residual_N": 0.00029372063727350906,
+            "test_nodes": 20744,
+            "test_elements": 3958,
+            "test_mesh_mass_kg": 0.3477085836195238,
+            "test_root_m": -0.006658605624999999,
+            "test_reaction_N": 37.27800091563765,
+            "test_reaction_residual_N": 9.156378482089167e-07,
+            "frequency_Hz": 4.833074,
+            "frequencies_Hz": [
+              4.833074,
+              8.284505,
+              22.86946,
+              78.97803,
+              79.15761,
+              95.26819
+            ],
+            "selected_mode": 1,
+            "vertical_fractions": [
+              0.9717718205939233,
+              0.27899164574156565,
+              0.586985755847828,
+              0.9934876833098176,
+              0.9975796293825372,
+              0.9907538275254665
+            ],
+            "mode_symmetry": [
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt"
+            ],
+            "errors": [
+              "Nichtlinearer Vergleich: Zeitlimit 600s überschritten; kein abgeschlossenes Volllastergebnis. Siehe C:\\Users\\USER\\Documents\\ChatGPT\\Erweiterte_Holmberechnung_nach_Christian_Baron\\results\\fem_sandwich_q20\\B\\level_1\\flight\\nonlinear.log"
+            ],
+            "flight_reaction_moment_Nm": [
+              -17.341292553377833,
+              759.7915210585838,
+              4.637180111899397e-05
+            ],
+            "flight_moment_balance_residual_Nm": [
+              3.6017708424651573e-06,
+              -0.00014560812633135356,
+              4.637180111899397e-05
+            ],
+            "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf. Einzelauflager aus globalem Gleichgewicht rekonstruiert.",
+            "test_averaged_support_reactions": {
+              "source": "Aus Gleichgewicht der drei gemittelten Vertikalbedingungen rekonstruiert; keine direkten RF-Werte der virtuellen Referenzknoten.",
+              "labels": [
+                "links hinten",
+                "links vorne",
+                "rechts"
+              ],
+              "positions_m": [
+                [
+                  -0.8959986255422,
+                  0.002835584700028,
+                  -0.006757205910168
+                ],
+                [
+                  -0.8959166234456,
+                  0.01440742559419,
+                  -0.006757558519184
+                ],
+                [
+                  0.8959367205828,
+                  0.0115713898872,
+                  -0.006757472101494
+                ]
+              ],
+              "reactions_N": [
+                -33.47187209970278,
+                52.112612953238475,
+                18.637259146464107
+              ],
+              "tensile_reaction_required": true,
+              "equilibrium_residual": [
+                7.105427357601002e-15,
+                -2.0816681711721685e-17,
+                -1.1102230246251565e-16
+              ]
+            },
+            "mode_parity_errors": [
+              {
+                "symmetric": 0.10438067354208078,
+                "antisymmetric": 1.9972743114031437
+              },
+              {
+                "symmetric": 0.5055939533777304,
+                "antisymmetric": 1.9350386958166694
+              },
+              {
+                "symmetric": 0.4975505177691902,
+                "antisymmetric": 1.93712247477221
+              },
+              {
+                "symmetric": 1.9070218121673048,
+                "antisymmetric": 0.6027170214272441
+              },
+              {
+                "symmetric": 1.247513070035717,
+                "antisymmetric": 1.5632373908303436
+              },
+              {
+                "symmetric": 1.9904884236192422,
+                "antisymmetric": 0.19482257425099214
+              }
+            ],
+            "mode_root_motion_ratios": [
+              0.9879643303330455,
+              0.5989678476101475,
+              0.8878849959507371,
+              0.1275014558632705,
+              0.2587570433155148,
+              0.0029169691418893685
+            ]
+          },
+          {
+            "level": 2,
+            "flight_nodes": 20353,
+            "flight_elements": 3881,
+            "flight_mesh_mass_kg": 0.17385429180976406,
+            "flight_bottom_tip_m": 0.5157573513888889,
+            "flight_tip_m": 0.5157575152777778,
+            "flight_reaction_N": -1085.4167311760277,
+            "flight_reaction_residual_N": -6.450936461988022e-05,
+            "test_nodes": 40324,
+            "test_elements": 7762,
+            "test_mesh_mass_kg": 0.347708583619532,
+            "test_root_m": -0.007030826083333333,
+            "test_reaction_N": 37.277995478166936,
+            "test_reaction_residual_N": -4.521833069759396e-06,
+            "frequency_Hz": 4.601797,
+            "frequencies_Hz": [
+              4.601797,
+              7.771504,
+              21.50337,
+              78.26842,
+              79.31775,
+              95.54325
+            ],
+            "selected_mode": 1,
+            "vertical_fractions": [
+              0.9449050426424044,
+              0.40555847752663576,
+              0.5737297151479532,
+              0.9934701046993313,
+              0.9967402253500051,
+              0.991706346558955
+            ],
+            "mode_symmetry": [
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt"
+            ],
+            "flight_reaction_moment_Nm": [
+              -17.341292726833267,
+              759.7918287534301,
+              -0.00014305297762007285
+            ],
+            "flight_moment_balance_residual_Nm": [
+              3.428314904851959e-06,
+              0.00016208671377171413,
+              -0.00014305297762007285
+            ],
+            "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf. Einzelauflager aus globalem Gleichgewicht rekonstruiert.",
+            "test_averaged_support_reactions": {
+              "source": "Aus Gleichgewicht der drei gemittelten Vertikalbedingungen rekonstruiert; keine direkten RF-Werte der virtuellen Referenzknoten.",
+              "labels": [
+                "links hinten",
+                "links vorne",
+                "rechts"
+              ],
+              "positions_m": [
+                [
+                  -0.8959489059089,
+                  0.007203356379234,
+                  -0.006757419704592
+                ],
+                [
+                  -0.8959166234456,
+                  0.01877554410356,
+                  -0.006757558519184
+                ],
+                [
+                  0.8959367205828,
+                  0.0115713898872,
+                  -0.006757472101494
+                ]
+              ],
+              "reactions_N": [
+                -26.435262264912076,
+                45.074947581000174,
+                18.638314683911908
+              ],
+              "tensile_reaction_required": true,
+              "equilibrium_residual": [
+                0.0,
+                -7.074202335033419e-15,
+                0.0
+              ]
+            },
+            "mode_parity_errors": [
+              {
+                "symmetric": 0.11813801477822927,
+                "antisymmetric": 1.996507803506978
+              },
+              {
+                "symmetric": 0.37168774025328827,
+                "antisymmetric": 1.9651585747072433
+              },
+              {
+                "symmetric": 0.3880498325703827,
+                "antisymmetric": 1.961993202700279
+              },
+              {
+                "symmetric": 1.9959150077092656,
+                "antisymmetric": 0.1277626001650061
+              },
+              {
+                "symmetric": 0.2479763401497298,
+                "antisymmetric": 1.9845673923366638
+              },
+              {
+                "symmetric": 1.9918444532744608,
+                "antisymmetric": 0.1804319094832352
+              }
+            ],
+            "mode_root_motion_ratios": [
+              0.981125491087847,
+              0.7022288272369517,
+              0.8801974924080359,
+              0.023079247498415282,
+              0.42422507020386774,
+              0.0027256545465659645
+            ]
+          },
+          {
+            "level": 3,
+            "flight_nodes": 32134,
+            "flight_elements": 6147,
+            "flight_mesh_mass_kg": 0.17385429180976306,
+            "flight_bottom_tip_m": 0.5128449794871793,
+            "flight_tip_m": 0.5128452141025642,
+            "flight_reaction_N": -1085.416435903016,
+            "flight_reaction_residual_N": 0.00023076364959706552,
+            "test_nodes": 63832,
+            "test_elements": 12294,
+            "test_mesh_mass_kg": 0.34770858361953266,
+            "test_root_m": -0.006901107399999999,
+            "test_reaction_N": 37.27800055337598,
+            "test_reaction_residual_N": 5.533757700959541e-07,
+            "frequency_Hz": 4.682249,
+            "frequencies_Hz": [
+              4.682249,
+              7.952291,
+              22.24533,
+              74.54033,
+              78.08588,
+              94.74542
+            ],
+            "selected_mode": 1,
+            "vertical_fractions": [
+              0.9556672117190286,
+              0.3615516241475968,
+              0.5974621923795923,
+              0.9935359537691003,
+              0.9969250817942439,
+              0.9931272122239985
+            ],
+            "mode_symmetry": [
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt",
+              "gemischt"
+            ],
+            "flight_reaction_moment_Nm": [
+              -17.34129713837493,
+              759.79131274366,
+              5.0113983675714735e-05
+            ],
+            "flight_moment_balance_residual_Nm": [
+              -9.832263785369832e-07,
+              -0.0003539230506248714,
+              5.0113983675714735e-05
+            ],
+            "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf. Einzelauflager aus globalem Gleichgewicht rekonstruiert.",
+            "test_averaged_support_reactions": {
+              "source": "Aus Gleichgewicht der drei gemittelten Vertikalbedingungen rekonstruiert; keine direkten RF-Werte der virtuellen Referenzknoten.",
+              "labels": [
+                "links hinten",
+                "links vorne",
+                "rechts"
+              ],
+              "positions_m": [
+                [
+                  -0.8959570830936,
+                  0.005747373917849,
+                  -0.006757384542697
+                ],
+                [
+                  -0.8959166234456,
+                  0.01731950460043,
+                  -0.006757558519184
+                ],
+                [
+                  0.8959367205828,
+                  0.0115713898872,
+                  -0.006757472101494
+                ]
+              ],
+              "reactions_N": [
+                -28.78060634688246,
+                47.42046525854932,
+                18.638141088333352
+              ],
+              "tensile_reaction_required": true,
+              "equilibrium_residual": [
+                0.0,
+                -3.5457747848965937e-15,
+                0.0
+              ]
+            },
+            "mode_parity_errors": [
+              {
+                "symmetric": 0.10763391565646822,
+                "antisymmetric": 1.9971016349200799
+              },
+              {
+                "symmetric": 0.3918403666969428,
+                "antisymmetric": 1.9612396913755354
+              },
+              {
+                "symmetric": 0.39899577916349344,
+                "antisymmetric": 1.959796511939369
+              },
+              {
+                "symmetric": 1.9962875885376983,
+                "antisymmetric": 0.12180256093507406
+              },
+              {
+                "symmetric": 0.11026850095603849,
+                "antisymmetric": 1.9969579008323903
+              },
+              {
+                "symmetric": 1.9926622284448916,
+                "antisymmetric": 0.17116437517497315
+              }
+            ],
+            "mode_root_motion_ratios": [
+              0.9832572480914041,
+              0.6739883666710164,
+              0.8839076475521561,
+              0.010883441599341515,
+              0.5062556002682255,
+              0.0026907758825905443
+            ],
+            "flight_static_sigma_xx_max_abs_Pa": 870074500.0,
+            "test_static_sigma_xx_max_abs_Pa": 77659430.0
+          }
+        ],
+        "convergence": {
+          "converged": false,
+          "relative_changes": {
+            "flight_tip_m": 0.005678713762221322,
+            "test_root_m": 0.01879679242976765,
+            "frequency_Hz": 0.017182341221066908,
+            "modes_by_index": [
+              0.017182341221066908,
+              0.022733951763083064,
+              0.033353517344988766,
+              0.05001440159977839,
+              0.01577583552877935,
+              0.008420776434364898
+            ]
+          },
+          "reference": "jeweils feinste Netzstufe",
+          "tolerance": 0.02,
+          "reason": "Konvergenzziel NICHT erreicht"
+        }
+      }
+    },
+    "method": "Explizite Depronkerne und CFK-Schläuche, strukturierte C3D20R-Volumen; FreeCAD-CAD, eigener reproduzierbarer Netzgenerator (kein Gmsh-Tetraedernetz).",
+    "complete": true
+  },
+  "reconstructed_excel": {
+    "uniform_q_N_m": 775.2976190476188,
+    "root_moment_Nm": 759.7916666666666,
+    "flight_uniform_root_EI_m": 0.3171147032438748,
+    "excel_written_flight_root_EI_m": 0.6342294064877496,
+    "test_root_constant_EI_m": 0.0038067219429052156,
+    "test_tip_constant_EI_m": 0.0032119216393262755,
+    "spring_frequency_excel_mass_Hz": 6.667357715648517
+  }
+}

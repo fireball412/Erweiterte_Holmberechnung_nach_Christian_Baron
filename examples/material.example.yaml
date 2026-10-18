@@ -1,0 +1,13 @@
+# NUR Beispielkennwerte, KEINE Messdaten des Biest; nicht automatisch übernommen!
+# Ein Einsatz muss material.provisional: true setzen und im Bericht so bezeichnet sein.
+material:
+  E2: 8000000000
+  E3: 8000000000
+  G12: 4500000000
+  G13: 4500000000
+  G23: 3000000000
+  nu12: 0.28
+  nu13: 0.28
+  nu23: 0.35
+  density: 1550
+  provisional: true

@@ -1,0 +1,133 @@
+# Alle SI-Werte sind explizit bezeichnet. null blockiert den davon abhängigen Schritt.
+# VORLÄUFIGER ANNAHMENSATZ: ergänzte Werte sind keine Mess-/Herstellerdaten
+# des tatsächlich gebauten Holms. Vor belastbaren Aussagen am Bauteil bestätigen.
+excel: Holmberechnung_deutsch_korrigiert3_Biest.xls
+output: results
+paths:
+  freecad_python: C:/Program Files/FreeCAD 1.1/bin/python.exe
+  calculix: C:/Program Files/FreeCAD 1.1/bin/ccx.exe
+  gmsh: C:/Program Files/FreeCAD 1.1/bin/gmsh.exe
+mapping:
+  planform: {first_row: 22, last_row: 27, chord: C, segment: D, unit: mm} # Flächentiefe und Abschnittslänge, nicht Gurtbreite.
+  sheet: Berechnung der Werte
+  stations: {first_row: 111, last_row: 121, x: C, width_top: D, width_bottom: D, height: H, clear_height: J, theoretical_thickness: K, plies_top: M, plies_bottom: M, web_required: R}
+  # H ist Außenhöhe des Holms UNTER der Beplankung; J ist lichte Steghöhe,
+  # K theoretische Gurtdicke. H = J + 2 K wird im Import geprüft.
+  parameters:
+    span: {sheet: Berechnung der Werte, cell: D45, unit: mm}
+    total_lift: {sheet: Berechnung der Werte, cell: D37, unit: N}
+    weight: {sheet: Berechnung der Werte, cell: D39, unit: N}
+    load_factor: {sheet: Berechnung der Werte, cell: D41, unit: '1'}
+    E1: {sheet: Berechnung der Werte, cell: U68, unit: MPa}
+    support_fraction: {sheet: Berechnung der Werte, cell: C145, unit: '%'}
+    test_mass: {sheet: Berechnung der Werte, cell: C144, unit: kg}
+    modal_mass: {sheet: Berechnung der Werte, cell: C170, unit: kg}
+    excel_I_old: {sheet: Berechnung der Werte, cell: W68, unit: mm4}
+    excel_I_new: {sheet: Berechnung der Werte, cell: W78, unit: mm4}
+    excel_flight_old: {sheet: Berechnung der Werte, cell: C126, unit: mm}
+    excel_flight_new: {sheet: Berechnung der Werte, cell: G126, unit: mm}
+    measured_root: {sheet: Berechnung der Werte, cell: D146, unit: mm}
+    measured_tip: {sheet: Berechnung der Werte, cell: D147, unit: mm}
+    measured_frequency: {sheet: Berechnung der Werte, cell: C173, unit: Hz}
+    measured_stiffness: {sheet: Berechnung der Werte, cell: D149, unit: N/mm}
+    excel_test_root: {sheet: Berechnung der Werte, cell: C146, unit: mm}
+    excel_frequency: {sheet: Berechnung der Werte, cell: C171, unit: Hz}
+# Overrides verwenden dieselbe Einheit wie das Mapping, sofern unit angegeben.
+# Beispiel: total_lift: {value: 2000, unit: N, reason: 'Bestätigte Grenzlast'}
+overrides: {}
+geometry:
+  minimum_cap_width_m: 0.006 # Vom Nutzer gewählt: 5-mm-Depronkern bleibt, Gurt mindestens 6 mm.
+  minimum_sleeve_wall_m: 0.00010 # ANNAHME: Schlauch je Wand mindestens 0,10 mm; Excel R(L)=0 ist kein baubarer Abschluss.
+  sandwich:
+    enabled: true # Vom Nutzer bestätigtes Depron-/CFK-Schlauchmodell; Materialwerte weiter vorläufig.
+    core_width_m: 0.005
+    rear_center_y_m: 0.003
+    rear_end_m: 1.40 # Hinterer Steg bis zur Flügelspitze.
+    front_end_m: 0.70
+    pocket_width_m: 0.035
+    pocket_length_m: 0.14 # ANNAHME aus Excel-Verbinderauslegung; nicht gemessene Taschenlänge.
+    core_density: 40
+    core_E: 20000000
+    core_nu: 0.30
+    sleeve_angles_deg: [45, -45]
+    wall_thickness: excel_R_linear # Je Wand; geschlossener Schlauch oben/unten ebenfalls R.
+  height_definition: outer  # outer, clear oder centroid
+  ply_thickness_m: 0.00010 # ANNAHME: 0,10 mm ausgehärtete UD-Lage; keine gemessene Dicke.
+  # Für Voruntersuchungen soll der Excel-Auslegungsplan als Fertigungsplan angenommen
+  # werden. Eine tatsächliche Fertigungsbestätigung liegt weiterhin NICHT vor;
+  # analysis.allow_provisional erlaubt nur die als Annahme markierte Vorrechnung.
+  manufacturing_plan_confirmed: false
+  step_rule: right # [x_i,x_i+1): n_i; keine glatte Interpolation. Spitze endet mit letzter positiver Lage.
+  web:
+    enabled: false # Alter Rechtecksteg deaktiviert; aktives Depron-/Schlauchmodell unter geometry.sandwich.
+    thickness_m: null # Gesamte Breite des tragenden Stegs, SI, nicht Excel-Mindestbeschichtung.
+    E_Pa: null
+    G_Pa: null
+    density_kg_m3: null
+  shell_EI_Nm2: 0 # Separater bestätigter Schalenbeitrag; 0 = reine Holmrechnung.
+  shell_mass_kg_m: 0
+  nonstructural_mass_kg_m: 0
+material:
+  # E1 bleibt Excel-Wert: 135 GPa; Übertragbarkeit auf reales Laminat unbestätigt.
+  # Alle folgenden Zahlen sind editierbare ANNAHMEN, keine bestätigten Kennwerte.
+  E2: 8000000000 # Pa; ANNAHME: 8 GPa quer zur Faser
+  E3: 8000000000 # Pa; ANNAHME: 8 GPa in Dickenrichtung
+  G12: 4500000000 # Pa; ANNAHME: 4,5 GPa
+  G13: 4500000000 # Pa; ANNAHME: 4,5 GPa
+  G23: 3000000000 # Pa; ANNAHME: 3,0 GPa
+  nu12: 0.30 # ANNAHME, dimensionslos
+  nu13: 0.30 # ANNAHME, dimensionslos
+  nu23: 0.35 # ANNAHME, dimensionslos
+  density: 1550 # ANNAHME: kg/m³ des ausgehärteten Laminats, keine reine Faserdichte
+  provisional: true # Ergebnisse mit diesem Satz ausdrücklich als vorläufig markieren.
+flight:
+  load_kind: comparison # ANNAHME: unveränderter Excel-Auftrieb als Vergleichslast, keine bestätigte Grenzlast.
+  # Vorschlag: Excel-Gesamtauftrieb 2170,833333 N unverändert als Vergleichslast
+  # übernehmen (keine Überschreibung). Keine unbelegte Umbenennung zur Grenzlast.
+  safety_factor: null # Nur bei ultimate zur Rückrechnung auf limit nötig, niemals doppelt anwenden.
+  distribution: chord_proportional # q(x) proportional zur Flächentiefe; ANNAHME: örtlich gleicher c_l. Gesamtauftrieb bleibt Excel D37.
+  stations: [] # Alternativ [[x_m, relative_load], ...], mit distribution: stations
+  net_load: false
+  mass_relief: false # Trägheitsentlastung n*g*mu, nicht nochmals bei net_load anwenden.
+  root_rotation_stiffness_Nm: null # null = feste Einspannung; positive Zahl = Drehfeder.
+test:
+  fem_support_model: bottom_contact_line # Nutzerfestlegung: nur Unterseitenknoten bei x=±0,896 m uz=0; horizontal gleitend, Biegeneigung frei, bilateral.
+  load_region: rear_web # Nutzerfestlegung: Versuchskraft und Schwingungsmasse oben über hinterem 5-mm-Kern samt Schlauch, x=-25 bis +25 mm.
+  load_across_pocket_only: false # Historische Taschenbelastung deaktiviert; load_region hat Vorrang.
+  gravity: 9.81 # m/s², entspricht der Excel-Versuchsformel
+  supports_m: null # Excel: ±0,64*1,4 m = ±0,896 m; null erhält Bezug zur Halbspannweite.
+  support_width_m: 0.020 # Bei bottom_contact_line nur Netzunterteilung; Fixierung ohne Längsausdehnung nur auf der unteren Kontaktlinie.
+  measurements:
+    variant: B # Nutzer: B gebaut und gemessen; Excel-Messwerte als Vergleich, keine Bestätigung identischer Modellannahmen.
+    root_sign: -1 # Excel delta_Höhe als positiver Betrag; Darstellung als Absenkung.
+    tip_sign: 1 # Excel delta_Tip als positiver Betrag; Darstellung als Hebung.
+    tip_side: right # Darstellungsannahme: Excel nennt keine Seite; nur ein Tip-Messpunkt bei +L, keine Spiegelung.
+  load_width_m: 0.050 # ANNAHME: 50 mm zentrale Lasteinleitungsbreite; am Aufbau messen.
+  self_weight: false
+  force_N: null # Überschreibt test_mass*g für statischen Versuch, keine dynamische Masse daraus ableiten.
+  central_inertia_kg_m2: 0 # ANNAHME: Punktmassenidealisation ohne zusätzliche Rotationsträgheit.
+  modal_mass_is_total: true # ANNAHME zur Interpretation: C170=5,58 kg Gesamtmasse; C144=3,8 kg nur statisch.
+analysis:
+  allow_provisional: true # Autorisierte Vorrechnung mit angenommenem Fertigungsplan und Vergleichslast.
+  elements_per_interval: 8
+  modes: 6
+  timoshenko: false
+  large_deflection_ratio: 0.05
+fem:
+  sandwich_element: C3D20R # Quadratische Volumen statt linearer inkompatibler Elemente für dünne, keilförmige Gurte.
+  mesh_levels: [1, 2, 3]
+  base_length_m: 0.06 # Strukturierte Volumenelemente; zusätzliche Unterteilung an Last-/Auflagenkanten.
+  convergence_relative: 0.02
+  timeout_s: 1200
+  nonlinear: true
+  nonlinear_mesh_level: 1 # Zusätzlicher qualitativer NL-Vergleich; kein netzkonvergierter nichtlinearer Nachweis.
+  nonlinear_timeout_s: 600
+  nonlinear_initial_increment: 0.001
+  # Aktiver Generator: strukturierte C3D20R mit getrennten Kern-/CFK-Materialien.
+
+# Dokumentierte Vorschläge für spätere Sensitivitätsläufe.
+# Dieser Block ist nur Metadaten; die aktuelle CLI führt daraus KEINEN Sweep aus.
+proposed_sensitivity:
+  status: assumptions
+  ply_thickness_m: [0.00008, 0.00010, 0.00012] # 0,08 / 0,10 / 0,12 mm
+  E1_Pa: [110000000000, 135000000000] # 110 / 135 GPa

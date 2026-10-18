@@ -1,0 +1,628 @@
+{
+  "status": "ausgeführt",
+  "variants": {
+    "A": {
+      "meshes": [
+        {
+          "level": 1,
+          "flight_nodes": 11835,
+          "flight_elements": 2004,
+          "flight_mesh_mass_kg": 0.14046535643010147,
+          "flight_bottom_tip_m": 0.5267524722222223,
+          "flight_tip_m": 0.5267526972222222,
+          "flight_reaction_N": -1085.4169554855569,
+          "flight_reaction_residual_N": -0.00028881889147669426,
+          "test_nodes": 23342,
+          "test_elements": 4008,
+          "test_mesh_mass_kg": 0.28093071286019944,
+          "test_root_m": -0.006250272125,
+          "test_reaction_N": 37.27800936917008,
+          "test_reaction_residual_N": 9.36916391935938e-06,
+          "frequency_Hz": 5.146485,
+          "frequencies_Hz": [
+            5.146485,
+            8.553726,
+            52.09279,
+            92.54029,
+            96.07077,
+            123.5168
+          ],
+          "selected_mode": 1,
+          "vertical_fractions": [
+            0.9993125162375923,
+            0.04764369712396632,
+            0.7948577776368284,
+            0.8268495115017667,
+            0.30348963242426846,
+            0.0077467173954843364
+          ],
+          "mode_symmetry": [
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "gemischt",
+            "gemischt",
+            "gemischt"
+          ],
+          "errors": [
+            "Nichtlinearer Vergleich: Zeitlimit 600s überschritten; kein abgeschlossenes Volllastergebnis. Siehe C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\A\\level_1\\flight\\nonlinear.log"
+          ],
+          "flight_applied_force_N": 1085.4166666666727,
+          "flight_applied_root_moment_Nm": 670.8333333333827,
+          "flight_reaction_moment_Nm": [
+            -19.245152202324096,
+            670.8336234628748,
+            1.2670421654092934e-05
+          ],
+          "flight_moment_balance_residual_Nm": [
+            -2.5609993699049483e-06,
+            0.0002901294921002773,
+            1.2670421654092934e-05
+          ],
+          "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf.",
+          "mode_parity_errors": [
+            {
+              "symmetric": 0.00020618496240406127,
+              "antisymmetric": 1.9999999893719402
+            },
+            {
+              "symmetric": 0.005362095373518425,
+              "antisymmetric": 1.9999928119703845
+            },
+            {
+              "symmetric": 0.02825670535960141,
+              "antisymmetric": 1.9998003796884882
+            },
+            {
+              "symmetric": 1.9791591406968985,
+              "antisymmetric": 0.28797412348319523
+            },
+            {
+              "symmetric": 1.8115187443923322,
+              "antisymmetric": 0.8475847088729408
+            },
+            {
+              "symmetric": 0.7618696085440784,
+              "antisymmetric": 1.8492038015256436
+            }
+          ],
+          "mode_root_motion_ratios": [
+            0.9997243254930942,
+            0.4336157627951937,
+            0.9598939828696202,
+            0.03182853433999166,
+            0.04852776638399363,
+            0.013960063140665079
+          ],
+          "test_support_nodes": 30,
+          "test_support_max_abs_uz_m": 0.0,
+          "test_load_centroid_y_m": 0.003,
+          "test_left_tip_m": 0.006229320736111111,
+          "test_right_tip_m": 0.006229422833333333
+        },
+        {
+          "level": 2,
+          "flight_nodes": 21998,
+          "flight_elements": 3936,
+          "flight_mesh_mass_kg": 0.14046535643010025,
+          "flight_bottom_tip_m": 0.5253338897435897,
+          "flight_tip_m": 0.5253341756410256,
+          "flight_reaction_N": -1085.4168281055581,
+          "flight_reaction_residual_N": -0.00016143889206432505,
+          "test_nodes": 43614,
+          "test_elements": 7872,
+          "test_mesh_mass_kg": 0.2809307128602041,
+          "test_root_m": -0.006227682666666666,
+          "test_reaction_N": 37.27798895825849,
+          "test_reaction_residual_N": -1.1041747669082724e-05,
+          "frequency_Hz": 5.159618,
+          "frequencies_Hz": [
+            5.159618,
+            8.582478,
+            51.91321,
+            93.46525,
+            96.80602,
+            122.967
+          ],
+          "selected_mode": 1,
+          "vertical_fractions": [
+            0.9993281672545241,
+            0.05093282101778999,
+            0.8054002067128335,
+            0.8023306493633783,
+            0.34613804601693876,
+            0.005162967975168012
+          ],
+          "mode_symmetry": [
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "gemischt",
+            "gemischt",
+            "gemischt"
+          ],
+          "flight_applied_force_N": 1085.4166666666815,
+          "flight_applied_root_moment_Nm": 670.8333333333823,
+          "flight_reaction_moment_Nm": [
+            -19.245150459998055,
+            670.8334486647974,
+            3.199210412674347e-05
+          ],
+          "flight_moment_balance_residual_Nm": [
+            -8.186730156012345e-07,
+            0.0001153314151451923,
+            3.199210412674347e-05
+          ],
+          "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf.",
+          "mode_parity_errors": [
+            {
+              "symmetric": 0.00022228493570398977,
+              "antisymmetric": 1.9999999876473518
+            },
+            {
+              "symmetric": 0.005303372044312402,
+              "antisymmetric": 1.9999929685488798
+            },
+            {
+              "symmetric": 0.02654685404613744,
+              "antisymmetric": 1.9998238083741908
+            },
+            {
+              "symmetric": 1.9747700077653667,
+              "antisymmetric": 0.31667556967719285
+            },
+            {
+              "symmetric": 1.8403948217269586,
+              "antisymmetric": 0.7829092541033059
+            },
+            {
+              "symmetric": 0.8422110975046926,
+              "antisymmetric": 1.8140232818902688
+            }
+          ],
+          "mode_root_motion_ratios": [
+            0.9997460371710237,
+            0.4424674697237125,
+            0.9597906721966686,
+            0.03255431236146584,
+            0.04705297717975868,
+            0.013162601910922177
+          ],
+          "test_support_nodes": 34,
+          "test_support_max_abs_uz_m": 0.0,
+          "test_load_centroid_y_m": 0.003,
+          "test_left_tip_m": 0.006134636871794871,
+          "test_right_tip_m": 0.006134794217948717
+        },
+        {
+          "level": 3,
+          "flight_nodes": 33982,
+          "flight_elements": 6217,
+          "flight_mesh_mass_kg": 0.14046535643010052,
+          "flight_bottom_tip_m": 0.5227052782051284,
+          "flight_tip_m": 0.5227054705128206,
+          "flight_reaction_N": -1085.4164046327792,
+          "flight_reaction_residual_N": 0.0002620338855194859,
+          "test_nodes": 67528,
+          "test_elements": 12434,
+          "test_mesh_mass_kg": 0.2809307128602045,
+          "test_root_m": -0.00621811,
+          "test_reaction_N": 37.27799029274771,
+          "test_reaction_residual_N": -9.707255195223752e-06,
+          "frequency_Hz": 5.16298,
+          "frequencies_Hz": [
+            5.16298,
+            8.605209,
+            51.69194,
+            93.72485,
+            97.07015,
+            123.1704
+          ],
+          "selected_mode": 1,
+          "vertical_fractions": [
+            0.9993509771856208,
+            0.0544320214094046,
+            0.8179981620740321,
+            0.7915705999497132,
+            0.3835636351751747,
+            0.004519332816239279
+          ],
+          "mode_symmetry": [
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "gemischt",
+            "gemischt",
+            "gemischt"
+          ],
+          "flight_applied_force_N": 1085.4166666666717,
+          "flight_applied_root_moment_Nm": 670.8333333333685,
+          "flight_reaction_moment_Nm": [
+            -19.245147260744066,
+            670.8331138473318,
+            5.5786382532119205e-05
+          ],
+          "flight_moment_balance_residual_Nm": [
+            2.380581062055853e-06,
+            -0.0002194860367126239,
+            5.5786382532119205e-05
+          ],
+          "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf.",
+          "mode_parity_errors": [
+            {
+              "symmetric": 0.0002581167202298326,
+              "antisymmetric": 1.9999999833439397
+            },
+            {
+              "symmetric": 0.005012185532907523,
+              "antisymmetric": 1.999993719489185
+            },
+            {
+              "symmetric": 0.023776424852613103,
+              "antisymmetric": 1.9998586654114405
+            },
+            {
+              "symmetric": 1.9730043554368508,
+              "antisymmetric": 0.3274962800204244
+            },
+            {
+              "symmetric": 1.8647198542663135,
+              "antisymmetric": 0.7230628362079036
+            },
+            {
+              "symmetric": 0.8764287662355126,
+              "antisymmetric": 1.7977409762573966
+            }
+          ],
+          "mode_root_motion_ratios": [
+            0.9997197199471396,
+            0.4493539780551027,
+            0.9597890897037469,
+            0.033355083288672226,
+            0.04638808401056625,
+            0.012808665999578665
+          ],
+          "flight_static_sigma_xx_max_abs_Pa": 942796700.0,
+          "test_static_sigma_xx_max_abs_Pa": 23879290.0,
+          "test_support_nodes": 38,
+          "test_support_max_abs_uz_m": 0.0,
+          "test_load_centroid_y_m": 0.002999999999999999,
+          "test_left_tip_m": 0.006123887756410256,
+          "test_right_tip_m": 0.006124062538461538
+        }
+      ],
+      "convergence": {
+        "converged": true,
+        "relative_changes": {
+          "flight_tip_m": 0.005029036955794661,
+          "test_root_m": 0.0015394817181855166,
+          "frequency_Hz": 0.0006511743218064155,
+          "modes_by_index": [
+            0.0006511743218064155,
+            0.0026415395605150645,
+            0.00428055128130221,
+            0.0027698097142860837,
+            0.0027210218589339198,
+            0.0016513707838896523
+          ]
+        },
+        "reference": "jeweils feinste Netzstufe",
+        "tolerance": 0.02,
+        "reason": "erreicht"
+      }
+    },
+    "B": {
+      "meshes": [
+        {
+          "level": 1,
+          "flight_nodes": 10536,
+          "flight_elements": 1979,
+          "flight_mesh_mass_kg": 0.17385429180976392,
+          "flight_bottom_tip_m": 0.41035429444444443,
+          "flight_tip_m": 0.4103544625,
+          "flight_reaction_N": -1085.4166735255553,
+          "flight_reaction_residual_N": -6.858889946670388e-06,
+          "test_nodes": 20744,
+          "test_elements": 3958,
+          "test_mesh_mass_kg": 0.3477085836195238,
+          "test_root_m": -0.005389212500000001,
+          "test_reaction_N": 37.27799874234457,
+          "test_reaction_residual_N": -1.2576615873172159e-06,
+          "frequency_Hz": 5.519711,
+          "frequencies_Hz": [
+            5.519711,
+            9.472558,
+            55.76861,
+            90.98785,
+            101.1503,
+            114.8713
+          ],
+          "selected_mode": 1,
+          "vertical_fractions": [
+            0.9994171047603226,
+            0.04690163379015582,
+            0.8093978221931639,
+            0.9946105881048047,
+            0.08938941438895677,
+            0.8497482428905625
+          ],
+          "mode_symmetry": [
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-antisymmetrisch",
+            "gemischt",
+            "quasi-symmetrisch"
+          ],
+          "flight_nonlinear_m": 0.4720382569444445,
+          "flight_nonlinear_bottom_tip_m": 0.4730164874999999,
+          "flight_nonlinear_reaction_residual_N": 0.001295891105883129,
+          "flight_nonlinear_qualitative_only": true,
+          "flight_applied_force_N": 1085.4166666666727,
+          "flight_applied_root_moment_Nm": 670.8333333333827,
+          "flight_reaction_moment_Nm": [
+            -19.245152068510478,
+            670.8331915497506,
+            -2.0688889804887367e-05
+          ],
+          "flight_moment_balance_residual_Nm": [
+            -2.427185751940897e-06,
+            -0.0001417836321024879,
+            -2.0688889804887367e-05
+          ],
+          "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf.",
+          "mode_parity_errors": [
+            {
+              "symmetric": 7.680090895871516e-05,
+              "antisymmetric": 1.999999998525405
+            },
+            {
+              "symmetric": 0.0035193807439727253,
+              "antisymmetric": 1.999996903487398
+            },
+            {
+              "symmetric": 0.019837169021146475,
+              "antisymmetric": 1.9999016192616141
+            },
+            {
+              "symmetric": 1.9991762198184708,
+              "antisymmetric": 0.057397230876840774
+            },
+            {
+              "symmetric": 0.5363870617193794,
+              "antisymmetric": 1.926730110840657
+            },
+            {
+              "symmetric": 0.01410286939145286,
+              "antisymmetric": 1.999950276650629
+            }
+          ],
+          "mode_root_motion_ratios": [
+            0.9997937984968128,
+            0.4229299829357225,
+            0.9604414644619824,
+            0.011183054782409323,
+            0.052514740776369126,
+            0.050553597839297436
+          ],
+          "test_support_nodes": 30,
+          "test_support_max_abs_uz_m": 0.0,
+          "test_load_centroid_y_m": 0.003,
+          "test_left_tip_m": 0.004995803444444444,
+          "test_right_tip_m": 0.004995845527777779
+        },
+        {
+          "level": 2,
+          "flight_nodes": 20353,
+          "flight_elements": 3881,
+          "flight_mesh_mass_kg": 0.17385429180976406,
+          "flight_bottom_tip_m": 0.4096782958333333,
+          "flight_tip_m": 0.4096783652777778,
+          "flight_reaction_N": -1085.4167508555556,
+          "flight_reaction_residual_N": -8.418888955930015e-05,
+          "test_nodes": 40324,
+          "test_elements": 7762,
+          "test_mesh_mass_kg": 0.347708583619532,
+          "test_root_m": -0.005375899500000001,
+          "test_reaction_N": 37.277995341656485,
+          "test_reaction_residual_N": -4.658349674002693e-06,
+          "frequency_Hz": 5.529341,
+          "frequencies_Hz": [
+            5.529341,
+            9.489024,
+            55.88411,
+            91.78632,
+            101.763,
+            114.4847
+          ],
+          "selected_mode": 1,
+          "vertical_fractions": [
+            0.9994292143292056,
+            0.04854825872714534,
+            0.8225000654469465,
+            0.9946794372831783,
+            0.09678851920870882,
+            0.845195384485365
+          ],
+          "mode_symmetry": [
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-antisymmetrisch",
+            "gemischt",
+            "quasi-symmetrisch"
+          ],
+          "flight_applied_force_N": 1085.4166666666815,
+          "flight_applied_root_moment_Nm": 670.8333333333823,
+          "flight_reaction_moment_Nm": [
+            -19.245148726532694,
+            670.8335136091227,
+            -1.612526261851599e-06
+          ],
+          "flight_moment_balance_residual_Nm": [
+            9.147923449859263e-07,
+            0.00018027574049028772,
+            -1.612526261851599e-06
+          ],
+          "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf.",
+          "mode_parity_errors": [
+            {
+              "symmetric": 7.792714772568729e-05,
+              "antisymmetric": 1.9999999984818402
+            },
+            {
+              "symmetric": 0.0033486170916032687,
+              "antisymmetric": 1.999997196688929
+            },
+            {
+              "symmetric": 0.01839140095344036,
+              "antisymmetric": 1.9999154373050303
+            },
+            {
+              "symmetric": 1.9991614239993112,
+              "antisymmetric": 0.057910282273928464
+            },
+            {
+              "symmetric": 0.5563667203118754,
+              "antisymmetric": 1.9210559784996917
+            },
+            {
+              "symmetric": 0.013033510533173233,
+              "antisymmetric": 1.999957531449901
+            }
+          ],
+          "mode_root_motion_ratios": [
+            0.9998128874398571,
+            0.4226213708574421,
+            0.9604085195543233,
+            0.011067586061798746,
+            0.05222022951080227,
+            0.04874924896191949
+          ],
+          "test_support_nodes": 34,
+          "test_support_max_abs_uz_m": 0.0,
+          "test_load_centroid_y_m": 0.003,
+          "test_left_tip_m": 0.004934040930555556,
+          "test_right_tip_m": 0.004934134819444444
+        },
+        {
+          "level": 3,
+          "flight_nodes": 32134,
+          "flight_elements": 6147,
+          "flight_mesh_mass_kg": 0.1738542918097629,
+          "flight_bottom_tip_m": 0.40734212179487184,
+          "flight_tip_m": 0.4073422384615385,
+          "flight_reaction_N": -1085.4164942377777,
+          "flight_reaction_residual_N": 0.00017242888702639902,
+          "test_nodes": 63832,
+          "test_elements": 12294,
+          "test_mesh_mass_kg": 0.34770858361953266,
+          "test_root_m": -0.0053627331,
+          "test_reaction_N": 37.27800042590659,
+          "test_reaction_residual_N": 4.25903685652429e-07,
+          "frequency_Hz": 5.534539,
+          "frequencies_Hz": [
+            5.534539,
+            9.521888,
+            55.82497,
+            92.16058,
+            102.0816,
+            115.1852
+          ],
+          "selected_mode": 1,
+          "vertical_fractions": [
+            0.999457085895359,
+            0.05044471420139255,
+            0.8321641301092745,
+            0.9943808035550571,
+            0.09485722671208974,
+            0.8397420374561043
+          ],
+          "mode_symmetry": [
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-symmetrisch",
+            "quasi-antisymmetrisch",
+            "gemischt",
+            "quasi-symmetrisch"
+          ],
+          "flight_applied_force_N": 1085.4166666666717,
+          "flight_applied_root_moment_Nm": 670.8333333333685,
+          "flight_reaction_moment_Nm": [
+            -19.24515072976271,
+            670.8330153980032,
+            5.155114882882117e-05
+          ],
+          "flight_moment_balance_residual_Nm": [
+            -1.0884375818420722e-06,
+            -0.00031793536527402466,
+            5.155114882882117e-05
+          ],
+          "test_reaction_method": "Gesamter physischer Knotenrest RF minus Last; innere MPC-Kraefte heben sich im Resultat auf.",
+          "mode_parity_errors": [
+            {
+              "symmetric": 8.565219327433807e-05,
+              "antisymmetric": 1.9999999981659253
+            },
+            {
+              "symmetric": 0.003053087786945776,
+              "antisymmetric": 1.9999976696623838
+            },
+            {
+              "symmetric": 0.016764186028992857,
+              "antisymmetric": 1.9999297392825546
+            },
+            {
+              "symmetric": 1.999147556325626,
+              "antisymmetric": 0.05838705367867922
+            },
+            {
+              "symmetric": 0.6109800072218294,
+              "antisymmetric": 1.9043905667628196
+            },
+            {
+              "symmetric": 0.01507948183254402,
+              "antisymmetric": 1.9999431514989774
+            }
+          ],
+          "mode_root_motion_ratios": [
+            0.9998028129090171,
+            0.4266957415778901,
+            0.9604397607335629,
+            0.011236173107674823,
+            0.0518666979033424,
+            0.04786553646440375
+          ],
+          "flight_static_sigma_xx_max_abs_Pa": 777630200.0,
+          "test_static_sigma_xx_max_abs_Pa": 23886620.0,
+          "test_support_nodes": 38,
+          "test_support_max_abs_uz_m": 0.0,
+          "test_load_centroid_y_m": 0.002999999999999999,
+          "test_left_tip_m": 0.004923502756410256,
+          "test_right_tip_m": 0.0049236142435897445
+        }
+      ],
+      "convergence": {
+        "converged": true,
+        "relative_changes": {
+          "flight_tip_m": 0.005735046836936039,
+          "test_root_m": 0.0024551660048122144,
+          "frequency_Hz": 0.0009391929481389573,
+          "modes_by_index": [
+            0.0009391929481389573,
+            0.0034514163577643426,
+            0.001059382566618474,
+            0.004060955345550044,
+            0.0031210325856960448,
+            0.006081510471831373
+          ]
+        },
+        "reference": "jeweils feinste Netzstufe",
+        "tolerance": 0.02,
+        "reason": "erreicht"
+      }
+    }
+  },
+  "method": "Explizite Depronkerne und CFK-Schläuche, strukturierte C3D20R-Volumen; FreeCAD-CAD, eigener reproduzierbarer Netzgenerator (kein Gmsh-Tetraedernetz).",
+  "complete": true
+}

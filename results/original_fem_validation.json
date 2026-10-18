@@ -1,0 +1,150 @@
+{
+  "A": {
+    "verified_cases": [
+      {
+        "level": 1,
+        "case": "flight",
+        "nodes": 11835,
+        "elements": 2004,
+        "reaction_residual_N": -0.00028881889147669426,
+        "mass_kg": 0.14046535643010147
+      },
+      {
+        "level": 1,
+        "case": "test",
+        "nodes": 23342,
+        "elements": 4008,
+        "reaction_residual_N": 9.36916391935938e-06,
+        "mass_kg": 0.28093071286019944
+      },
+      {
+        "level": 2,
+        "case": "flight",
+        "nodes": 21998,
+        "elements": 3936,
+        "reaction_residual_N": -0.00016143889206432505,
+        "mass_kg": 0.14046535643010025
+      },
+      {
+        "level": 2,
+        "case": "test",
+        "nodes": 43614,
+        "elements": 7872,
+        "reaction_residual_N": -1.1041747669082724e-05,
+        "mass_kg": 0.2809307128602041
+      },
+      {
+        "level": 3,
+        "case": "flight",
+        "nodes": 33982,
+        "elements": 6217,
+        "reaction_residual_N": 0.0002620338855194859,
+        "mass_kg": 0.14046535643010052
+      },
+      {
+        "level": 3,
+        "case": "test",
+        "nodes": 67528,
+        "elements": 12434,
+        "reaction_residual_N": -9.707255195223752e-06,
+        "mass_kg": 0.2809307128602045
+      }
+    ],
+    "convergence": {
+      "converged": true,
+      "relative_changes": {
+        "flight_tip_m": 0.005029036955794661,
+        "test_root_m": 0.0015394817181855166,
+        "frequency_Hz": 0.0006511743218064155,
+        "modes_by_index": [
+          0.0006511743218064155,
+          0.0026415395605150645,
+          0.00428055128130221,
+          0.0027698097142860837,
+          0.0027210218589339198,
+          0.0016513707838896523
+        ]
+      },
+      "reference": "jeweils feinste Netzstufe",
+      "tolerance": 0.02,
+      "reason": "erreicht"
+    }
+  },
+  "B": {
+    "verified_cases": [
+      {
+        "level": 1,
+        "case": "flight",
+        "nodes": 10536,
+        "elements": 1979,
+        "reaction_residual_N": -6.858889946670388e-06,
+        "mass_kg": 0.17385429180976392
+      },
+      {
+        "level": 1,
+        "case": "test",
+        "nodes": 20744,
+        "elements": 3958,
+        "reaction_residual_N": -1.2576615873172159e-06,
+        "mass_kg": 0.3477085836195238
+      },
+      {
+        "level": 1,
+        "case": "flight_nonlinear",
+        "full_load_completed": true,
+        "qualitative_only": true
+      },
+      {
+        "level": 2,
+        "case": "flight",
+        "nodes": 20353,
+        "elements": 3881,
+        "reaction_residual_N": -8.418888955930015e-05,
+        "mass_kg": 0.17385429180976406
+      },
+      {
+        "level": 2,
+        "case": "test",
+        "nodes": 40324,
+        "elements": 7762,
+        "reaction_residual_N": -4.658349674002693e-06,
+        "mass_kg": 0.347708583619532
+      },
+      {
+        "level": 3,
+        "case": "flight",
+        "nodes": 32134,
+        "elements": 6147,
+        "reaction_residual_N": 0.00017242888702639902,
+        "mass_kg": 0.1738542918097629
+      },
+      {
+        "level": 3,
+        "case": "test",
+        "nodes": 63832,
+        "elements": 12294,
+        "reaction_residual_N": 4.25903685652429e-07,
+        "mass_kg": 0.34770858361953266
+      }
+    ],
+    "convergence": {
+      "converged": true,
+      "relative_changes": {
+        "flight_tip_m": 0.005735046836936039,
+        "test_root_m": 0.0024551660048122144,
+        "frequency_Hz": 0.0009391929481389573,
+        "modes_by_index": [
+          0.0009391929481389573,
+          0.0034514163577643426,
+          0.001059382566618474,
+          0.004060955345550044,
+          0.0031210325856960448,
+          0.006081510471831373
+        ]
+      },
+      "reference": "jeweils feinste Netzstufe",
+      "tolerance": 0.02,
+      "reason": "erreicht"
+    }
+  }
+}

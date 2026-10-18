@@ -1,0 +1,31 @@
+{
+  "cases": [
+    {
+      "variant": "A",
+      "case": "flight",
+      "fcstd": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\A\\level_1\\flight\\spar.FCStd",
+      "mesh_mass_kg": 0.14046535643010136
+    },
+    {
+      "variant": "A",
+      "case": "test",
+      "fcstd": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\A\\level_1\\test\\spar.FCStd",
+      "mesh_mass_kg": 0.28093071286019944
+    },
+    {
+      "variant": "B",
+      "case": "flight",
+      "fcstd": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\B\\level_1\\flight\\spar.FCStd",
+      "mesh_mass_kg": 0.17385429180976397
+    },
+    {
+      "variant": "B",
+      "case": "test",
+      "fcstd": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\B\\level_1\\test\\spar.FCStd",
+      "mesh_mass_kg": 0.3477085836195238
+    }
+  ],
+  "rho_core": 40,
+  "rho_cfk": 1550,
+  "output": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\cad_validation.json"
+}

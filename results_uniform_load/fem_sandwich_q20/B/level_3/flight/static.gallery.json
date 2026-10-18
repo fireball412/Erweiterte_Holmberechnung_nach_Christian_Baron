@@ -1,0 +1,27 @@
+{
+  "label": "Biest B, flight, static: bestätigte Annahmen",
+  "nodes": 32134,
+  "elements": 6147,
+  "deformation_scale": 0.135999158140128,
+  "max_displacement_m": 0.514709068477283,
+  "max_abs_sigma_xx_integration_point_Pa": 870074500.0,
+  "images": [
+    {
+      "file": "static_model.png"
+    },
+    {
+      "file": "static_mesh.png"
+    },
+    {
+      "file": "static_deformation.png"
+    },
+    {
+      "file": "static_stress_xx.png"
+    }
+  ],
+  "image_policy": "Vorhandene Bilder aus demselben Solverlauf wiederverwendet; alle Bilddateien neuer als DAT.",
+  "scope": "Biest_assumed_materials",
+  "solver_dat": "results\\fem_sandwich_q20\\B\\level_3\\flight\\static.dat",
+  "input_sha256": "c9c5968ed4e0c39b27ab4038dfeb6b76d747a7c2e1e28c7b7129c7a067208978",
+  "dat_sha256": "920270159d904eac3d210c3b42ba1bee6d5719e10b182fe9bebe9110e1d9154a"
+}
