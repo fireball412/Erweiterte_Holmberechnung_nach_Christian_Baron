@@ -23,3 +23,6 @@ results*/**/*.step
 results*/**/*.vtk
 results*/**/mesh_si.json
 results*/**/*.parsed.json
+
+# Publish only the current result set.
+/results_*/

@@ -1430,7 +1430,7 @@ Abweichung der Spitzendurchbiegung: -0.747 %; Abweichung der ersten Eigenfrequen
 
 ## Änderung gegenüber dem archivierten Aufbau
 
-Archiv: `../results_before_full_web/`. Dort endete der hintere Steg bei 1,29 m; jetzt läuft er bis 1,40 m durch. Gurtbreite mindestens 6 mm und angenommene CFK-Mindestwanddicke 0,10 mm. Lastverteilung gemäß aktiver YAML; beim tiefenproportionalen Fall unterscheidet sich zusätzlich die Last vom alten Gleichlastarchiv. Dies ist kein reiner Geometrie- oder Netzkonvergenzvergleich.
+Vergleich mit einem lokalen, nicht mitveröffentlichten Archiv des früheren Aufbaus. Dort endete der hintere Steg bei 1,29 m; jetzt läuft er bis 1,40 m durch. Gurtbreite mindestens 6 mm und angenommene CFK-Mindestwanddicke 0,10 mm. Lastverteilung gemäß aktiver YAML; beim tiefenproportionalen Fall unterscheidet sich zusätzlich die Last vom alten Gleichlastarchiv. Dies ist kein reiner Geometrie- oder Netzkonvergenzvergleich.
 
 | Variante | frühere lineare Flugtip [m] | neue lineare Flugtip [m] |
 |---|---:|---:|
@@ -1439,7 +1439,7 @@ Archiv: `../results_before_full_web/`. Dort endete der hintere Steg bei 1,29 m; 
 
 ## Untere Kontaktlinien statt fixierter Auflagerbänder
 
-Vergleich mit dem letzten vollständig abgeschlossenen Stand in results_before_section_supports: dort alle Knoten im 20-mm-Band vertikal fest, jetzt nur die Unterseitenknoten auf einer Kontaktlinie je Auflager. Last auf dem hinteren Steg, Gesamtlast, Holmgeometrie und Material bleiben gleich. Die unterbrochene Querschnittslager-Rechnung ist kein abgeschlossener Vergleichsfall.
+Vergleich mit dem letzten vollständig abgeschlossenen lokalen, nicht mitveröffentlichten Archivstand: dort alle Knoten im 20-mm-Band vertikal fest, jetzt nur die Unterseitenknoten auf einer Kontaktlinie je Auflager. Last auf dem hinteren Steg, Gesamtlast, Holmgeometrie und Material bleiben gleich. Die unterbrochene Querschnittslager-Rechnung ist kein abgeschlossener Vergleichsfall.
 
 | Variante | vorher: Wurzelweg [mm] | jetzt: Wurzelweg [mm] | größtes abs. u_z an der Kontaktlinie [m] |
 |---|---:|---:|---:|
@@ -1455,7 +1455,7 @@ Vergleich mit dem letzten vollständig abgeschlossenen Stand in results_before_s
 
 ## Vergleich der Fluglastverteilungen bei gleicher Geometrie
 
-Gleichlast-Archiv: `../results_uniform_load/`. Gesamtauftrieb, Stege, Gurte und Materialwerte sind gleich; im Flugfall verändert wurde die örtliche Fluglast. Angegeben sind die feinsten linearen FEM-Flugnetze. Die Versuchslagerung wurde später separat geändert; Versuchswerte und Eigenformen dürfen daher nicht als unverändert gegenüber diesem Archiv behandelt werden.
+Vergleich mit einem lokalen, nicht mitveröffentlichten Gleichlast-Archiv. Gesamtauftrieb, Stege, Gurte und Materialwerte sind gleich; im Flugfall verändert wurde die örtliche Fluglast. Angegeben sind die feinsten linearen FEM-Flugnetze. Die Versuchslagerung wurde später separat geändert; Versuchswerte und Eigenformen dürfen daher nicht als unverändert gegenüber diesem Archiv behandelt werden.
 
 | Variante | Gleichlast: Flugtip [m] | tiefenproportional: Flugtip [m] | Änderung |
 |---|---:|---:|---:|
