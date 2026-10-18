@@ -3,6 +3,7 @@ import csv
 from pathlib import Path
 import shutil
 from .excel import dump_json
+from .report_editorial import apply_report_wording
 from .figure_notes import beam_notes,fem_notes,reference_notes,explanation
 
 
@@ -111,18 +112,36 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
         lines += ['', '| Eigenform | A [Hz] / Symmetrie | B [Hz] / Symmetrie |','|---|---|---|']
         for j,(fa,fb) in enumerate(zip(aa['frequencies_Hz'],bb['frequencies_Hz'])):
             lines.append(f"| {j+1} | {fa:.5g} / {aa['mode_symmetry'][j]} | {fb:.5g} / {bb['mode_symmetry'][j]} |")
+        lines += ['', '**Kontrolle der Kräfte und Ergebnisse der linearen Balkenrechnung**', '',
+                  'Die Auflagerkräfte im Laborversuch und die Reaktionen an der Wurzel im Fluglastfall werden gegen die aufgebrachte Last geprüft. Der Reaktionsrest ist die verbleibende numerische Abweichung vom Kräftegleichgewicht.', '',
+                  '| Fall | Reaktionsrest Labor [N] | Gegenkraft Flug [N] | Gegenmoment Flug [N·m] | Flug-Spitzenweg [mm] |',
+                  '|---|---:|---:|---:|---:|']
         for variant,r in analysis['variants'].items():
-            s = r['summary']
-            lines += ['',f"{variant}: Test-Reaktionsrest {s['test_reaction_residual_N']:.4g} N; Flugreaktion {s['flight_reaction_N']:.5g} N, {s['flight_reaction_Nm']:.5g} Nm. Materialvolumen (Halbflügel) {s['material_volume_half_m3']}. Max. Flugdurchbiegung {s['flight_max_m']:.5g} m bei x={s['flight_max_x_m']:.5g} m."]
-            if s['large_deflection']:
-                lines += ['**Große Verformung: lineare Rechnung nur bedingt gültig; geometrisch nichtlineare FEM vergleichen.**']
+            result = r['summary']
+            lines += [f"| {variant} | {result['test_reaction_residual_N']:.4g} | {abs(result['flight_reaction_N']):.5g} | {abs(result['flight_reaction_Nm']):.5g} | {result['flight_tip_m']*1000:.4g} |"]
+        lines += ['', 'Fall B biegt sich weniger, weil die UD-Lagenzahl an der Wurzel bis zur Flügelspitze beibehalten wird.']
+        if any(r['summary']['large_deflection'] for r in analysis['variants'].values()):
+            lines += ['', '**Einordnung:** Die Flugverformungen sind im Verhältnis zur Halbspannweite groß. Die lineare Rechnung berücksichtigt nicht, wie die veränderte Form das Tragverhalten beeinflusst. Die Werte sind deshalb zusammen mit der geometrisch nichtlinearen FEM und deren Abschlussstatus zu beurteilen.']
+        lines += ['', '**Materialmengen je Halbflügel**', '',
+                  'Die Volumina bilden zusammen mit den Materialdichten die Grundlage der Massenberechnung. Die CFK-Wandbereiche um jeden Depronkern sind zusammengefasst.', '',
+                  '| Holmteil | Fall A [cm³] | Fall B [cm³] |', '|---|---:|---:|']
+        groups = [('Oberer UD-Gurt', 'top'), ('Unterer UD-Gurt', 'bottom'),
+                  ('Hinterer Depronkern', 'rear_core'), ('CFK-Wände um den hinteren Kern', 'rear_'),
+                  ('Vorderer Depronkern', 'front_core'), ('CFK-Wände um den vorderen Kern', 'front_')]
+        for label, key in groups:
+            values = []
+            for variant in ('A','B'):
+                volumes = analysis['variants'][variant]['summary']['material_volume_half_m3']
+                volume = sum(v for k,v in volumes.items() if k.startswith(key) and not k.endswith('_core')) if key.endswith('_') else volumes.get(key,0)
+                values.append(volume*1e6)
+            lines += [f'| {label} | {values[0]:.2f} | {values[1]:.2f} |']
     else:
         lines += ['Keine Variantenwerte: Pflichtdaten fehlen. Damit sind Massen, Eigenformen und Durchbiegungen der Fertigungsvarianten nicht belastbar berechenbar.']
     lines += ['', '## Räumliche FEM und Netzkonvergenz','',
         ('Aktives Biest-Schlauchmodell: keilförmige UD-Gurte mit gerader hinterer Kante, hinterer 5-mm-Depronkern bis x=1,40 m; Gurtbreite max(Excel-Keil, 6 mm) mit Knick bei x≈1,28618 m, vorderer bis x=0,70 m. Hintere Kernmitte y=3 mm; Verbindertasche 35 mm breit. Taschenlänge 0,14 m als Excel-basierte Annahme; vorderer Steg danach linear zur Keilkontur geführt. Idealer Verbund. Der Verbinder und seine Tasche werden als Lage-/Freiraumvorgabe dokumentiert, ohne unbelegten Steifigkeitsbeitrag. Jeder CFK-Schlauch besitzt zwei senkrechte Wände und obere/untere Abschnitte, jeweils max(R(x), 0,10 mm) als vorläufige Mindestwanddicke, in zwei halbe ±45°-Teilschichten zerlegt. Orientierungen beziehen sich auf die globale Spannweitenrichtung; die kleine lokale Schräglage des vorderen Stegs wird in der Faserorientierung vernachlässigt. Depron isotrop mit E=20 MPa, ν=0,30, ρ=40 kg/m³; CFK-Werte vorläufig. Der eigene strukturierte 3D-Netzgenerator erzeugt quadratische C3D20R-Hexaeder statt Gmsh-Tetraeder. Alle Materialgrenzen innerhalb eines Intervalls teilen Knoten. Nichtpassende Knoten an Lagensprüngen werden über quadratische Flächen-Verschiebungsinterpolation verbunden, ohne starre Lastspider; zusätzliche lokale Diskretisierungssteifigkeit ist durch Netzverfeinerung zu prüfen. Vorläufe mit linearen C3D8I-Elementen wurden wegen auffälliger lokaler Niedrigfrequenzformen verworfen und werden nicht als validierte Ergebnisse gezeigt.' if sandwich_mode else
         'FreeCAD baut pro Lagenintervall massive, linear veränderliche Gurte und einen zentralen rechteckigen Steg. Gmsh erzeugt quadratische Tetraeder; CalculiX nutzt C3D10 mit orthotropem UD in globaler x-Faserrichtung.'),
         ('CAD in mm; der strukturierte Netzgenerator arbeitet direkt in m. Solver: m, N, kg, s, Pa; Dichte kg/m³. E-Modul N/mm² aus Excel wird mit 10⁶ in Pa umgerechnet. UD-Gurtfaser entlang x; Schlauchfasern ±45° zur Spannweitenrichtung in der jeweiligen Wandebene. Ausgegebene σxx sind globale Längsspannungen, in der linearen Rechnung im UD-Gurt zugleich Fasernormalspannungen; bei großen nichtlinearen Rotationen ist diese Gleichsetzung nicht allgemein zulässig.' if sandwich_mode else 'CAD in mm; Gmsh-Knoten werden vor Solverexport mit 0,001 in m umgerechnet. Solver: m, N, kg, s, Pa; Dichte kg/m³. E-Modul N/mm² aus Excel wird mit 10⁶ in Pa umgerechnet.'),
-        'Lasten werden über die Elementflächen in konsistente Knotenkräfte umgerechnet; kein starrer Lastspider. Auflagen beschränken vertikale Verschiebung auf unteren Flächenbändern; drei weitere skalare Bedingungen verhindern Starrkörperbewegungen in der Ebene. Zusätzliche Zentralmasse verteilt sich über das Lastband. Ein Band kann lokal steifer wirken als die idealisierte Balken-Punktauflage.',
+        'Lasten werden über die Elementflächen in konsistente Knotenkräfte umgerechnet; kein starrer Lastspider. Die Auflagerbedingungen entsprechen dem konfigurierten Lagermodell; beim aktuellen Modell werden nur die unteren Kontaktlinien vertikal festgehalten. Drei weitere skalare Bedingungen verhindern Starrkörperbewegungen in der Ebene. Die zusätzliche Zentralmasse verteilt sich über das Lastband.',
         'Mindestens drei Netzfaktoren; relative Änderung zwischen den letzten zwei Stufen bezogen auf feinste Stufe. Räumliche Modalsuche liefert auch Quer-/Torsionsmoden; deren erste Frequenz darf erst nach Prüfung der Form einer vertikalen Balkenmode zugeordnet werden. Nichtlineare Statik wird separat gerechnet; Modalanalyse ist unbelastet linear, keine vorgespannte Analyse.',
         '', f"Status: **{fem['status']}**."]
     for variant,v in fem.get('variants',{}).items():
@@ -178,7 +197,15 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
             lines += ['[Krümmungsdaten A als CSV](flight_rear_curvature_A.csv) · [Krümmungsdaten B als CSV](flight_rear_curvature_B.csv).','']
         if name=='stegannahmen':
             lines += ['[Skizze als verlustfrei vergrößerbare SVG öffnen](images/stegannahmen.svg).','']
-    lines += ['', '## FEM-Anhänge', '']
+    if fem.get('complete') and fem.get('variants'):
+        lines += ['', '## Messwerte und aktuelle FEM-Ergebnisse im Laborversuch', '']
+        p=model['parameters']
+        lines += ['', f"**Messpunkte im Biegelinienplot (B-Modell):** Excel D146, ΔHöhe={p['measured_root']*1000:.6g} mm als Absenkung an x=0; Excel D147, ΔTip={p['measured_tip']*1000:.6g} mm als Hebung am Tip. Die Darstellungsseite +L ist eine YAML-Annahme, keine in Excel dokumentierte Messseite. Die genaue Messposition über der Flächentiefe ist nicht dokumentiert; der FEM-Querschnittsmittelwert und die Wurzelauswertung im Taschenband sind nicht automatisch identisch mit dem Messpunkt. Die Werte sind kein automatischer Nachweis identischer Material-, Geometrie- und Lagerannahmen.", '']
+        lines += ['| Variante | FEM Wurzel, Taschenmittel [mm] | FEM Tip links, oberer Gurt [mm] | FEM Tip rechts, oberer Gurt [mm] |', '|---|---:|---:|---:|']
+        for variant,record in fem['variants'].items():
+            last=record['meshes'][-1]
+            lines += [f"| {variant} | {last['test_root_m']*1000:.6g} | {last['test_left_tip_m']*1000:.6g} | {last['test_right_tip_m']*1000:.6g} |"]
+    lines += ['', '## FEM-Anhänge', '', 'Die wesentlichen Ergebnisse und Vergleiche stehen im Hauptteil oben. Der folgende Anhang dokumentiert die einzelnen FEM-Netzstufen, Verformungen, Spannungen und Schwingungsformen sowie die technischen Prüfungen und die Reproduzierbarkeit der Berechnung.', '']
     fem_folder = out/(('fem_sandwich_q20' if cfg['fem'].get('sandwich_element')=='C3D20R' else 'fem_sandwich') if sandwich_mode else 'fem')
     if sandwich_mode:
         lines += ['', '**Geänderte Spitzengeometrie:** Hinterer Steg bis 1,40 m; Gurt mindestens 6 mm. Die CFK-Mindestwanddicke 0,10 mm bleibt eine Annahme. Die reale Flügelschale ist nicht enthalten. Frühere Messwerte dienen nur bei identischem tatsächlichem Bauzustand zur Validierung dieser neuen Variante.','']
@@ -186,9 +213,9 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
         if cfg['test'].get('fem_support_model')=='bottom_contact_line':
             lines += ['**Versuchslagerung auf unteren Kontaktlinien:** Bei x=±0,896 m gilt u_z=0 ausschließlich für die Knoten auf der unteren Holmoberfläche, über deren Breite. Oberseite und innere Knoten werden nicht vertikal festgehalten. Benachbarte Querschnitte bleiben vertikal frei; die Biegeneigung und das horizontale Gleiten werden bis auf drei skalare Bedingungen zur Starrkörperstabilisierung zugelassen. Die Außenflügel setzen die Auflagerneigung fort. Die 20-mm-Unterteilung um die Auflage ist nur eine Netzunterteilung, keine fixierte Kontaktfläche. Diese bilaterale Kontaktlinie verhindert Abheben und kann Niederhaltekräfte übertragen; sie ist kein einseitiger Kontakt mit Abrollen und kein Nachweis realer Kontaktpressungen. Die reale Flügelschale fehlt weiterhin.','']
         elif cfg['test'].get('fem_support_model')=='fixed_vertical_section':
-            lines += ['**Versuchslagerung mit freier Biegeneigung:** Nur in den beiden Querschnittsebenen bei x=±0,896 m gilt für sämtliche Strukturknoten u_z=0. Die Nachbarquerschnitte sind vertikal frei; die Biegeneigung kann sich einstellen und der Außenflügel setzt die Neigung fort. Die Verschiebung in Spannweitenrichtung bleibt bis auf die Starrkörperstabilisierung frei. Querschnittstorsion an der Auflage ist unterdrückt. Drei zusätzliche skalare Bedingungen verhindern Starrkörperbewegungen in der Flügelebene. Dies ist ein bilaterales ideales Querschnittslager mit möglichen Niederhaltekräften, kein einseitiger Kontakt und keine flächige Einspannung. Die 20-mm-Unterteilung um die Auflage bleibt nur im Netz erhalten. Die reale Flügelschale ist nicht enthalten. Der vorherige Stand mit festgehaltenen Bändern ist nur lokal archiviert und wird nicht mitveröffentlicht.','']
+            lines += ['**Versuchslagerung mit freier Biegeneigung:** Nur in den beiden Querschnittsebenen bei x=±0,896 m gilt für sämtliche Strukturknoten u_z=0. Die Nachbarquerschnitte sind vertikal frei; die Biegeneigung kann sich einstellen und der Außenflügel setzt die Neigung fort. Die Verschiebung in Spannweitenrichtung bleibt bis auf die Starrkörperstabilisierung frei. Querschnittstorsion an der Auflage ist unterdrückt. Drei zusätzliche skalare Bedingungen verhindern Starrkörperbewegungen in der Flügelebene. Dies ist ein bilaterales ideales Querschnittslager mit möglichen Niederhaltekräften, kein einseitiger Kontakt und keine flächige Einspannung. Die 20-mm-Unterteilung um die Auflage bleibt nur im Netz erhalten. Die reale Flügelschale ist nicht enthalten.','']
         elif cfg['test'].get('fem_support_model')=='fixed_vertical_band':
-            lines += ['**Versuchslagerung nach Nutzerfestlegung:** In beiden 20-mm-Auflagerbändern bei x=±0,896 m gilt für sämtliche Strukturknoten u_z=0, über die gesamte Holmbreite und -höhe. Drei zusätzliche skalare Bedingungen in der Flügelebene verhindern Starrkörperbewegungen. Die Bänder verhindern Abheben und Absinken und schränken Querschnittstorsion sowie die Biegerotation innerhalb ihrer endlichen Breite ein. Dies ist eine bilaterale vertikale Führung mit möglichen Niederhaltekräften, kein einseitiger Kontakt. Die Flügelschale wird dadurch nicht ausdrücklich modelliert. Der 1D-Balken behält seine idealen Punktauflager; Unterschiede zum 3D-Versuch sind deshalb auch durch die Lageridealisation bedingt. Der vorherige Stand ist nur lokal archiviert und wird nicht mitveröffentlicht.','']
+            lines += ['**Versuchslagerung nach Nutzerfestlegung:** In beiden 20-mm-Auflagerbändern bei x=±0,896 m gilt für sämtliche Strukturknoten u_z=0, über die gesamte Holmbreite und -höhe. Drei zusätzliche skalare Bedingungen in der Flügelebene verhindern Starrkörperbewegungen. Die Bänder verhindern Abheben und Absinken und schränken Querschnittstorsion sowie die Biegerotation innerhalb ihrer endlichen Breite ein. Dies ist eine bilaterale vertikale Führung mit möglichen Niederhaltekräften, kein einseitiger Kontakt. Die Flügelschale wird dadurch nicht ausdrücklich modelliert. Der 1D-Balken behält seine idealen Punktauflager; Unterschiede zum 3D-Versuch sind deshalb auch durch die Lageridealisation bedingt.','']
         else:
             lines += ['Die drei gemittelten Vertikalbedingungen der Auflagenbänder unterdrücken Starrkörperbewegungen, lassen aber die Rotation in Spannweitenrichtung frei. Reaktionskräfte werden aus den ursprünglichen Flächenknoten zurückgewonnen.','']
     last_parent=None
@@ -247,64 +274,8 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
         lines += ['', '## CAD-/Netz-Konsistenz','', '[Erneut geöffnete CAD-Dateien, gültige Volumenkörper und Vergleich der CAD-/Netzmassen](cad_validation.json).']
     if (out/'original_fem_validation.json').exists():
         lines += ['', '[Prüfung der tatsächlichen Original-FEM-Dateien und Reaktionsgleichgewichte](original_fem_validation.json).']
-    previous=out.parent/'results_before_full_web'/'summary.json'
-    if cfg['geometry'].get('minimum_cap_width_m') and previous.exists() and fem.get('complete'):
-        old=__import__('json').loads(previous.read_text(encoding='utf-8')).get('fem',{}).get('variants',{})
-        lines += ['', '## Änderung gegenüber dem archivierten Aufbau', '',
-            'Vergleich mit einem lokalen, nicht mitveröffentlichten Archiv des früheren Aufbaus. Dort endete der hintere Steg bei 1,29 m; jetzt läuft er bis 1,40 m durch. Gurtbreite mindestens 6 mm und angenommene CFK-Mindestwanddicke 0,10 mm. Lastverteilung gemäß aktiver YAML; beim tiefenproportionalen Fall unterscheidet sich zusätzlich die Last vom alten Gleichlastarchiv. Dies ist kein reiner Geometrie- oder Netzkonvergenzvergleich.', '',
-            '| Variante | frühere lineare Flugtip [m] | neue lineare Flugtip [m] |', '|---|---:|---:|']
-        for variant,record in fem.get('variants',{}).items():
-            if variant in old:
-                lines += [f"| {variant} | {old[variant]['meshes'][-1]['flight_tip_m']:.6g} | {record['meshes'][-1]['flight_tip_m']:.6g} |"]
-    support_archive=out.parent/'results_before_fixed_vertical_supports'/'summary.json'
-    if cfg['test'].get('fem_support_model')=='fixed_vertical_band' and support_archive.exists() and fem.get('complete'):
-        old=__import__('json').loads(support_archive.read_text(encoding='utf-8'))['fem']['variants']
-        lines += ['', '## Einfluss der geänderten Versuchslagerung und Lasteinleitung', '',
-            'Vergleich der feinsten linearen Netze mit dem archivierten Stand: Dort gemittelte Auflagerbedingungen und Taschenbelastung; jetzt vertikal festgehaltene Auflagerbänder und Belastung über dem hinteren Steg. Gesamtlast, Holmgeometrie und Material bleiben gleich. Dieser Vergleich enthält beide Änderungen und trennt deren Einflüsse nicht. Er ist kein alleiniger Nachweis der realen Flügelschalenwirkung.', '',
-            '| Variante | vorher: Wurzelweg [mm] | jetzt: Wurzelweg [mm] | jetzt: größtes abs. u_z im Auflagerband [m] |', '|---|---:|---:|---:|']
-        for variant,record in fem['variants'].items():
-            last=record['meshes'][-1]
-            lines += [f"| {variant} | {old[variant]['meshes'][-1]['test_root_m']*1000:.6g} | {last['test_root_m']*1000:.6g} | {last.get('test_support_max_abs_uz_m',float('nan')):.3g} |"]
-    section_archive=out.parent/'results_before_section_supports'/'summary.json'
-    if cfg['test'].get('fem_support_model')=='fixed_vertical_section' and section_archive.exists() and fem.get('complete'):
-        old=__import__('json').loads(section_archive.read_text(encoding='utf-8'))['fem']['variants']
-        lines += ['', '## Freigabe der Biegeneigung an den Auflagen', '',
-            'Vergleich mit dem archivierten Stand vor der Umstellung: vorher alle Knoten im 20-mm-Band vertikal fest, jetzt nur die mittlere Querschnittsebene. Last auf dem hinteren Steg, Gesamtlast, Holmgeometrie und Material bleiben gleich. Die Querschnittslager halten die Torsion an den Auflagen, lassen aber die Biegeneigung zu.', '',
-            '| Variante | vorher: Wurzelweg [mm] | jetzt: Wurzelweg [mm] | größtes abs. u_z am Lagerquerschnitt [m] |', '|---|---:|---:|---:|']
-        for variant,record in fem['variants'].items():
-            last=record['meshes'][-1]
-            lines += [f"| {variant} | {old[variant]['meshes'][-1]['test_root_m']*1000:.6g} | {last['test_root_m']*1000:.6g} | {last['test_support_max_abs_uz_m']:.3g} |"]
-    if cfg['test'].get('fem_support_model')=='bottom_contact_line' and section_archive.exists() and fem.get('complete'):
-        old=__import__('json').loads(section_archive.read_text(encoding='utf-8'))['fem']['variants']
-        lines += ['', '## Untere Kontaktlinien statt fixierter Auflagerbänder', '',
-            'Vergleich mit dem letzten vollständig abgeschlossenen lokalen, nicht mitveröffentlichten Archivstand: dort alle Knoten im 20-mm-Band vertikal fest, jetzt nur die Unterseitenknoten auf einer Kontaktlinie je Auflager. Last auf dem hinteren Steg, Gesamtlast, Holmgeometrie und Material bleiben gleich. Die unterbrochene Querschnittslager-Rechnung ist kein abgeschlossener Vergleichsfall.', '',
-            '| Variante | vorher: Wurzelweg [mm] | jetzt: Wurzelweg [mm] | größtes abs. u_z an der Kontaktlinie [m] |', '|---|---:|---:|---:|']
-        for variant,record in fem['variants'].items():
-            last=record['meshes'][-1]
-            lines += [f"| {variant} | {old[variant]['meshes'][-1]['test_root_m']*1000:.6g} | {last['test_root_m']*1000:.6g} | {last['test_support_max_abs_uz_m']:.3g} |"]
-        p=model['parameters']
-        lines += ['', f"**Messpunkte im Biegelinienplot (B-Modell):** Excel D146, ΔHöhe={p['measured_root']*1000:.6g} mm als Absenkung an x=0; Excel D147, ΔTip={p['measured_tip']*1000:.6g} mm als Hebung am Tip. Die Darstellungsseite +L ist eine YAML-Annahme, keine in Excel dokumentierte Messseite. Die genaue Messposition über der Flächentiefe ist nicht dokumentiert; der FEM-Querschnittsmittelwert und die Wurzelauswertung im Taschenband sind nicht automatisch identisch mit dem Messpunkt. Die Werte sind kein automatischer Nachweis identischer Material-, Geometrie- und Lagerannahmen.", '']
-        lines += ['| Variante | FEM Wurzel, Taschenmittel [mm] | FEM Tip links, oberer Gurt [mm] | FEM Tip rechts, oberer Gurt [mm] |', '|---|---:|---:|---:|']
-        for variant,record in fem['variants'].items():
-            last=record['meshes'][-1]
-            lines += [f"| {variant} | {last['test_root_m']*1000:.6g} | {last['test_left_tip_m']*1000:.6g} | {last['test_right_tip_m']*1000:.6g} |"]
-    uniform_archive=out.parent/'results_uniform_load'/'summary.json'
-    comparable=False
-    if uniform_archive.exists() and (uniform_archive.parent/'normalized_input.json').exists():
-        archived_model=__import__('json').loads((uniform_archive.parent/'normalized_input.json').read_text(encoding='utf-8'))
-        archived_cfg=__import__('yaml').safe_load((uniform_archive.parent/'used_config.yaml').read_text(encoding='utf-8'))
-        comparable=all(archived_model.get(k)==model.get(k) for k in ['stations','material','half_span']) and archived_cfg['geometry']==cfg['geometry'] and archived_model['parameters']['total_lift']==model['parameters']['total_lift']
-        comparable=comparable and {k:v for k,v in archived_cfg['flight'].items() if k!='distribution'}=={k:v for k,v in cfg['flight'].items() if k!='distribution'}
-    if cfg['flight']['distribution']=='chord_proportional' and comparable and fem.get('complete'):
-        previous=__import__('json').loads(uniform_archive.read_text(encoding='utf-8'))['fem']['variants']
-        lines += ['', '## Vergleich der Fluglastverteilungen bei gleicher Geometrie', '',
-            'Vergleich mit einem lokalen, nicht mitveröffentlichten Gleichlast-Archiv. Gesamtauftrieb, Stege, Gurte und Materialwerte sind gleich; im Flugfall verändert wurde die örtliche Fluglast. Angegeben sind die feinsten linearen FEM-Flugnetze. Die Versuchslagerung wurde später separat geändert; Versuchswerte und Eigenformen dürfen daher nicht als unverändert gegenüber diesem Archiv behandelt werden.', '',
-            '| Variante | Gleichlast: Flugtip [m] | tiefenproportional: Flugtip [m] | Änderung |', '|---|---:|---:|---:|']
-        for variant,record in fem['variants'].items():
-            before=previous[variant]['meshes'][-1]['flight_tip_m'];after=record['meshes'][-1]['flight_tip_m']
-            lines += [f'| {variant} | {before:.6g} | {after:.6g} | {(after/before-1)*100:.3g} % |']
     measurement = out/'phyphox_measurement.md'
     if measurement.exists():
         appendix_index = lines.index('## FEM-Anhänge')
         lines[appendix_index:appendix_index] = [measurement.read_text(encoding='utf-8').strip(), '']
-    (out/'report.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+    (out/'report.md').write_text(apply_report_wording('\n'.join(lines)+'\n'),encoding='utf-8')

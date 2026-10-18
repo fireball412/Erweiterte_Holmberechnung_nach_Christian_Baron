@@ -1,8 +1,10 @@
 # Holmberechnung – Import, Nachrechnung und Ausführungsnachweis
 
+**Hinweis zu den Berechnungen:** Die Berechnungen dokumentieren das beschriebene Modell und seine Annahmen. Sie ersetzen keinen geprüften Festigkeits- oder Lufttüchtigkeitsnachweis.
+
 ## Aufgabenstellung und Modellumfang
 
-Vergleich A (diskreter Excel-Lagenplan) gegen B (durchgehende jeweilige Wurzellagen). Holm, keine vollständige Flügelsteifigkeit.
+Verglichen werden zwei UD-Lagenverteilungen der Holmgurte: Fall A entspricht der Auslegung nach Excel mit einer zur Flügelspitze hin gestuft abnehmenden Anzahl der UD-Lagen gemäß dem diskreten Excel-Lagenplan. In Fall B wird dagegen die jeweilige Anzahl der UD-Lagen an der Wurzel über die gesamte Halbspannweite bis zur Flügelspitze durchgehend beibehalten; für Ober- und Untergurt gilt jeweils dessen eigene Wurzellagenzahl. Berechnet wird der Holm, nicht die vollständige Flügelsteifigkeit.
 x=0 an der Wurzel, x=L an der Halbflügelspitze. Gesamtspannweite 2.8 m; Halbspannweite 1.4 m.
 
 ## Tatsächlich ausgeführte Schritte
@@ -23,17 +25,16 @@ Vollständige Daten: [Inventur](excel_inventory.json), [SI-Modell](normalized_in
 
 - Nutzergeometrie: Gurtbreiten max(Excel-Keil, 6 mm); Excel-Datei unverändert. Eingefügte Knickstationen übernehmen die Lagen des ursprünglichen Intervalls.
 - ANNAHME: CFK-Schlauchwand max(Excel R, 0.1 mm), damit der durchgehende Steg an der Spitze nicht auf null Wanddicke ausläuft.
-- Excel-Flugnäherung M0*L²/(2EI) ist doppelt so groß wie die korrekte Gleichlast-Kragträgerformel q*L⁴/(8EI).
-- Altes Excel-I ist größenordnungsmäßig größer als korrigiertes I; alter Formelzweig nicht als Referenz verwenden.
-- VORLÄUFIG: Excel-Auslegungsplan als Fertigungsplan angenommen; tatsächliche Fertigung NICHT bestätigt.
-- VORLÄUFIG: unveränderter Excel-Auftrieb ist eine Vergleichslast, keine bestätigte Grenz-/Bruchlast; kein Sicherheitsfaktor angewendet.
+- Einordnung der Excel-Flugnäherung: Für eine Gleichlast (gleichmäßig über die Halbspannweite verteilter Auftrieb) gilt bei gleichbleibender Biegesteifigkeit eigentlich M₀L²/(4EI) für die Durchbiegung der Flügelspitze. Die verwendete Excel-Formel M₀L²/(2EI) ergibt eine doppelt so große Durchbiegung. Dies ist als Näherung für Fall A zu begründen: Die Auslegung reduziert von der Wurzel bis zur Flügelspitze die Anzahl der UD-Lagen und macht den Holm dadurch zunehmend biegeweicher. So bleibt die Krümmung trotz abnehmendem Biegemoment über einen weiten Bereich annähernd konstant, wie der Krümmungsgraph für Fall A zeigt.
+- Fertigungsstand: Fall B wurde gebaut, mit der jeweiligen UD-Wurzellagenzahl von Ober- und Untergurt durchgehend bis zur Flügelspitze. Fall A beschreibt die Excel-Auslegung mit gestufter UD-Lagenzahl.
+- Lastansatz: Der unveränderte Excel-Auftrieb wird gemäß Nutzerangabe als Grenzlast angesetzt, da maximale Geschwindigkeit und höchster möglicher Auftrieb verwendet wurden. Ein zusätzlicher Sicherheitsfaktor zur Ermittlung einer Bruchlast wurde nicht angewendet, da dieser Lastfall nach Einschätzung des Nutzers bereits praktisch nicht als statischer Lastzustand auftreten kann.
 - Bestätigtes Schlauchmodell: zwei Depronkerne, ±45°-CFK-Wände; Materialwerte bleiben Annahmen. Hinteres Stegende gemäß YAML; Flügelschale nicht enthalten.
 - VORLÄUFIG: Materialkennwerte enthalten ausdrücklich bestätigte Beispielannahmen.
 - Fluglast tiefenproportional aus separater Excel-Flächengeometrie; örtlich konstanter Auftriebsbeiwert als Annahme, keine berechnete 3D-Auftriebsverteilung.
 
 ## Aktive Fluglast: tiefenproportional
 
-q(x)=F_halb · c(x) / ∫₀ᴸc(s)ds. c(x) ist die Flächentiefe aus der Excel-Flächengeometrie, nicht die Gurtbreite. Angenommen wird ein örtlich konstanter Auftriebsbeiwert. Der Excel-Gesamtauftrieb bleibt erhalten; die früher verwendete Gleichlast ist jetzt nur noch eine Referenz.
+q(x)=F_halb · c(x) / ∫₀ᴸc(s)ds. c(x) ist die Flächentiefe aus der Excel-Flächengeometrie, nicht die Gurtbreite. Angenommen wird ein örtlich konstanter Auftriebsbeiwert. Der Gesamtauftrieb entspricht dem Excel-Wert. Für die räumliche Lastverteilung wird die örtliche Flächentiefe verwendet.
 
 In der 3D-FEM wird diese Streckenlast durch einen äquivalenten vertikalen Gurtflächendruck proportional zu c(x)/b_Gurt(x) auf konsistente Knotenkräfte abgebildet. Die Gurtbreite dient nur der Lastübertragung auf das vorhandene Holmnetz. Das ist keine aerodynamische Druckverteilung auf einer mitmodellierten Flügelschale. Kraftsumme und erstes Lastmoment werden gegen die tiefenproportionale Sollverteilung geprüft.
 
@@ -50,7 +51,7 @@ Halbflügelfläche 0.2605 m²; Kraft je Halbflügel 1085.42 N; Lastschwerpunkt x
 | 1.2 | 130 | 541.667 | Berechnung der Werte!C26 |
 | 1.4 | 95 | 395.833 | Berechnung der Werte!C27 |
 
-Dies ist eine geometrisch gewichtete Lastannahme, keine Lösung der realen 3D-Auftriebsverteilung. Der zentrale Biegeversuch und die unbelastete Modalanalyse werden durch diese Änderung nicht verändert.
+Dies ist eine geometrisch gewichtete Lastannahme, keine Lösung der realen 3D-Auftriebsverteilung. Der zentrale Labor-Biegeversuch und die unbelastete Modalanalyse werden durch diese Änderung nicht verändert.
 
 Fehlende Eingaben werden nicht automatisch ersetzt. Explizite Annahmen aus der verwendeten YAML sind als vorläufig markiert; Beispiele in `examples/material.example.yaml` werden niemals automatisch eingelesen.
 Die E1-Angabe stammt aus der ausgewählten Excel-Materialzeile. Ob sie den tatsächlich ausgehärteten Verbund beschreibt, muss bestätigt werden. Festigkeits-/Beulnachweise und Flugsicherheitsfreigabe sind nicht Gegenstand dieser Rechnung.
@@ -188,12 +189,12 @@ Alle belegten Werte, Kommentare, Formelergebnisse und verfügbare Formeltokens s
 
 ## Rekonstruierte Excel-Näherungen
 
-Die Vorlage bestimmt Auftrieb aus ca, Geschwindigkeit und Fläche; G ist in N angegeben, keine Masse in kg. n=A/G wird geprüft. Die in Excel verwendete konstante Streckenlast integriert zu A/2. Eine explizite Unterscheidung Grenz-/Bruchlast ist nicht vorhanden und muss bestätigt werden.
+Die Vorlage bestimmt Auftrieb aus ca, Geschwindigkeit und Fläche; G ist in N angegeben, keine Masse in kg. n=A/G wird geprüft. Die in Excel verwendete konstante Streckenlast integriert zu A/2. Gemäß Nutzerangabe entspricht dieser Auftrieb der Grenzlast, da maximale Geschwindigkeit und höchster möglicher Auftrieb angesetzt wurden. Eine zusätzliche Erhöhung zur Bruchlast wurde nicht vorgenommen, da dieser Lastfall nach Einschätzung des Nutzers bereits praktisch nicht als statischer Lastzustand auftreten kann.
 Die Höhen H (Profil), h (unter Beplankung), h1 (lichte Steghöhe) und t (theoretische Gurtdicke) sind zu unterscheiden. Das Standardmapping verwendet h als Holm-Außenhöhe. Fertigungslagen verschieben Gurtschwerpunkte gegenüber der theoretischen Excel-Geometrie.
 
 Für konstantes EI an der Wurzel gelten:
-- Gleichlast-Kragträger: δ=qL⁴/(8EI), M₀=qL²/2. Die ausgeschriebene Excel-Näherung M₀L²/(2EI) überschätzt diesen Referenzfall um Faktor 2.
-- Gelenkiger Auflagenversuch, zentrale Kraft: δ₀=F(2pL)³/(48EI). Freie Überhänge ohne Eigengewicht sind krümmungsfrei, aber wegen der Auflagerneigung nicht verschiebungsfrei.
+- Gleichlast-Kragträger: δ=qL⁴/(8EI), M₀=qL²/2. Die ausgeschriebene Excel-Näherung M₀L²/(2EI) überschätzt ausschließlich diesen Referenzfall mit konstantem EI um Faktor 2. Für den abgestuften Holm A kann sie dagegen eine Näherung für annähernd konstante Krümmung κ(x)≈M₀/EI₀ darstellen; siehe die Einordnung unter „Fehlende Daten und Annahmen“.
+- Gelenkiger Laborversuch, zentrale Kraft: δ₀=F(2pL)³/(48EI). Die Formel beschreibt die Absenkung δ₀ der Flügelmitte gegenüber zwei Auflagern unter einer mittig aufgebrachten Kraft F (in Newton). L ist die Halbspannweite; p ist die Auflagerposition als Anteil der Halbspannweite. 2pL ist der Abstand zwischen den beiden Auflagern. Die aktuellen Abmessungen und Auflagerpositionen stehen im Abschnitt zum Laborversuch. EI ist die Biegesteifigkeit des Holms. Die Formel setzt kleine Verformungen und eine über die Länge gleichbleibende Biegesteifigkeit voraus; hier wird dafür der Wert an der Wurzel verwendet. Sie dient als einfache Vergleichsrechnung, während die genauere Balkenrechnung die entlang des Holms veränderliche Steifigkeit berücksichtigt. Die Flügelabschnitte außerhalb der Auflager sind freie Überhänge: Ohne Eigengewicht biegen sie sich in diesem Modell nicht zusätzlich, bewegen sich aber durch die Neigung des Holms an den Auflagern mit.
 - Zentraler Feder-Masse-Ersatz: k=6EI/(pL)³ und f=√(k/m)/(2π). Strukturmasse fehlt in dieser einfachen Excel-Näherung.
 
 | Größe | neu rekonstruierter Wert | Bedeutung |
@@ -206,7 +207,7 @@ Für konstantes EI an der Wurzel gelten:
 | test_tip_constant_EI_m | 0.00321192 | Spitzenhebung relativ Auflagen, m |
 | spring_frequency_excel_mass_Hz | 6.66736 | Feder-Masse-Näherung mit C170, Hz |
 
-**Die vorstehenden Flugwerte rekonstruieren ausschließlich die frühere Excel-Gleichlastnäherung. Sie sind nicht die aktive tiefenproportionale Last oder deren Wurzelmoment.**
+**Die vorstehenden Flugwerte rekonstruieren ausschließlich die Excel-Vergleichsrechnung mit Gleichlast. Sie sind nicht die aktive tiefenproportionale Last oder deren Wurzelmoment.**
 
 
 Diese Werte verwenden das theoretische Excel-Wurzel-EI und ersetzen keine Rechnung der Fertigungsvarianten. C144 ist die statische Laständerungsmasse; C170 wird separat als gesamte mitbewegte Zentralmasse interpretiert. Ihre physische Bedeutung muss am Aufbau bestätigt werden.
@@ -226,13 +227,13 @@ Diese Werte verwenden das theoretische Excel-Wurzel-EI und ersetzen keine Rechnu
 
 ## Berechnungsverfahren und Randbedingungen
 
-A verwendet abschnittsweise konstante ganze Lagenzahlen [xᵢ,xᵢ₊₁); der Spitzenwert 0 beschreibt das Ende, kein endliches gurtloses Intervall. Breiten und Höhen werden linear interpoliert. B übernimmt nur die oberen/unteren Wurzellagen; restliche Geometrie bleibt gleich.
-1D-Balkenquerschnitt: zₙ=Σ(EAz)/Σ(EA), EI=ΣE[Iₑ+A(z−zₙ)²]. Orthotrope Nachgiebigkeitsmatrix ist symmetrisch (νji=νij Ej/Ei) und muss positiv definit sein. Der Balken setzt ebene vertikale Biegung voraus und erfasst keine Biege-Torsionskopplung; diese Einschränkung gilt nicht als Vorgabe für die räumliche FEM. Ein Verbinder wird ohne bestätigten Schub-/Momentenübertragungsmechanismus nicht addiert.
+Fall A verwendet abschnittsweise konstante ganze Lagenzahlen [xᵢ,xᵢ₊₁); der Spitzenwert 0 beschreibt das Ende, kein endliches gurtloses Intervall. Breiten und Höhen werden linear interpoliert. Fall B übernimmt nur die oberen/unteren Wurzellagen; restliche Geometrie bleibt gleich.
+1D-Balkenmodell: Für jeden Querschnitt wird berechnet, wo die neutrale Achse liegt, an der durch reine Biegung weder Zug noch Druck entsteht. Daraus wird die Biegesteifigkeit EI des gesamten Querschnitts bestimmt. Dabei zählen die Steifigkeit der einzelnen Materialien, ihre Querschnittsflächen und ihr Abstand zur neutralen Achse. Bei CFK werden die unterschiedlichen Materialeigenschaften längs und quer zur Faserrichtung berücksichtigt und auf physikalische Konsistenz geprüft. Das Balkenmodell beschreibt die vertikale Biegung; eine damit verbundene Verdrehung wird darin nicht erfasst. Die räumliche FEM hat diese Einschränkung nicht. Ein Verbinder wird erst als mittragend berücksichtigt, wenn geklärt ist, wie er Kräfte und Biegemomente überträgt.
 Flug: M(x)=∫ₓᴸq(s)(s−x)ds, κ=M/EI, θ=∫κdx und w=∫θdx. Krümmung wird innerhalb jedes diskreten Lagenintervalls einseitig mit Gaußquadratur integriert; kein Glätten der Steifigkeitssprünge. Zusätzlich eine an allen Geometrie- und Lagensprüngen segmentierte numerische Balkenlösung mit Gaußintegration. Positive Fluglast bedeutet positive Durchbiegung.
-Versuch: vollständiger Flügel, freie Überhänge und zentrale Last; die Wurzel bleibt beweglich. Der 1D-Balken verwendet zwei vertikale Punktauflager bei ±pL (oder expliziten Koordinaten). Die räumliche Lagerung wird separat durch test.fem_support_model festgelegt und im FEM-Abschnitt beschrieben. Bei bottom_contact_line werden nur die Unterseitenknoten auf einer Linie je Auflager vertikal fixiert; die konfigurierte 20-mm-Breite dient dann ausschließlich der Netzunterteilung.
-Dynamik: Euler-Bernoulli-Hermite-Elemente, konsistente verteilte Masse und separate Zentralmasse am beweglichen Wurzelknoten; optional Rotationsträgheit. Vollmodell erfasst symmetrische und antisymmetrische Biegemoden. Zentralmasse ist fest mitbewegend; lose aufgelegte Massen können Kontakt verlieren. Statische Versuchsmasse und dynamische Gesamtmasse werden nicht addiert.
-Rayleigh: statische Einheitslast-Biegelinie als zulässige Ansatzfunktion; ω²=φᵀKφ/(φᵀMφ). Effektive Masse m_eff=φᵀMφ/φ(0)². Der mit derselben Ansatzfunktion gebildete Feder-Masse-Wert ist mathematisch identisch und kein unabhängiger Genauigkeitsnachweis. Numerische Eigenwerte sind keine geschlossene Formel.
-Schub: optionaler Fluganteil ∫V/(κGA)dx wird separat ausgegeben. Versuch und Eigenwerte bleiben Euler-Bernoulli; keine behauptete Timoshenko-Validierung.
+Laborversuch: vollständiger Flügel, freie Überhänge und zentrale Last; die Wurzel bleibt beweglich. Der 1D-Balken verwendet zwei vertikale Punktauflager links und rechts von der Flügelmitte, jeweils im konfigurierten prozentualen Abstand der Halbspannweite. Die räumliche Lagerung wird separat durch test.fem_support_model festgelegt und im FEM-Abschnitt beschrieben. An jedem Auflager werden die Knoten auf einer quer über die Holm-Unterseite verlaufenden Linie in vertikaler Richtung festgehalten (Modellbezeichnung: bottom_contact_line). Damit wird verhindert, dass der Holm in der Simulation in Nickrichtung verkippt, also um die in Spannweitenrichtung verlaufende Holm-Längsachse kippt. Im praktischen Laborversuch wird diese Stabilisierung durch die Auflage über die Flügeltiefe und die geeignete Platzierung des Zusatzgewichts erreicht. Die konfigurierte 20-mm-Breite legt lediglich die Unterteilung des Rechennetzes um das Auflager fest; sie ist keine 20 mm breite, festgehaltene Auflagefläche.
+Dynamik: Euler-Bernoulli-Hermite-Elemente, konsistente verteilte Masse und separate Zentralmasse am beweglichen Wurzelknoten; optional Rotationsträgheit. Vollmodell erfasst symmetrische und antisymmetrische Biegemoden. Zentralmasse ist fest mitbewegend; lose aufgelegte Massen können Kontakt verlieren. Statische Laborversuchsmasse und dynamische Gesamtmasse werden nicht addiert.
+Abschätzung der Schwingungsfrequenz nach Rayleigh: Als vereinfachte Schwingungsform wird die Biegelinie verwendet, die eine mittige Kraft im Laborversuch erzeugt. Aus der Steifigkeit des Holms und der mitbewegten Masse wird dann die Frequenz abgeschätzt. Dabei wird berücksichtigt, dass sich die einzelnen Bereiche des Holms unterschiedlich stark bewegen und deshalb unterschiedlich zur Schwingung beitragen. Die ebenfalls angegebene Feder-Masse-Abschätzung verwendet dieselben Annahmen und liefert daher denselben Wert; sie ist keine unabhängige Kontrolle. Die genauere Eigenfrequenzberechnung bestimmt die Schwingungsformen und Frequenzen direkt aus dem Rechenmodell.
+Zusätzliche Verformung durch Schub: Neben der Biegung kann sich der Holm auch dadurch verformen, dass sich seine Querschnitte gegeneinander verschieben. Dieser zusätzliche Anteil kann für den Fluglastfall optional abgeschätzt und getrennt ausgegeben werden. In der 1D-Balkenrechnung für den Laborversuch und die Eigenfrequenzen wird dieser Anteil nicht berücksichtigt. Eine Überprüfung eines um Schubverformung erweiterten Balkenmodells ist damit nicht erfolgt.
 
 ## Variantenvergleich
 
@@ -254,17 +255,37 @@ Schub: optionaler Fluganteil ∫V/(κGA)dx wird separat ausgegeben. Versuch und 
 | 5 | 234.44 / symmetrisch | 237.64 / symmetrisch |
 | 6 | 458.4 / antisymmetrisch | 468.03 / antisymmetrisch |
 
-A: Test-Reaktionsrest 2.845e-07 N; Flugreaktion -1085.4 N, -670.83 Nm. Materialvolumen (Halbflügel) {'top': np.float64(3.3644115853658534e-05), 'bottom': np.float64(3.3644115853658534e-05), 'rear_core': np.float64(8.636594674624427e-05), 'rear_left_0': np.float64(2.1104350650477237e-06), 'rear_left_1': np.float64(2.1104350650477233e-06), 'rear_right_0': np.float64(2.110435065047723e-06), 'rear_right_1': np.float64(2.1104350650477254e-06), 'rear_bottom_0': np.float64(7.622633134389172e-07), 'rear_bottom_1': np.float64(7.622633134389173e-07), 'rear_top_0': np.float64(7.622633134389173e-07), 'rear_top_1': np.float64(7.622633134389172e-07), 'front_core': np.float64(5.077022657614689e-05), 'front_left_0': np.float64(1.561565983431138e-06), 'front_left_1': np.float64(1.561565983431149e-06), 'front_right_0': np.float64(1.5615659834311484e-06), 'front_right_1': np.float64(1.5615659834311363e-06), 'front_bottom_0': np.float64(5.146308559632856e-07), 'front_bottom_1': np.float64(5.146308559632854e-07), 'front_top_0': np.float64(5.146308559632854e-07), 'front_top_1': np.float64(5.146308559632856e-07)}. Max. Flugdurchbiegung 0.49986 m bei x=1.4 m.
-**Große Verformung: lineare Rechnung nur bedingt gültig; geometrisch nichtlineare FEM vergleichen.**
+**Kontrolle der Kräfte und Ergebnisse der linearen Balkenrechnung**
 
-B: Test-Reaktionsrest -5.961e-06 N; Flugreaktion -1085.4 N, -670.83 Nm. Materialvolumen (Halbflügel) {'top': np.float64(4.473455284552844e-05), 'bottom': np.float64(4.473455284552844e-05), 'rear_core': np.float64(8.096594674624434e-05), 'rear_left_0': np.float64(2.023735194429595e-06), 'rear_left_1': np.float64(2.0237351944295954e-06), 'rear_right_0': np.float64(2.023735194429594e-06), 'rear_right_1': np.float64(2.023735194429597e-06), 'rear_bottom_0': np.float64(7.622633134389175e-07), 'rear_bottom_1': np.float64(7.622633134389167e-07), 'rear_top_0': np.float64(7.622633134389167e-07), 'rear_top_1': np.float64(7.622633134389175e-07), 'front_core': np.float64(4.957022657614691e-05), 'front_left_0': np.float64(1.5309401612854913e-06), 'front_left_1': np.float64(1.5309401612855023e-06), 'front_right_0': np.float64(1.530940161285502e-06), 'front_right_1': np.float64(1.5309401612854898e-06), 'front_bottom_0': np.float64(5.146308559632857e-07), 'front_bottom_1': np.float64(5.14630855963285e-07), 'front_top_0': np.float64(5.14630855963285e-07), 'front_top_1': np.float64(5.146308559632857e-07)}. Max. Flugdurchbiegung 0.39128 m bei x=1.4 m.
-**Große Verformung: lineare Rechnung nur bedingt gültig; geometrisch nichtlineare FEM vergleichen.**
+Die Auflagerkräfte im Laborversuch und die Reaktionen an der Wurzel im Fluglastfall werden gegen die aufgebrachte Last geprüft. Der Reaktionsrest ist die verbleibende numerische Abweichung vom Kräftegleichgewicht.
+
+| Fall | Reaktionsrest Labor [N] | Gegenkraft Flug [N] | Gegenmoment Flug [N·m] | Flug-Spitzenweg [mm] |
+|---|---:|---:|---:|---:|
+| A | 2.845e-07 | 1085.4 | 670.83 | 499.9 |
+| B | -5.961e-06 | 1085.4 | 670.83 | 391.3 |
+
+Fall B biegt sich weniger, weil die UD-Lagenzahl an der Wurzel bis zur Flügelspitze beibehalten wird.
+
+**Einordnung:** Die Flugverformungen sind im Verhältnis zur Halbspannweite groß. Die lineare Rechnung berücksichtigt nicht, wie die veränderte Form das Tragverhalten beeinflusst. Die Werte sind deshalb zusammen mit der geometrisch nichtlinearen FEM und deren Abschlussstatus zu beurteilen.
+
+**Materialmengen je Halbflügel**
+
+Die Volumina bilden zusammen mit den Materialdichten die Grundlage der Massenberechnung. Die CFK-Wandbereiche um jeden Depronkern sind zusammengefasst.
+
+| Holmteil | Fall A [cm³] | Fall B [cm³] |
+|---|---:|---:|
+| Oberer UD-Gurt | 33.64 | 44.73 |
+| Unterer UD-Gurt | 33.64 | 44.73 |
+| Hinterer Depronkern | 86.37 | 80.97 |
+| CFK-Wände um den hinteren Kern | 11.49 | 11.14 |
+| Vorderer Depronkern | 50.77 | 49.57 |
+| CFK-Wände um den vorderen Kern | 8.30 | 8.18 |
 
 ## Räumliche FEM und Netzkonvergenz
 
-Aktives Biest-Schlauchmodell: keilförmige UD-Gurte mit gerader hinterer Kante, hinterer 5-mm-Depronkern bis x=1,40 m; Gurtbreite max(Excel-Keil, 6 mm) mit Knick bei x≈1,28618 m, vorderer bis x=0,70 m. Hintere Kernmitte y=3 mm; Verbindertasche 35 mm breit. Taschenlänge 0,14 m als Excel-basierte Annahme; vorderer Steg danach linear zur Keilkontur geführt. Idealer Verbund. Der Verbinder und seine Tasche werden als Lage-/Freiraumvorgabe dokumentiert, ohne unbelegten Steifigkeitsbeitrag. Jeder CFK-Schlauch besitzt zwei senkrechte Wände und obere/untere Abschnitte, jeweils max(R(x), 0,10 mm) als vorläufige Mindestwanddicke, in zwei halbe ±45°-Teilschichten zerlegt. Orientierungen beziehen sich auf die globale Spannweitenrichtung; die kleine lokale Schräglage des vorderen Stegs wird in der Faserorientierung vernachlässigt. Depron isotrop mit E=20 MPa, ν=0,30, ρ=40 kg/m³; CFK-Werte vorläufig. Der eigene strukturierte 3D-Netzgenerator erzeugt quadratische C3D20R-Hexaeder statt Gmsh-Tetraeder. Alle Materialgrenzen innerhalb eines Intervalls teilen Knoten. Nichtpassende Knoten an Lagensprüngen werden über quadratische Flächen-Verschiebungsinterpolation verbunden, ohne starre Lastspider; zusätzliche lokale Diskretisierungssteifigkeit ist durch Netzverfeinerung zu prüfen. Vorläufe mit linearen C3D8I-Elementen wurden wegen auffälliger lokaler Niedrigfrequenzformen verworfen und werden nicht als validierte Ergebnisse gezeigt.
+Aktives Biest-Schlauchmodell: keilförmige UD-Gurte mit gerader hinterer Kante, hinterer 5-mm-Depronkern bis x=1,40 m; Gurtbreite max(Excel-Keil, 6 mm) mit Knick bei x≈1,28618 m, vorderer bis x=0,70 m. Hintere Kernmitte y=3 mm; Verbindertasche 35 mm breit. Taschenlänge 0,14 m als Excel-basierte Annahme; vorderer Steg danach linear zur Keilkontur geführt. Idealer Verbund. Der Verbinder und seine Tasche werden als Lage-/Freiraumvorgabe dokumentiert, ohne unbelegten Steifigkeitsbeitrag. Jeder CFK-Schlauch besitzt zwei senkrechte Wände und obere/untere Abschnitte, jeweils max(R(x), 0,10 mm) als vorläufige Mindestwanddicke, in zwei halbe ±45°-Teilschichten zerlegt. Orientierungen beziehen sich auf die globale Spannweitenrichtung; die kleine lokale Schräglage des vorderen Stegs wird in der Faserorientierung vernachlässigt. Depron isotrop mit E=20 MPa, ν=0,30, ρ=40 kg/m³; CFK-Werte vorläufig. Der eigene strukturierte 3D-Netzgenerator erzeugt quadratische C3D20R-Hexaeder statt Gmsh-Tetraeder. Alle Materialgrenzen innerhalb eines Intervalls teilen Knoten. Nichtpassende Knoten an Lagensprüngen werden über quadratische Flächen-Verschiebungsinterpolation verbunden, ohne starre Lastspider; zusätzliche lokale Diskretisierungssteifigkeit ist durch Netzverfeinerung zu prüfen.
 CAD in mm; der strukturierte Netzgenerator arbeitet direkt in m. Solver: m, N, kg, s, Pa; Dichte kg/m³. E-Modul N/mm² aus Excel wird mit 10⁶ in Pa umgerechnet. UD-Gurtfaser entlang x; Schlauchfasern ±45° zur Spannweitenrichtung in der jeweiligen Wandebene. Ausgegebene σxx sind globale Längsspannungen, in der linearen Rechnung im UD-Gurt zugleich Fasernormalspannungen; bei großen nichtlinearen Rotationen ist diese Gleichsetzung nicht allgemein zulässig.
-Lasten werden über die Elementflächen in konsistente Knotenkräfte umgerechnet; kein starrer Lastspider. Auflagen beschränken vertikale Verschiebung auf unteren Flächenbändern; drei weitere skalare Bedingungen verhindern Starrkörperbewegungen in der Ebene. Zusätzliche Zentralmasse verteilt sich über das Lastband. Ein Band kann lokal steifer wirken als die idealisierte Balken-Punktauflage.
+Lasten werden über die Elementflächen in konsistente Knotenkräfte umgerechnet; kein starrer Lastspider. Die Auflagerbedingungen entsprechen dem konfigurierten Lagermodell; beim aktuellen Modell werden nur die unteren Kontaktlinien vertikal festgehalten. Drei weitere skalare Bedingungen verhindern Starrkörperbewegungen in der Ebene. Die zusätzliche Zentralmasse verteilt sich über das Lastband.
 Mindestens drei Netzfaktoren; relative Änderung zwischen den letzten zwei Stufen bezogen auf feinste Stufe. Räumliche Modalsuche liefert auch Quer-/Torsionsmoden; deren erste Frequenz darf erst nach Prüfung der Form einer vertikalen Balkenmode zugeordnet werden. Nichtlineare Statik wird separat gerechnet; Modalanalyse ist unbelastet linear, keine vorgespannte Analyse.
 
 Status: **ausgeführt**.
@@ -355,27 +376,25 @@ Frequenzvergleich erfordert Eigenformzuordnung. Die ausgewählte 3D-Form hat üb
 
 **Lesen:** Oben: eingespannter Halbflügel von 0 bis 1.4 m mit aufwärts gerichteter Fluglast. Unten: vollständiger Flügel mit beweglicher Mitte, zwei Auflagen bei ±0.896 m und zentraler Abwärtskraft.
 
-**Einordnung:** Die Flugeinspannung und die Versuchslager sind unterschiedliche Randbedingungen; ihre Verformungswerte sind nicht direkt vergleichbar. Das Bild zeigt das mechanische Prinzip. Die räumlichen Auflagerbedingungen sind im FEM-Abschnitt beschrieben. Bei bottom_contact_line werden nur Unterseitenknoten auf einer Linie je Auflager vertikal gehalten. Innere und obere Knoten bleiben vertikal frei; Biegeneigung und horizontales Gleiten werden zugelassen, abgesehen von der Starrkörperstabilisierung. Die Lagerung bleibt bilateral.
+**Einordnung:** Die Flugeinspannung und die Laborversuchslager sind unterschiedliche Randbedingungen; ihre Verformungswerte sind nicht direkt vergleichbar. Das Bild zeigt das mechanische Prinzip. Die räumlichen Auflagerbedingungen sind im FEM-Abschnitt beschrieben. Bei bottom_contact_line werden nur Unterseitenknoten auf einer Linie je Auflager vertikal gehalten. Innere und obere Knoten bleiben vertikal frei; Biegeneigung und horizontales Gleiten werden zugelassen, abgesehen von der Starrkörperstabilisierung. Die Lagerung bleibt bilateral.
 
 ### Balkenvergleich A/B: Steifigkeit, Masse und Verformung
 
 ![beam_comparison](images/beam_comparison.png)
 
 
-**Lesen:** Vier Teilbilder: oben links Biegesteifigkeit EI [N·m²], oben rechts längenbezogene Masse μ [kg/m], unten links Flugverformung w [mm], unten rechts Auflagenversuch w [mm]. x ist jeweils die Spannweitenkoordinate in m. Gepunktet: lineare 3D-FEM der feinsten abgeschlossenen Netzstufe, ohne Darstellungsfaktor. Die Linie ist das arithmetische Mittel der vertikalen Knotenverschiebungen je x-Querschnitt; das transparente Band zeigt deren Minimum bis Maximum (einschließlich Torsion und lokaler Verformung). Schwarze Punkte: Excel-Messungen des B-Modells, ΔHöhe an x=0 abwärts und ΔTip aufwärts; Vorzeichen gemäß YAML. Die Tip-Seite ist nur für die Darstellung als +L angenommen, da Excel keine Seite angibt.
+**Lesen:** Vier Teilbilder: oben links Biegesteifigkeit EI [N·m²], oben rechts längenbezogene Masse μ [kg/m], unten links Flugverformung w [mm] einschließlich der Excel-Näherung (schwarz strichpunktiert), unten rechts Laborversuch w [mm]. x ist jeweils die Spannweitenkoordinate in m.
 
-**Einordnung:** Lagenabstufungen erzeugen Sprünge in EI und μ bei A; das vordere Stegende bei 0,70 m erzeugt zusätzlich einen Übergang bei beiden Varianten. Mindestbreite und Mindestwanddicke ändern weitere Kurvensteigungen. B liegt außerhalb der Wurzel überwiegend höher: zusätzliche Masse erkauft zusätzliche Steifigkeit. Flugtip im Balken: A: 499.9 mm; B: 391.3 mm. Die gestrichelte Krümmungsintegration und die numerische Balkenlösung liegen fast übereinander; das ist eine interne Verfahrensprüfung, kein unabhängiger Bauteilnachweis. Im Versuch sinkt die Mitte ab (A: -5.641 mm; B: -4.95 mm); die freien Überhänge heben sich durch die Auflagerneigung. Die großen Flugverformungen verlangen eine nichtlineare Prüfung; ihr tatsächlicher Abschlussstatus steht im FEM-Abschnitt. Die FEM-Überlagerung verwendet dieselben Flug- beziehungsweise Versuchslasten. Unterschiede zum Balken können aus Schub, Torsion, örtlicher Querschnittsverformung und der räumlichen Lagerung stammen. Der Knotenmittelwert ist keine flächengewichtete Querschnittsverschiebung; das Band zeigt die Streuung innerhalb des Querschnitts. Nichtlineare Ergebnisse sind in dieser Überlagerung nicht enthalten. Das konfigurierte 2-%-Netzkonvergenzziel ist für die ausgewerteten Verschiebungen und sechs Eigenfrequenzen erreicht; dies belegt keine lokale Spannungskonvergenz. Messwerte sind unabhängig von den berechneten Kurven und wurden nicht zum Anpassen der Materialwerte verwendet. Die genaue Messposition über der Flächentiefe ist nicht dokumentiert; FEM-Knotenmittel und Tabellenwert im Taschenband sind daher nicht automatisch exakt dieselbe Messgröße.
+**Einordnung:** Lagenabstufungen erzeugen Sprünge in EI und μ bei A; das vordere Stegende bei 0,70 m erzeugt zusätzlich einen Übergang bei beiden Varianten. Mindestbreite und Mindestwanddicke ändern weitere Kurvensteigungen. B liegt außerhalb der Wurzel überwiegend höher: zusätzliche Masse erkauft zusätzliche Steifigkeit. Flugtip im Balken: A: 499.9 mm; B: 391.3 mm. Die schwarze strichpunktierte Kurve ergänzt die Excel-Näherung mit {model["reconstructed"]["excel_written_flight_root_EI_m"]*1000:.1f} mm Spitzenverformung. Dafür wird die Wurzelkrümmung über die Länge konstant angesetzt; die Verformung wächst quadratisch zur Spitze. Verwendet werden das Excel-Wurzelmoment bei Gleichlast und das korrigierte Excel-Wurzel-EI. Die gestrichelte Krümmungsintegration und die numerische Balkenlösung liegen fast übereinander; das ist eine interne Verfahrensprüfung, kein unabhängiger Bauteilnachweis. Im Laborversuch sinkt die Mitte ab (A: -5.641 mm; B: -4.95 mm); die freien Überhänge heben sich durch die Auflagerneigung. Die großen Flugverformungen verlangen eine nichtlineare Prüfung; ihr tatsächlicher Abschlussstatus steht im FEM-Abschnitt.
 
 ### Fluglast, Querkraft, Biegemoment und Krümmung
 
 ![loads](images/loads.png)
 
 
-**Lesen:** Oben links tiefenproportionale Streckenlast q(x) [N/m], oben rechts Querkraft V [N], unten links Moment M [N·m], unten rechts Krümmung κ=M/EI [1/m]. A/B haben dieselbe äußere Last; ihre Kurven können übereinanderliegen. Im Krümmungsdiagramm zusätzlich gestrichelt: lineare Flug-FEM A/B entlang der Mitte des hinteren Depronkerns bei y=3 mm, z=0. Durchgezogen: Balkenkrümmung M/EI. Kein Versuchslastfall.
+**Lesen:** Oben links tiefenproportionale Streckenlast q(x) [N/m], oben rechts Querkraft V [N], unten links Moment M [N·m], unten rechts Krümmung κ=M/EI [1/m]. A/B haben dieselbe äußere Last; ihre Kurven können übereinanderliegen.
 
-**Einordnung:** Die Last folgt der separat aus Excel importierten Flächentiefe, nicht der Gurtbreite: q(0)=958.3 N/m und q(L)=395.8 N/m. Das Integral beträgt unverändert 1085.4 N je Halbflügel. V und M fallen daher nicht mehr wie bei Gleichlast linear beziehungsweise rein quadratisch über die gesamte Spannweite ab; die abschnittsweise lineare Tiefenkontur erzeugt entsprechende Übergänge. Das Wurzelmoment beträgt 670.83 N·m, gegenüber 759.79 N·m bei der früheren Gleichlast. Unterschiede zwischen A/B entstehen in κ über EI, nicht in q, V oder M. Ein örtlich konstanter c_l ist eine Annahme; Randwirbel, Verwindung und lokale Profile sind nicht aerodynamisch gelöst. Die endliche Spitzenlast folgt dieser Annahme und ist keine behauptete reale Randwirbelverteilung. κ ist kein Festigkeitskriterium. Die FEM-Kurve ist die zweite Ableitung w′′ der tatsächlichen vertikalen Knotenverschiebungen auf dieser Linie. Sie wird durch lokale kubische Ausgleichspolynome über jeweils fünf benachbarte Stationen gewonnen; dadurch werden Netzrauschen und scharfe Übergänge geglättet. Die örtlich variable Auswertebreite steht zusammen mit Verschiebung und Krümmung in flight_rear_curvature_A.csv beziehungsweise flight_rear_curvature_B.csv. Dies ist eine lineare kinematische Linienkrümmung einschließlich örtlicher Schub-/Verformungseinflüsse, nicht direkt aus den Spannungen bestimmte reine Balkenbiegung. An Einspannung, Lagensprüngen und Endpunkten ist die Ableitung besonders empfindlich; lokale Krümmungskonvergenz wurde nicht nachgewiesen. Die große Flugverformung wird hier nicht geometrisch nichtlinear korrigiert; w′′ darf nicht als exakte geometrische Krümmung der stark verformten Linie gelesen werden. Die ersten und letzten zwei FEM-Stationen werden im Diagramm ausgelassen, weil dort der zentrierte Fünf-Punkte-Ansatz nicht verfügbar ist; ihre nicht zentrierten Schätzwerte bleiben in der CSV ausdrücklich mit interior_stencil=False markiert. Es wird kein FEM-Krümmungswert an der exakten Wurzel oder Spitze behauptet.
-
-[Krümmungsdaten A als CSV](flight_rear_curvature_A.csv) · [Krümmungsdaten B als CSV](flight_rear_curvature_B.csv).
+**Einordnung:** Die Last folgt der separat aus Excel importierten Flächentiefe, nicht der Gurtbreite: q(0)=958.3 N/m und q(L)=395.8 N/m. Das Integral beträgt unverändert 1085.4 N je Halbflügel. V und M fallen daher nicht mehr wie bei Gleichlast linear beziehungsweise rein quadratisch über die gesamte Spannweite ab; die abschnittsweise lineare Tiefenkontur erzeugt entsprechende Übergänge. Das Wurzelmoment beträgt 670,83 N·m. Unterschiede zwischen A/B entstehen in κ über EI, nicht in q, V oder M. Ein örtlich konstanter c_l ist eine Annahme; Randwirbel, Verwindung und lokale Profile sind nicht aerodynamisch gelöst. Die endliche Spitzenlast folgt dieser Annahme und ist keine behauptete reale Randwirbelverteilung. κ ist kein Festigkeitskriterium.
 
 ### Normierte Biegeeigenformen des 1D-Balkens
 
@@ -402,16 +421,26 @@ Frequenzvergleich erfordert Eigenformzuordnung. Die ausgewählte 3D-Form hat üb
 
 **Lesen:** Draufsicht, Wurzelquerschnitt und vergrößerter Spitzenquerschnitt B. Maßangaben sind maßgebend; die Gesamtzeichnung ist schematisch. Der hintere Steg läuft bis 1,40 m, der vordere bis 0,70 m.
 
-**Einordnung:** Die konstante 6-mm-Gurtbreite schafft Platz für den unverändert 5 mm breiten Kern und den CFK-Schlauch. Der Steg bleibt bis zur Spitze mit beiden Gurten verbunden; der frühere stegfreie Bereich entfällt. Die Mindestwanddicke 0,10 mm ist eine Annahme, kein aus Excel oder Messung bestätigter Fertigungswert. Diese Skizze erläutert Eingaben und enthält selbst kein Solverergebnis.
+**Einordnung:** Die konstante 6-mm-Gurtbreite schafft Platz für den unverändert 5 mm breiten Kern und den CFK-Schlauch. Der Steg bleibt bis zur Spitze mit beiden Gurten verbunden. Die Mindestwanddicke 0,10 mm ist eine Annahme, kein aus Excel oder Messung bestätigter Fertigungswert. Diese Skizze erläutert Eingaben und enthält selbst kein Solverergebnis.
 
 [Skizze als verlustfrei vergrößerbare SVG öffnen](images/stegannahmen.svg).
 
+
+## Messwerte und aktuelle FEM-Ergebnisse im Laborversuch
+
+
+**Messpunkte im Biegelinienplot (B-Modell):** Excel D146, ΔHöhe=6.7 mm als Absenkung an x=0; Excel D147, ΔTip=6.83 mm als Hebung am Tip. Die Darstellungsseite +L ist eine YAML-Annahme, keine in Excel dokumentierte Messseite. Die genaue Messposition über der Flächentiefe ist nicht dokumentiert; der FEM-Querschnittsmittelwert und die Wurzelauswertung im Taschenband sind nicht automatisch identisch mit dem Messpunkt. Die Werte sind kein automatischer Nachweis identischer Material-, Geometrie- und Lagerannahmen.
+
+| Variante | FEM Wurzel, Taschenmittel [mm] | FEM Tip links, oberer Gurt [mm] | FEM Tip rechts, oberer Gurt [mm] |
+|---|---:|---:|---:|
+| A | -6.21811 | 6.12389 | 6.12406 |
+| B | -5.36273 | 4.9235 | 4.92361 |
 
 ## Schwingungsmessung mit phyphox: z-Achse
 
 ### Kurzanleitung: Messung und CSV-Export
 
-1. **Aufbau vorbereiten:** Holm wie im gewuenschten Versuch lagern und belasten. Smartphone fest und ohne Spiel am Messort befestigen; seine z-Achse (senkrecht zum Display) muss in Schwingungsrichtung zeigen. Messort, Lagerung, Belastung sowie Telefonmasse und Befestigung notieren, da diese die Eigenfrequenz beeinflussen.
+1. **Aufbau vorbereiten:** Holm wie im gewuenschten Laborversuch lagern und belasten. Smartphone fest und ohne Spiel am Messort befestigen; seine z-Achse (senkrecht zum Display) muss in Schwingungsrichtung zeigen. Messort, Lagerung, Belastung sowie Telefonmasse und Befestigung notieren, da diese die Eigenfrequenz beeinflussen.
 2. **phyphox einstellen:** Das Experiment **"Beschleunigung ohne g" / "Acceleration (without g)"** oeffnen. Fuer diese Auswertung wird die z-Beschleunigung benoetigt. Vor jeder Wiederholung alte Messdaten loeschen bzw. eine neue Aufnahme beginnen.
 3. **Ausschwingen aufnehmen:** Mit der Starttaste starten, etwa 2 s Ruhe aufzeichnen, den Holm leicht auslenken und loslassen oder kurz anregen. Anschliessend frei ausschwingen lassen, ohne Holm oder Telefon zu beruehren. Nach etwa 15-20 s Ausschwingzeit die Aufnahme stoppen. Zwei bis drei getrennte Messungen erleichtern die Kontrolle der Wiederholbarkeit.
 4. **Als CSV exportieren:** Im Experimentmenue **"Daten exportieren" / "Export Data"** waehlen und **CSV mit Komma als Spaltentrenner und Dezimalpunkt** auswaehlen (englisch "CSV (Comma, decimal point)"). Ueber den Speichern-/Teilen-Dialog die Exportdatei auf dem Geraet sichern oder auf den Rechner Uebertragen; Menuebezeichnungen koennen je nach Betriebssystem abweichen.
@@ -464,26 +493,29 @@ Reproduzierbar mit `.venv/Scripts/python.exe tests/analyze_phyphox.py`. [Fitpara
 
 ## FEM-Anhänge
 
-**Geänderte Spitzengeometrie:** Hinterer Steg bis 1,40 m; Gurt mindestens 6 mm. Die CFK-Mindestwanddicke 0,10 mm bleibt eine Annahme. Die reale Flügelschale ist nicht enthalten. Frühere Messwerte dienen nur bei identischem tatsächlichem Bauzustand zur Validierung dieser neuen Variante.
-
-Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt wird in der JSON/CSV getrennt ausgewiesen. Die Versuchswurzel wird als Auswertegröße weiterhin über die obere Gurtfläche im 35-mm-Taschenbereich bei x=0 gemittelt; dies ist kein festgelegter Messpunkt. Versuchskraft und Schwingungsmasse werden bei load_region=rear_web auf der oberen Gurtfläche unmittelbar über dem hinteren Steg verteilt: x=-25 bis +25 mm, quer dazu über den 5-mm-Depronkern einschließlich beider CFK-Schlauchwände, Mittelpunkt y=3 mm zur hinteren Gurtkante. Die statische Gesamtkraft bleibt 37,278 N; die gesonderte Schwingungsmasse bleibt 5,58 kg und erzeugt keine zusätzliche statische Gewichtslast. Nichtlineare Statik wird für den großen Fluglastfall versucht; beim kleinen Auflagenversuch bleibt die Statik linear. [FEM-Ergebnistabelle als CSV](fem_summary.csv).
-
-**Versuchslagerung auf unteren Kontaktlinien:** Bei x=±0,896 m gilt u_z=0 ausschließlich für die Knoten auf der unteren Holmoberfläche, über deren Breite. Oberseite und innere Knoten werden nicht vertikal festgehalten. Benachbarte Querschnitte bleiben vertikal frei; die Biegeneigung und das horizontale Gleiten werden bis auf drei skalare Bedingungen zur Starrkörperstabilisierung zugelassen. Die Außenflügel setzen die Auflagerneigung fort. Die 20-mm-Unterteilung um die Auflage ist nur eine Netzunterteilung, keine fixierte Kontaktfläche. Diese bilaterale Kontaktlinie verhindert Abheben und kann Niederhaltekräfte übertragen; sie ist kein einseitiger Kontakt mit Abrollen und kein Nachweis realer Kontaktpressungen. Die reale Flügelschale fehlt weiterhin.
+Die wesentlichen Ergebnisse und Vergleiche stehen im Hauptteil oben. Der folgende Anhang dokumentiert die einzelnen FEM-Netzstufen, Verformungen, Spannungen und Schwingungsformen sowie die technischen Prüfungen und die Reproduzierbarkeit der Berechnung.
 
 
-### fem_sandwich_q20/A
+**Spitzengeometrie:** Hinterer Steg bis 1,40 m; Gurt mindestens 6 mm. Die CFK-Mindestwanddicke 0,10 mm bleibt eine Annahme. Die reale Flügelschale ist nicht enthalten. Für den Vergleich mit Messwerten müssen Bauzustand und Laborversuchsaufbau dem Modell entsprechen.
+
+Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt wird in der JSON/CSV getrennt ausgewiesen. Die Laborversuchswurzel wird als Auswertegröße weiterhin über die obere Gurtfläche im 35-mm-Taschenbereich bei x=0 gemittelt; dies ist kein festgelegter Messpunkt. Laborversuchskraft und Schwingungsmasse werden bei load_region=rear_web auf der oberen Gurtfläche unmittelbar über dem hinteren Steg verteilt: x=-25 bis +25 mm, quer dazu über den 5-mm-Depronkern einschließlich beider CFK-Schlauchwände, Mittelpunkt y=3 mm zur hinteren Gurtkante. Die statische Gesamtkraft bleibt 37,278 N; die gesonderte Schwingungsmasse bleibt 5,58 kg und erzeugt keine zusätzliche statische Gewichtslast. Nichtlineare Statik wird für den großen Fluglastfall versucht; beim kleinen Laborversuch bleibt die Statik linear. [FEM-Ergebnistabelle als CSV](fem_summary.csv).
+
+**Laborversuchslagerung auf unteren Kontaktlinien:** Bei x=±0,896 m gilt u_z=0 ausschließlich für die Knoten auf der unteren Holmoberfläche, über deren Breite. Oberseite und innere Knoten werden nicht vertikal festgehalten. Benachbarte Querschnitte bleiben vertikal frei; die Biegeneigung und das horizontale Gleiten werden bis auf drei skalare Bedingungen zur Starrkörperstabilisierung zugelassen. Die Außenflügel setzen die Auflagerneigung fort. Die 20-mm-Unterteilung um die Auflage ist nur eine Netzunterteilung, keine fixierte Kontaktfläche. Diese bilaterale Kontaktlinie verhindert Abheben und kann Niederhaltekräfte übertragen; sie ist kein einseitiger Kontakt mit Abrollen und kein Nachweis realer Kontaktpressungen. Die reale Flügelschale fehlt weiterhin.
+
+
+## FEM-Detailbilder – Fall A
 
 **FEM A: Netzkonvergenz**
 
 ![FEM A: Netzkonvergenz](fem_sandwich_q20/A/convergence.png)
 
 
-**Lesen:** Drei Teilbilder zeigen Flug-Spitzenverschiebung [m], Versuchswurzel [m] und ausgewählte Eigenfrequenz [Hz] gegen den Netzverfeinerungsfaktor. Faktor 3 ist das feinste Netz, keine physische Laststeigerung. Die y-Achsen sind unterschiedlich skaliert.
+**Lesen:** Drei Teilbilder zeigen Flug-Spitzenverschiebung [m], Laborversuchswurzel [m] und ausgewählte Eigenfrequenz [Hz] gegen den Netzverfeinerungsfaktor. Faktor 3 ist das feinste Netz, keine physische Laststeigerung. Die y-Achsen sind unterschiedlich skaliert.
 
-**Einordnung:** Änderung der letzten beiden Stufen, bezogen auf die feinste: Flugtip 0.503 %, Versuchswurzel 0.154 %, ausgewählte Biegemode 0.0651 %. Das konfigurierte Ziel ist erreicht. Der Frequenzgraph zeigt nur eine ausgewählte Form; für den Gesamtstatus werden alle sechs Frequenzen geprüft. Ein optisch flacher Verlauf beweist keine vollständige Konvergenz, insbesondere nicht für lokale Spannungen oder bei Modenwechseln.
+**Einordnung:** Änderung der letzten beiden Stufen, bezogen auf die feinste: Flugtip 0.503 %, Laborversuchswurzel 0.154 %, ausgewählte Biegemode 0.0651 %. Das konfigurierte Ziel ist erreicht. Der Frequenzgraph zeigt nur eine ausgewählte Form; für den Gesamtstatus werden alle sechs Frequenzen geprüft. Ein optisch flacher Verlauf beweist keine vollständige Konvergenz, insbesondere nicht für lokale Spannungen oder bei Modenwechseln.
 
 
-### fem_sandwich_q20/A/level_1/flight
+### Fall A – Netzstufe 1 – Fluglastfall
 
 **FEM A, Netz 1, Flug, linear: Verformung**
 
@@ -492,7 +524,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 526.8 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 526.8 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM A, Netz 1, Flug, linear: Verformung im Wurzeldetail**
 
@@ -501,7 +533,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 526.8 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 526.8 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM A, Netz 1, Flug, linear: Netz am Wurzeldetail**
 
@@ -546,7 +578,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
 **FEM A, Netz 1, Flug, linear: globale Längsspannung**
 
@@ -558,74 +590,74 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 **Einordnung:** Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Wegen der großen linearen Flugverformung sind auch diese Spannungen nur Ergebnisse des linearen Vergleichsmodells.
 
 
-### fem_sandwich_q20/A/level_1/test
+### Fall A – Netzstufe 1 – Laborversuch
 
-**FEM A, Netz 1, Auflagenversuch, linear: Verformung**
+**FEM A, Netz 1, Laborversuch, linear: Verformung**
 
-![FEM A, Netz 1, Auflagenversuch, linear: Verformung](fem_sandwich_q20/A/level_1/test/static_deformation.png)
+![FEM A, Netz 1, Laborversuch, linear: Verformung](fem_sandwich_q20/A/level_1/test/static_deformation.png)
 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.25 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.25 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM A, Netz 1, Auflagenversuch, linear: Verformung im Wurzeldetail**
+**FEM A, Netz 1, Laborversuch, linear: Verformung im Wurzeldetail**
 
-![FEM A, Netz 1, Auflagenversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/A/level_1/test/static_detail_deformation.png)
+![FEM A, Netz 1, Laborversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/A/level_1/test/static_detail_deformation.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.25 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.25 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM A, Netz 1, Auflagenversuch, linear: Netz am Wurzeldetail**
+**FEM A, Netz 1, Laborversuch, linear: Netz am Wurzeldetail**
 
-![FEM A, Netz 1, Auflagenversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/A/level_1/test/static_detail_mesh.png)
+![FEM A, Netz 1, Laborversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/A/level_1/test/static_detail_mesh.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 23,342 Knoten und 4,008 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Das Detail hilft, Last-/Lagerband und dünne Schichten zu erkennen; daraus folgt noch kein konvergierter örtlicher Spannungswert.
 
-**FEM A, Netz 1, Auflagenversuch, linear: Wurzeldetail des Modells**
+**FEM A, Netz 1, Laborversuch, linear: Wurzeldetail des Modells**
 
-![FEM A, Netz 1, Auflagenversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/A/level_1/test/static_detail_model.png)
+![FEM A, Netz 1, Laborversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/A/level_1/test/static_detail_model.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
 **Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Im Wurzelausschnitt ist vor allem die Trennung der beiden Stege wichtig; die 6-mm-Spitze ist hier nicht sichtbar. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM A, Netz 1, Auflagenversuch, linear: Längsspannung im Wurzeldetail**
+**FEM A, Netz 1, Laborversuch, linear: Längsspannung im Wurzeldetail**
 
-![FEM A, Netz 1, Auflagenversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/A/level_1/test/static_detail_stress_xx.png)
+![FEM A, Netz 1, Laborversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/A/level_1/test/static_detail_stress_xx.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
 
 **Einordnung:** Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Die ideale Verklebung und die jeweiligen Lagerbedingungen beeinflussen die örtliche Lastübertragung.
 
-**FEM A, Netz 1, Auflagenversuch, linear: Volumennetz**
+**FEM A, Netz 1, Laborversuch, linear: Volumennetz**
 
-![FEM A, Netz 1, Auflagenversuch, linear: Volumennetz](fem_sandwich_q20/A/level_1/test/static_mesh.png)
+![FEM A, Netz 1, Laborversuch, linear: Volumennetz](fem_sandwich_q20/A/level_1/test/static_mesh.png)
 
 
 **Lesen:** Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 23,342 Knoten und 4,008 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Die Modellabmessungen und Lasten sind auf den Netzstufen gleich; nur die Diskretisierung wird verfeinert.
 
-**FEM A, Netz 1, Auflagenversuch, linear: räumliches Modell**
+**FEM A, Netz 1, Laborversuch, linear: räumliches Modell**
 
-![FEM A, Netz 1, Auflagenversuch, linear: räumliches Modell](fem_sandwich_q20/A/level_1/test/static_model.png)
+![FEM A, Netz 1, Laborversuch, linear: räumliches Modell](fem_sandwich_q20/A/level_1/test/static_model.png)
 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM A, Netz 1, Auflagenversuch, linear: globale Längsspannung**
+**FEM A, Netz 1, Laborversuch, linear: globale Längsspannung**
 
-![FEM A, Netz 1, Auflagenversuch, linear: globale Längsspannung](fem_sandwich_q20/A/level_1/test/static_stress_xx.png)
+![FEM A, Netz 1, Laborversuch, linear: globale Längsspannung](fem_sandwich_q20/A/level_1/test/static_stress_xx.png)
 
 
 **Lesen:** Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
@@ -633,7 +665,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 **Einordnung:** Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Die ideale Verklebung und die jeweiligen Lagerbedingungen beeinflussen die örtliche Lastübertragung.
 
 
-### fem_sandwich_q20/A/level_3/flight
+### Fall A – Netzstufe 3 – Fluglastfall
 
 **FEM A, Netz 3, Flug, linear: Verformung**
 
@@ -642,7 +674,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 522.7 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 522.7 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM A, Netz 3, Flug, linear: Verformung im Wurzeldetail**
 
@@ -651,7 +683,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 522.7 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 522.7 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM A, Netz 3, Flug, linear: Netz am Wurzeldetail**
 
@@ -696,7 +728,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
 **FEM A, Netz 3, Flug, linear: globale Längsspannung**
 
@@ -708,128 +740,128 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 **Einordnung:** Der größte Betrag an Integrationspunkten im gesamten Modell beträgt 942.8 MPa; er kann außerhalb des Ausschnitts oder über der gemittelten Elementfarbskala liegen. Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Wegen der großen linearen Flugverformung sind auch diese Spannungen nur Ergebnisse des linearen Vergleichsmodells.
 
 
-### fem_sandwich_q20/A/level_3/test
+### Fall A – Netzstufe 3 – Laborversuch
 
-**FEM A, Netz 3, Auflagenversuch: Eigenform 1, 5.163 Hz**
+**FEM A, Netz 3, Laborversuch: Eigenform 1, 5.163 Hz**
 
-![FEM A, Netz 3, Auflagenversuch: Eigenform 1, 5.163 Hz](fem_sandwich_q20/A/level_3/test/mode_1.png)
+![FEM A, Netz 3, Laborversuch: Eigenform 1, 5.163 Hz](fem_sandwich_q20/A/level_3/test/mode_1.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-symmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 99.9 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist die im Konvergenzgraphen verwendete überwiegend vertikale Form. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM A, Netz 3, Auflagenversuch: Eigenform 2, 8.605 Hz**
+**FEM A, Netz 3, Laborversuch: Eigenform 2, 8.605 Hz**
 
-![FEM A, Netz 3, Auflagenversuch: Eigenform 2, 8.605 Hz](fem_sandwich_q20/A/level_3/test/mode_2.png)
+![FEM A, Netz 3, Laborversuch: Eigenform 2, 8.605 Hz](fem_sandwich_q20/A/level_3/test/mode_2.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-symmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 5.44 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM A, Netz 3, Auflagenversuch: Eigenform 3, 51.69 Hz**
+**FEM A, Netz 3, Laborversuch: Eigenform 3, 51.69 Hz**
 
-![FEM A, Netz 3, Auflagenversuch: Eigenform 3, 51.69 Hz](fem_sandwich_q20/A/level_3/test/mode_3.png)
+![FEM A, Netz 3, Laborversuch: Eigenform 3, 51.69 Hz](fem_sandwich_q20/A/level_3/test/mode_3.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-symmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 81.8 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM A, Netz 3, Auflagenversuch: Eigenform 4, 93.72 Hz**
+**FEM A, Netz 3, Laborversuch: Eigenform 4, 93.72 Hz**
 
-![FEM A, Netz 3, Auflagenversuch: Eigenform 4, 93.72 Hz](fem_sandwich_q20/A/level_3/test/mode_4.png)
+![FEM A, Netz 3, Laborversuch: Eigenform 4, 93.72 Hz](fem_sandwich_q20/A/level_3/test/mode_4.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist gemischt; der rechnerische Anteil Σuz²/Σ|u|² beträgt 79.2 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM A, Netz 3, Auflagenversuch: Eigenform 5, 97.07 Hz**
+**FEM A, Netz 3, Laborversuch: Eigenform 5, 97.07 Hz**
 
-![FEM A, Netz 3, Auflagenversuch: Eigenform 5, 97.07 Hz](fem_sandwich_q20/A/level_3/test/mode_5.png)
+![FEM A, Netz 3, Laborversuch: Eigenform 5, 97.07 Hz](fem_sandwich_q20/A/level_3/test/mode_5.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist gemischt; der rechnerische Anteil Σuz²/Σ|u|² beträgt 38.4 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM A, Netz 3, Auflagenversuch: Eigenform 6, 123.2 Hz**
+**FEM A, Netz 3, Laborversuch: Eigenform 6, 123.2 Hz**
 
-![FEM A, Netz 3, Auflagenversuch: Eigenform 6, 123.2 Hz](fem_sandwich_q20/A/level_3/test/mode_6.png)
+![FEM A, Netz 3, Laborversuch: Eigenform 6, 123.2 Hz](fem_sandwich_q20/A/level_3/test/mode_6.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist gemischt; der rechnerische Anteil Σuz²/Σ|u|² beträgt 0.452 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM A, Netz 3, Auflagenversuch, linear: Verformung**
+**FEM A, Netz 3, Laborversuch, linear: Verformung**
 
-![FEM A, Netz 3, Auflagenversuch, linear: Verformung](fem_sandwich_q20/A/level_3/test/static_deformation.png)
+![FEM A, Netz 3, Laborversuch, linear: Verformung](fem_sandwich_q20/A/level_3/test/static_deformation.png)
 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.218 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.218 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM A, Netz 3, Auflagenversuch, linear: Verformung im Wurzeldetail**
+**FEM A, Netz 3, Laborversuch, linear: Verformung im Wurzeldetail**
 
-![FEM A, Netz 3, Auflagenversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/A/level_3/test/static_detail_deformation.png)
+![FEM A, Netz 3, Laborversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/A/level_3/test/static_detail_deformation.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.218 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -6.218 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM A, Netz 3, Auflagenversuch, linear: Netz am Wurzeldetail**
+**FEM A, Netz 3, Laborversuch, linear: Netz am Wurzeldetail**
 
-![FEM A, Netz 3, Auflagenversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/A/level_3/test/static_detail_mesh.png)
+![FEM A, Netz 3, Laborversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/A/level_3/test/static_detail_mesh.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 67,528 Knoten und 12,434 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Das Detail hilft, Last-/Lagerband und dünne Schichten zu erkennen; daraus folgt noch kein konvergierter örtlicher Spannungswert.
 
-**FEM A, Netz 3, Auflagenversuch, linear: Wurzeldetail des Modells**
+**FEM A, Netz 3, Laborversuch, linear: Wurzeldetail des Modells**
 
-![FEM A, Netz 3, Auflagenversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/A/level_3/test/static_detail_model.png)
+![FEM A, Netz 3, Laborversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/A/level_3/test/static_detail_model.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
 **Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Im Wurzelausschnitt ist vor allem die Trennung der beiden Stege wichtig; die 6-mm-Spitze ist hier nicht sichtbar. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM A, Netz 3, Auflagenversuch, linear: Längsspannung im Wurzeldetail**
+**FEM A, Netz 3, Laborversuch, linear: Längsspannung im Wurzeldetail**
 
-![FEM A, Netz 3, Auflagenversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/A/level_3/test/static_detail_stress_xx.png)
+![FEM A, Netz 3, Laborversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/A/level_3/test/static_detail_stress_xx.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
 
 **Einordnung:** Der größte Betrag an Integrationspunkten im gesamten Modell beträgt 23.88 MPa; er kann außerhalb des Ausschnitts oder über der gemittelten Elementfarbskala liegen. Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Die ideale Verklebung und die jeweiligen Lagerbedingungen beeinflussen die örtliche Lastübertragung.
 
-**FEM A, Netz 3, Auflagenversuch, linear: Volumennetz**
+**FEM A, Netz 3, Laborversuch, linear: Volumennetz**
 
-![FEM A, Netz 3, Auflagenversuch, linear: Volumennetz](fem_sandwich_q20/A/level_3/test/static_mesh.png)
+![FEM A, Netz 3, Laborversuch, linear: Volumennetz](fem_sandwich_q20/A/level_3/test/static_mesh.png)
 
 
 **Lesen:** Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 67,528 Knoten und 12,434 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Die Modellabmessungen und Lasten sind auf den Netzstufen gleich; nur die Diskretisierung wird verfeinert.
 
-**FEM A, Netz 3, Auflagenversuch, linear: räumliches Modell**
+**FEM A, Netz 3, Laborversuch, linear: räumliches Modell**
 
-![FEM A, Netz 3, Auflagenversuch, linear: räumliches Modell](fem_sandwich_q20/A/level_3/test/static_model.png)
+![FEM A, Netz 3, Laborversuch, linear: räumliches Modell](fem_sandwich_q20/A/level_3/test/static_model.png)
 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM A, Netz 3, Auflagenversuch, linear: globale Längsspannung**
+**FEM A, Netz 3, Laborversuch, linear: globale Längsspannung**
 
-![FEM A, Netz 3, Auflagenversuch, linear: globale Längsspannung](fem_sandwich_q20/A/level_3/test/static_stress_xx.png)
+![FEM A, Netz 3, Laborversuch, linear: globale Längsspannung](fem_sandwich_q20/A/level_3/test/static_stress_xx.png)
 
 
 **Lesen:** Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
@@ -837,19 +869,19 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 **Einordnung:** Der größte Betrag an Integrationspunkten im gesamten Modell beträgt 23.88 MPa; er kann außerhalb des Ausschnitts oder über der gemittelten Elementfarbskala liegen. Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Die ideale Verklebung und die jeweiligen Lagerbedingungen beeinflussen die örtliche Lastübertragung.
 
 
-### fem_sandwich_q20/B
+## FEM-Detailbilder – Fall B
 
 **FEM B: Netzkonvergenz**
 
 ![FEM B: Netzkonvergenz](fem_sandwich_q20/B/convergence.png)
 
 
-**Lesen:** Drei Teilbilder zeigen Flug-Spitzenverschiebung [m], Versuchswurzel [m] und ausgewählte Eigenfrequenz [Hz] gegen den Netzverfeinerungsfaktor. Faktor 3 ist das feinste Netz, keine physische Laststeigerung. Die y-Achsen sind unterschiedlich skaliert.
+**Lesen:** Drei Teilbilder zeigen Flug-Spitzenverschiebung [m], Laborversuchswurzel [m] und ausgewählte Eigenfrequenz [Hz] gegen den Netzverfeinerungsfaktor. Faktor 3 ist das feinste Netz, keine physische Laststeigerung. Die y-Achsen sind unterschiedlich skaliert.
 
-**Einordnung:** Änderung der letzten beiden Stufen, bezogen auf die feinste: Flugtip 0.574 %, Versuchswurzel 0.246 %, ausgewählte Biegemode 0.0939 %. Das konfigurierte Ziel ist erreicht. Der Frequenzgraph zeigt nur eine ausgewählte Form; für den Gesamtstatus werden alle sechs Frequenzen geprüft. Ein optisch flacher Verlauf beweist keine vollständige Konvergenz, insbesondere nicht für lokale Spannungen oder bei Modenwechseln.
+**Einordnung:** Änderung der letzten beiden Stufen, bezogen auf die feinste: Flugtip 0.574 %, Laborversuchswurzel 0.246 %, ausgewählte Biegemode 0.0939 %. Das konfigurierte Ziel ist erreicht. Der Frequenzgraph zeigt nur eine ausgewählte Form; für den Gesamtstatus werden alle sechs Frequenzen geprüft. Ein optisch flacher Verlauf beweist keine vollständige Konvergenz, insbesondere nicht für lokale Spannungen oder bei Modenwechseln.
 
 
-### fem_sandwich_q20/B/level_1/flight
+### Fall B – Netzstufe 1 – Fluglastfall
 
 **FEM B, Netz 1, Flug, geometrisch nichtlinear: Verformung**
 
@@ -858,7 +890,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 472 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Geometrisch nichtlinearer Vergleich auf dieser Netzstufe; kein netzkonvergierter nichtlinearer oder CFK-Festigkeitsnachweis.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 472 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Geometrisch nichtlinearer Vergleich auf dieser Netzstufe; kein netzkonvergierter nichtlinearer oder CFK-Festigkeitsnachweis.
 
 **FEM B, Netz 1, Flug, geometrisch nichtlinear: Verformung im Wurzeldetail**
 
@@ -867,7 +899,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 472 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Geometrisch nichtlinearer Vergleich auf dieser Netzstufe; kein netzkonvergierter nichtlinearer oder CFK-Festigkeitsnachweis.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 472 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Geometrisch nichtlinearer Vergleich auf dieser Netzstufe; kein netzkonvergierter nichtlinearer oder CFK-Festigkeitsnachweis.
 
 **FEM B, Netz 1, Flug, geometrisch nichtlinear: Netz am Wurzeldetail**
 
@@ -912,7 +944,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
 **FEM B, Netz 1, Flug, geometrisch nichtlinear: globale Längsspannung**
 
@@ -930,7 +962,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 410.4 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 410.4 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM B, Netz 1, Flug, linear: Verformung im Wurzeldetail**
 
@@ -939,7 +971,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 410.4 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 410.4 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM B, Netz 1, Flug, linear: Netz am Wurzeldetail**
 
@@ -984,7 +1016,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
 **FEM B, Netz 1, Flug, linear: globale Längsspannung**
 
@@ -996,74 +1028,74 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 **Einordnung:** Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Wegen der großen linearen Flugverformung sind auch diese Spannungen nur Ergebnisse des linearen Vergleichsmodells.
 
 
-### fem_sandwich_q20/B/level_1/test
+### Fall B – Netzstufe 1 – Laborversuch
 
-**FEM B, Netz 1, Auflagenversuch, linear: Verformung**
+**FEM B, Netz 1, Laborversuch, linear: Verformung**
 
-![FEM B, Netz 1, Auflagenversuch, linear: Verformung](fem_sandwich_q20/B/level_1/test/static_deformation.png)
+![FEM B, Netz 1, Laborversuch, linear: Verformung](fem_sandwich_q20/B/level_1/test/static_deformation.png)
 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.389 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.389 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM B, Netz 1, Auflagenversuch, linear: Verformung im Wurzeldetail**
+**FEM B, Netz 1, Laborversuch, linear: Verformung im Wurzeldetail**
 
-![FEM B, Netz 1, Auflagenversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/B/level_1/test/static_detail_deformation.png)
+![FEM B, Netz 1, Laborversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/B/level_1/test/static_detail_deformation.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.389 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.389 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM B, Netz 1, Auflagenversuch, linear: Netz am Wurzeldetail**
+**FEM B, Netz 1, Laborversuch, linear: Netz am Wurzeldetail**
 
-![FEM B, Netz 1, Auflagenversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/B/level_1/test/static_detail_mesh.png)
+![FEM B, Netz 1, Laborversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/B/level_1/test/static_detail_mesh.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 20,744 Knoten und 3,958 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Das Detail hilft, Last-/Lagerband und dünne Schichten zu erkennen; daraus folgt noch kein konvergierter örtlicher Spannungswert.
 
-**FEM B, Netz 1, Auflagenversuch, linear: Wurzeldetail des Modells**
+**FEM B, Netz 1, Laborversuch, linear: Wurzeldetail des Modells**
 
-![FEM B, Netz 1, Auflagenversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/B/level_1/test/static_detail_model.png)
+![FEM B, Netz 1, Laborversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/B/level_1/test/static_detail_model.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
 **Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Im Wurzelausschnitt ist vor allem die Trennung der beiden Stege wichtig; die 6-mm-Spitze ist hier nicht sichtbar. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM B, Netz 1, Auflagenversuch, linear: Längsspannung im Wurzeldetail**
+**FEM B, Netz 1, Laborversuch, linear: Längsspannung im Wurzeldetail**
 
-![FEM B, Netz 1, Auflagenversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/B/level_1/test/static_detail_stress_xx.png)
+![FEM B, Netz 1, Laborversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/B/level_1/test/static_detail_stress_xx.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
 
 **Einordnung:** Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Die ideale Verklebung und die jeweiligen Lagerbedingungen beeinflussen die örtliche Lastübertragung.
 
-**FEM B, Netz 1, Auflagenversuch, linear: Volumennetz**
+**FEM B, Netz 1, Laborversuch, linear: Volumennetz**
 
-![FEM B, Netz 1, Auflagenversuch, linear: Volumennetz](fem_sandwich_q20/B/level_1/test/static_mesh.png)
+![FEM B, Netz 1, Laborversuch, linear: Volumennetz](fem_sandwich_q20/B/level_1/test/static_mesh.png)
 
 
 **Lesen:** Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 20,744 Knoten und 3,958 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Die Modellabmessungen und Lasten sind auf den Netzstufen gleich; nur die Diskretisierung wird verfeinert.
 
-**FEM B, Netz 1, Auflagenversuch, linear: räumliches Modell**
+**FEM B, Netz 1, Laborversuch, linear: räumliches Modell**
 
-![FEM B, Netz 1, Auflagenversuch, linear: räumliches Modell](fem_sandwich_q20/B/level_1/test/static_model.png)
+![FEM B, Netz 1, Laborversuch, linear: räumliches Modell](fem_sandwich_q20/B/level_1/test/static_model.png)
 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM B, Netz 1, Auflagenversuch, linear: globale Längsspannung**
+**FEM B, Netz 1, Laborversuch, linear: globale Längsspannung**
 
-![FEM B, Netz 1, Auflagenversuch, linear: globale Längsspannung](fem_sandwich_q20/B/level_1/test/static_stress_xx.png)
+![FEM B, Netz 1, Laborversuch, linear: globale Längsspannung](fem_sandwich_q20/B/level_1/test/static_stress_xx.png)
 
 
 **Lesen:** Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
@@ -1071,7 +1103,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 **Einordnung:** Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Die ideale Verklebung und die jeweiligen Lagerbedingungen beeinflussen die örtliche Lastübertragung.
 
 
-### fem_sandwich_q20/B/level_3/flight
+### Fall B – Netzstufe 3 – Fluglastfall
 
 **FEM B, Netz 3, Flug, linear: Verformung**
 
@@ -1080,7 +1112,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 407.3 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 407.3 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM B, Netz 3, Flug, linear: Verformung im Wurzeldetail**
 
@@ -1089,7 +1121,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 407.3 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam; der alte freie Gurtauslauf ist beseitigt. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
+**Einordnung:** Die obere Flugtip-Verschiebung uz beträgt 407.3 mm. Ober- und Untergurt bewegen sich durch den durchgehenden Steg gemeinsam. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die lineare Flugverformung ist groß relativ zur Halbspannweite. Der Abschlussstatus der nichtlinearen Vergleichsläufe steht oben; der lineare Wert ist kein bestätigter realer Flugzustand.
 
 **FEM B, Netz 3, Flug, linear: Netz am Wurzeldetail**
 
@@ -1134,7 +1166,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
 **FEM B, Netz 3, Flug, linear: globale Längsspannung**
 
@@ -1146,128 +1178,128 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 **Einordnung:** Der größte Betrag an Integrationspunkten im gesamten Modell beträgt 777.6 MPa; er kann außerhalb des Ausschnitts oder über der gemittelten Elementfarbskala liegen. Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Wegen der großen linearen Flugverformung sind auch diese Spannungen nur Ergebnisse des linearen Vergleichsmodells.
 
 
-### fem_sandwich_q20/B/level_3/test
+### Fall B – Netzstufe 3 – Laborversuch
 
-**FEM B, Netz 3, Auflagenversuch: Eigenform 1, 5.535 Hz**
+**FEM B, Netz 3, Laborversuch: Eigenform 1, 5.535 Hz**
 
-![FEM B, Netz 3, Auflagenversuch: Eigenform 1, 5.535 Hz](fem_sandwich_q20/B/level_3/test/mode_1.png)
+![FEM B, Netz 3, Laborversuch: Eigenform 1, 5.535 Hz](fem_sandwich_q20/B/level_3/test/mode_1.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-symmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 99.9 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist die im Konvergenzgraphen verwendete überwiegend vertikale Form. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM B, Netz 3, Auflagenversuch: Eigenform 2, 9.522 Hz**
+**FEM B, Netz 3, Laborversuch: Eigenform 2, 9.522 Hz**
 
-![FEM B, Netz 3, Auflagenversuch: Eigenform 2, 9.522 Hz](fem_sandwich_q20/B/level_3/test/mode_2.png)
+![FEM B, Netz 3, Laborversuch: Eigenform 2, 9.522 Hz](fem_sandwich_q20/B/level_3/test/mode_2.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-symmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 5.04 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM B, Netz 3, Auflagenversuch: Eigenform 3, 55.82 Hz**
+**FEM B, Netz 3, Laborversuch: Eigenform 3, 55.82 Hz**
 
-![FEM B, Netz 3, Auflagenversuch: Eigenform 3, 55.82 Hz](fem_sandwich_q20/B/level_3/test/mode_3.png)
+![FEM B, Netz 3, Laborversuch: Eigenform 3, 55.82 Hz](fem_sandwich_q20/B/level_3/test/mode_3.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-symmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 83.2 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM B, Netz 3, Auflagenversuch: Eigenform 4, 92.16 Hz**
+**FEM B, Netz 3, Laborversuch: Eigenform 4, 92.16 Hz**
 
-![FEM B, Netz 3, Auflagenversuch: Eigenform 4, 92.16 Hz](fem_sandwich_q20/B/level_3/test/mode_4.png)
+![FEM B, Netz 3, Laborversuch: Eigenform 4, 92.16 Hz](fem_sandwich_q20/B/level_3/test/mode_4.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-antisymmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 99.4 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM B, Netz 3, Auflagenversuch: Eigenform 5, 102.1 Hz**
+**FEM B, Netz 3, Laborversuch: Eigenform 5, 102.1 Hz**
 
-![FEM B, Netz 3, Auflagenversuch: Eigenform 5, 102.1 Hz](fem_sandwich_q20/B/level_3/test/mode_5.png)
+![FEM B, Netz 3, Laborversuch: Eigenform 5, 102.1 Hz](fem_sandwich_q20/B/level_3/test/mode_5.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist gemischt; der rechnerische Anteil Σuz²/Σ|u|² beträgt 9.49 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM B, Netz 3, Auflagenversuch: Eigenform 6, 115.2 Hz**
+**FEM B, Netz 3, Laborversuch: Eigenform 6, 115.2 Hz**
 
-![FEM B, Netz 3, Auflagenversuch: Eigenform 6, 115.2 Hz](fem_sandwich_q20/B/level_3/test/mode_6.png)
+![FEM B, Netz 3, Laborversuch: Eigenform 6, 115.2 Hz](fem_sandwich_q20/B/level_3/test/mode_6.png)
 
 
 **Lesen:** Seitenprojektion in die x-z-Ebene. Schwarze Punkte: unverformtes Netz; farbige Fläche: Eigenform mit willkürlich gewählter Darstellungsamplitude. Die Farbskala φz/max|φz| ist dimensionslos; die Achsen geben die gezeichneten Koordinaten in m an.
 
 **Einordnung:** Diese Form ist quasi-symmetrisch; der rechnerische Anteil Σuz²/Σ|u|² beträgt 84 %. Das ist eine Verschiebungskennzahl, keine effektive Modalmasse oder Energiequote. Sie ist eine weitere räumliche Eigenform und nicht automatisch die gleich nummerierte Balkenmode. Formen mit ähnlicher Frequenz können sich bei Netzänderung mischen oder die Reihenfolge wechseln. Die 2D-Projektion zeigt seitliche Bewegung und Torsion nur eingeschränkt. Weder Amplitude noch Vorzeichen sagen eine reale Schwingungsantwort voraus; die Modalanalyse ist unbelastet und linear.
 
-**FEM B, Netz 3, Auflagenversuch, linear: Verformung**
+**FEM B, Netz 3, Laborversuch, linear: Verformung**
 
-![FEM B, Netz 3, Auflagenversuch, linear: Verformung](fem_sandwich_q20/B/level_3/test/static_deformation.png)
+![FEM B, Netz 3, Laborversuch, linear: Verformung](fem_sandwich_q20/B/level_3/test/static_deformation.png)
 
 
 **Lesen:** Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.363 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.363 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM B, Netz 3, Auflagenversuch, linear: Verformung im Wurzeldetail**
+**FEM B, Netz 3, Laborversuch, linear: Verformung im Wurzeldetail**
 
-![FEM B, Netz 3, Auflagenversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/B/level_3/test/static_detail_deformation.png)
+![FEM B, Netz 3, Laborversuch, linear: Verformung im Wurzeldetail](fem_sandwich_q20/B/level_3/test/static_detail_deformation.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Grau: unverformte Lage; farbig: verformte Oberfläche mit dem im Bild genannten Faktor. Achsen sind mm. Die Farbe zeigt den realen Betrag |u| [mm], nicht die mit dem Darstellungsfaktor multiplizierte Auslenkung und nicht nur die vertikale Komponente.
 
-**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.363 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Versuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Kontaktversuch und kein Nachweis realer Kontaktpressungen.
+**Einordnung:** Die gemittelte vertikale Wurzelverschiebung im Taschenband beträgt -5.363 mm. Die Mitte sinkt ab, freie Überhänge können sich heben. Der größte räumliche Verschiebungsbetrag muss nicht an der Wurzel liegen und darf nicht mit diesem Tabellenwert gleichgesetzt werden. Der Wurzelausschnitt zeigt vor allem lokale Bewegungen und nicht den Verlauf bis zur Spitze. Die Laborversuchslager sind bilateral. Die aktive Lageridealisation ist im FEM-Abschnitt dokumentiert. Bei bottom_contact_line sind nur die Unterseitenknoten auf einer Kontaktlinie vertikal gehalten; die übrigen Querschnittsknoten bleiben vertikal frei und die Außenflügel können die Biegeneigung fortsetzen. Dies ist kein einseitiger Laborversuch mit Kontakt und kein Nachweis realer Kontaktpressungen.
 
-**FEM B, Netz 3, Auflagenversuch, linear: Netz am Wurzeldetail**
+**FEM B, Netz 3, Laborversuch, linear: Netz am Wurzeldetail**
 
-![FEM B, Netz 3, Auflagenversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/B/level_3/test/static_detail_mesh.png)
+![FEM B, Netz 3, Laborversuch, linear: Netz am Wurzeldetail](fem_sandwich_q20/B/level_3/test/static_detail_mesh.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 63,832 Knoten und 12,294 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Das Detail hilft, Last-/Lagerband und dünne Schichten zu erkennen; daraus folgt noch kein konvergierter örtlicher Spannungswert.
 
-**FEM B, Netz 3, Auflagenversuch, linear: Wurzeldetail des Modells**
+**FEM B, Netz 3, Laborversuch, linear: Wurzeldetail des Modells**
 
-![FEM B, Netz 3, Auflagenversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/B/level_3/test/static_detail_model.png)
+![FEM B, Netz 3, Laborversuch, linear: Wurzeldetail des Modells](fem_sandwich_q20/B/level_3/test/static_detail_model.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
 **Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Im Wurzelausschnitt ist vor allem die Trennung der beiden Stege wichtig; die 6-mm-Spitze ist hier nicht sichtbar. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM B, Netz 3, Auflagenversuch, linear: Längsspannung im Wurzeldetail**
+**FEM B, Netz 3, Laborversuch, linear: Längsspannung im Wurzeldetail**
 
-![FEM B, Netz 3, Auflagenversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/B/level_3/test/static_detail_stress_xx.png)
+![FEM B, Netz 3, Laborversuch, linear: Längsspannung im Wurzeldetail](fem_sandwich_q20/B/level_3/test/static_detail_stress_xx.png)
 
 
 **Lesen:** Wurzelausschnitt derselben Rechnung; keine zusätzliche Laststufe. Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
 
 **Einordnung:** Der größte Betrag an Integrationspunkten im gesamten Modell beträgt 23.89 MPa; er kann außerhalb des Ausschnitts oder über der gemittelten Elementfarbskala liegen. Die gegensinnigen Normalspannungen in Ober- und Untergurt kennzeichnen Biegung. Im unverformten UD-Gurt verläuft die Faserrichtung entlang x. Bei großen nichtlinearen Rotationen ist globales σxx auch dort nicht automatisch die lokale Faserspannung. Im ±45°-Schlauch ist σxx keine lokale Faserspannung und zeigt auch nicht die gesamte Schubbeanspruchung. Lokale Spitzen an Lagensprüngen, Lasten und Lagern sind netzabhängig. Es fehlen CFK-Festigkeitswerte sowie Klebe-, Delaminations- und Beulnachweise; die Farben bedeuten weder sicher noch gebrochen. Die ideale Verklebung und die jeweiligen Lagerbedingungen beeinflussen die örtliche Lastübertragung.
 
-**FEM B, Netz 3, Auflagenversuch, linear: Volumennetz**
+**FEM B, Netz 3, Laborversuch, linear: Volumennetz**
 
-![FEM B, Netz 3, Auflagenversuch, linear: Volumennetz](fem_sandwich_q20/B/level_3/test/static_mesh.png)
+![FEM B, Netz 3, Laborversuch, linear: Volumennetz](fem_sandwich_q20/B/level_3/test/static_mesh.png)
 
 
 **Lesen:** Gezeigt wird die sichtbare Oberfläche des 3D-Netzes mit insgesamt 63,832 Knoten und 12,294 quadratischen C3D20R-Volumenelementen. Achsen in mm; sichtbare Dreieckslinien stammen auch aus der Darstellung der Elementflächen und sind keine Tetraederelemente.
 
 **Einordnung:** Die schmalen CFK-Schichten erzeugen stark unterschiedliche Elementabmessungen. Feinere Netze prüfen deren Einfluss; eine dichte Oberfläche allein beweist keine Genauigkeit. Innerhalb der Abschnitte teilen Materialien Knoten, an Lagensprüngen verbinden interpolierende Gleichungen nichtpassende Flächen. Die Modellabmessungen und Lasten sind auf den Netzstufen gleich; nur die Diskretisierung wird verfeinert.
 
-**FEM B, Netz 3, Auflagenversuch, linear: räumliches Modell**
+**FEM B, Netz 3, Laborversuch, linear: räumliches Modell**
 
-![FEM B, Netz 3, Auflagenversuch, linear: räumliches Modell](fem_sandwich_q20/B/level_3/test/static_model.png)
+![FEM B, Netz 3, Laborversuch, linear: räumliches Modell](fem_sandwich_q20/B/level_3/test/static_model.png)
 
 
 **Lesen:** Geometrie aus den tatsächlichen CAD-Eingaben; Achsen in mm. Blau sind die Gurte, grau die CFK-Schläuche, beige die Depronkerne. Verdeckte Innenflächen können in der Außenansicht unsichtbar sein.
 
-**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
+**Einordnung:** Hier wird die angenommene Bauweise kontrolliert, nicht die Beanspruchung: gerader hinterer Steg bis zur Spitze, vorderer Steg nur im inneren Bereich, diskrete Gurtdicken in A beziehungsweise durchgehende Wurzellagen in B. Die äußere Mindestgurtbreite beträgt 6 mm; der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze. Flügelschale und ein nachgewiesener steifer Verbinder fehlen weiterhin.
 
-**FEM B, Netz 3, Auflagenversuch, linear: globale Längsspannung**
+**FEM B, Netz 3, Laborversuch, linear: globale Längsspannung**
 
-![FEM B, Netz 3, Auflagenversuch, linear: globale Längsspannung](fem_sandwich_q20/B/level_3/test/static_stress_xx.png)
+![FEM B, Netz 3, Laborversuch, linear: globale Längsspannung](fem_sandwich_q20/B/level_3/test/static_stress_xx.png)
 
 
 **Lesen:** Unverformte Geometrie mit globaler σxx [MPa]: positiv Zug, negativ Druck, gemäß Farbskala. Gezeigt sind Integrationspunktmittelwerte je Element; es wird nicht über Materialgrenzen geglättet.
@@ -1278,7 +1310,7 @@ Flug-Spitzenverschiebung bezeichnet den belasteten oberen Gurt; der untere Gurt 
 ## FEM-Bilder des synthetischen Prüffalls – keine Biest-Ergebnisse
 
 **Diese Modelle, Netze und Solverergebnisse gehören ausschließlich zum synthetischen Software-Prüffall. Sie sind kein FEM-Nachweis der Excel-Holmauslegung und kein A/B-Vergleich des Biest-Holms.**
-Gezeigt wird der vorhandene homogene I-Holm-Prüffall (L=0,15 m je Halbflügel, E=70 GPa, ν=0,3, ρ=2700 kg/m³) auf seiner feinsten vorhandenen Netzstufe. Die Statik wurde für die Spannungsanforderung erneut mit CalculiX gerechnet. Das 2-%-Konvergenzziel des Auflagenversuchs war noch nicht erreicht; insbesondere Spannungen an Last- und Lagerstellen sind netzabhängig.
+Gezeigt wird der vorhandene homogene I-Holm-Prüffall (L=0,15 m je Halbflügel, E=70 GPa, ν=0,3, ρ=2700 kg/m³) auf seiner feinsten vorhandenen Netzstufe. Die Statik wurde für die Spannungsanforderung erneut mit CalculiX gerechnet. Das 2-%-Konvergenzziel des Laborversuchs war noch nicht erreicht; insbesondere Spannungen an Last- und Lagerstellen sind netzabhängig.
 Modellbilder zeigen die parametrischen Körper aus den tatsächlichen CAD-Eingaben; Netzbilder zeigen die zugehörigen quadratischen Tetraeder. Verformungsbilder überlagern das unverformte Netz; Farbskala und Vergrößerungsfaktor sind getrennt angegeben.
 Spannungsbilder zeigen globale Längsspannung σxx in MPa, positiv bei Zug und negativ bei Druck. x entspricht der UD-Gurtfaserrichtung; im ±45°-Schlauch ist σxx keine lokale Faserspannung. Dargestellt werden Mittelwerte der echten Integrationspunktspannungen innerhalb jedes Elements, ohne Glättung über Materialgrenzen. Die Farbskala enthält daher nicht zwingend die Integrationspunktspitze. Eine Spannungsdarstellung ist kein CFK-Festigkeitsnachweis.
 
@@ -1323,7 +1355,7 @@ Spannungsbilder zeigen globale Längsspannung σxx in MPa, positiv bei Zug und n
 **Einordnung:** Maximaler Betrag an Integrationspunkten: 1.264 MPa. Der Zug-/Druckwechsel zwischen den Gurten ist mit Biegung vereinbar. Lokale Spitzen hängen vom Netz und der Lasteinleitung ab. Dies prüft Spannungsexport und Darstellung; es ist kein CFK-Festigkeitsnachweis.
 
 
-### Synthetischer Prueffall: Auflagenversuch-Vollmodell
+### Synthetischer Prueffall: Laborversuch-Vollmodell
 
 3630 Knoten, 1721 C3D10-Elemente; max. reale Verschiebung 0.0019459 mm. Max. |σxx| an Integrationspunkten: 0.46719 MPa.
 [Solverdaten und Herkunft](fem_reference/test/gallery.json); [CalculiX-Ergebnisdatei](fem_reference/test/gallery_static.dat).
@@ -1427,38 +1459,3 @@ Abweichung der Spitzendurchbiegung: -0.747 %; Abweichung der ersten Eigenfrequen
 [Erneut geöffnete CAD-Dateien, gültige Volumenkörper und Vergleich der CAD-/Netzmassen](cad_validation.json).
 
 [Prüfung der tatsächlichen Original-FEM-Dateien und Reaktionsgleichgewichte](original_fem_validation.json).
-
-## Änderung gegenüber dem archivierten Aufbau
-
-Vergleich mit einem lokalen, nicht mitveröffentlichten Archiv des früheren Aufbaus. Dort endete der hintere Steg bei 1,29 m; jetzt läuft er bis 1,40 m durch. Gurtbreite mindestens 6 mm und angenommene CFK-Mindestwanddicke 0,10 mm. Lastverteilung gemäß aktiver YAML; beim tiefenproportionalen Fall unterscheidet sich zusätzlich die Last vom alten Gleichlastarchiv. Dies ist kein reiner Geometrie- oder Netzkonvergenzvergleich.
-
-| Variante | frühere lineare Flugtip [m] | neue lineare Flugtip [m] |
-|---|---:|---:|
-| A | 29.0492 | 0.522705 |
-| B | 0.824473 | 0.407342 |
-
-## Untere Kontaktlinien statt fixierter Auflagerbänder
-
-Vergleich mit dem letzten vollständig abgeschlossenen lokalen, nicht mitveröffentlichten Archivstand: dort alle Knoten im 20-mm-Band vertikal fest, jetzt nur die Unterseitenknoten auf einer Kontaktlinie je Auflager. Last auf dem hinteren Steg, Gesamtlast, Holmgeometrie und Material bleiben gleich. Die unterbrochene Querschnittslager-Rechnung ist kein abgeschlossener Vergleichsfall.
-
-| Variante | vorher: Wurzelweg [mm] | jetzt: Wurzelweg [mm] | größtes abs. u_z an der Kontaktlinie [m] |
-|---|---:|---:|---:|
-| A | -3.21296 | -6.21811 | 0 |
-| B | -2.66062 | -5.36273 | 0 |
-
-**Messpunkte im Biegelinienplot (B-Modell):** Excel D146, ΔHöhe=6.7 mm als Absenkung an x=0; Excel D147, ΔTip=6.83 mm als Hebung am Tip. Die Darstellungsseite +L ist eine YAML-Annahme, keine in Excel dokumentierte Messseite. Die genaue Messposition über der Flächentiefe ist nicht dokumentiert; der FEM-Querschnittsmittelwert und die Wurzelauswertung im Taschenband sind nicht automatisch identisch mit dem Messpunkt. Die Werte sind kein automatischer Nachweis identischer Material-, Geometrie- und Lagerannahmen.
-
-| Variante | FEM Wurzel, Taschenmittel [mm] | FEM Tip links, oberer Gurt [mm] | FEM Tip rechts, oberer Gurt [mm] |
-|---|---:|---:|---:|
-| A | -6.21811 | 6.12389 | 6.12406 |
-| B | -5.36273 | 4.9235 | 4.92361 |
-
-## Vergleich der Fluglastverteilungen bei gleicher Geometrie
-
-Vergleich mit einem lokalen, nicht mitveröffentlichten Gleichlast-Archiv. Gesamtauftrieb, Stege, Gurte und Materialwerte sind gleich; im Flugfall verändert wurde die örtliche Fluglast. Angegeben sind die feinsten linearen FEM-Flugnetze. Die Versuchslagerung wurde später separat geändert; Versuchswerte und Eigenformen dürfen daher nicht als unverändert gegenüber diesem Archiv behandelt werden.
-
-| Variante | Gleichlast: Flugtip [m] | tiefenproportional: Flugtip [m] | Änderung |
-|---|---:|---:|---:|
-| A | 0.67687 | 0.522705 | -22.8 % |
-| B | 0.512845 | 0.407342 | -20.6 % |
-

@@ -1,0 +1,132 @@
+[
+  [
+    "literal",
+    "Vergleich A (diskreter Excel-Lagenplan) gegen B (durchgehende jeweilige Wurzellagen). Holm, keine vollständige Flügelsteifigkeit.",
+    "Verglichen werden zwei UD-Lagenverteilungen der Holmgurte: Fall A entspricht der Auslegung nach Excel mit einer zur Flügelspitze hin gestuft abnehmenden Anzahl der UD-Lagen gemäß dem diskreten Excel-Lagenplan. In Fall B wird dagegen die jeweilige Anzahl der UD-Lagen an der Wurzel über die gesamte Halbspannweite bis zur Flügelspitze durchgehend beibehalten; für Ober- und Untergurt gilt jeweils dessen eigene Wurzellagenzahl. Berechnet wird der Holm, nicht die vollständige Flügelsteifigkeit."
+  ],
+  [
+    "literal",
+    "- Gleichlast-Kragträger: δ=qL⁴/(8EI), M₀=qL²/2. Die ausgeschriebene Excel-Näherung M₀L²/(2EI) überschätzt diesen Referenzfall um Faktor 2.",
+    "- Gleichlast-Kragträger: δ=qL⁴/(8EI), M₀=qL²/2. Die ausgeschriebene Excel-Näherung M₀L²/(2EI) überschätzt ausschließlich diesen Referenzfall mit konstantem EI um Faktor 2. Für den abgestuften Holm A kann sie dagegen eine Näherung für annähernd konstante Krümmung κ(x)≈M₀/EI₀ darstellen; siehe die Einordnung unter „Fehlende Daten und Annahmen“."
+  ],
+  [
+    "literal",
+    "- VORLÄUFIG: Excel-Auslegungsplan als Fertigungsplan angenommen; tatsächliche Fertigung NICHT bestätigt.",
+    "- Fertigungsstand: Fall B wurde gebaut, mit der jeweiligen UD-Wurzellagenzahl von Ober- und Untergurt durchgehend bis zur Flügelspitze. Fall A beschreibt die Excel-Auslegung mit gestufter UD-Lagenzahl."
+  ],
+  [
+    "literal",
+    "- VORLÄUFIG: unveränderter Excel-Auftrieb ist eine Vergleichslast, keine bestätigte Grenz-/Bruchlast; kein Sicherheitsfaktor angewendet.",
+    "- Lastansatz: Der unveränderte Excel-Auftrieb wird gemäß Nutzerangabe als Grenzlast angesetzt, da maximale Geschwindigkeit und höchster möglicher Auftrieb verwendet wurden. Ein zusätzlicher Sicherheitsfaktor zur Ermittlung einer Bruchlast wurde nicht angewendet, da dieser Lastfall nach Einschätzung des Nutzers bereits praktisch nicht als statischer Lastzustand auftreten kann."
+  ],
+  [
+    "literal",
+    "Die Vorlage bestimmt Auftrieb aus ca, Geschwindigkeit und Fläche; G ist in N angegeben, keine Masse in kg. n=A/G wird geprüft. Die in Excel verwendete konstante Streckenlast integriert zu A/2. Eine explizite Unterscheidung Grenz-/Bruchlast ist nicht vorhanden und muss bestätigt werden.",
+    "Die Vorlage bestimmt Auftrieb aus ca, Geschwindigkeit und Fläche; G ist in N angegeben, keine Masse in kg. n=A/G wird geprüft. Die in Excel verwendete konstante Streckenlast integriert zu A/2. Gemäß Nutzerangabe entspricht dieser Auftrieb der Grenzlast, da maximale Geschwindigkeit und höchster möglicher Auftrieb angesetzt wurden. Eine zusätzliche Erhöhung zur Bruchlast wurde nicht vorgenommen, da dieser Lastfall nach Einschätzung des Nutzers bereits praktisch nicht als statischer Lastzustand auftreten kann."
+  ],
+  [
+    "literal",
+    "- Gelenkiger Auflagenversuch, zentrale Kraft: δ₀=F(2pL)³/(48EI). Freie Überhänge ohne Eigengewicht sind krümmungsfrei, aber wegen der Auflagerneigung nicht verschiebungsfrei.",
+    "- Gelenkiger Auflagenversuch, zentrale Kraft: δ₀=F(2pL)³/(48EI). Die Formel beschreibt die Absenkung δ₀ der Flügelmitte gegenüber zwei Auflagern unter einer mittig aufgebrachten Kraft F (in Newton). L ist die Halbspannweite; p ist die Auflagerposition als Anteil der Halbspannweite. 2pL ist der Abstand zwischen den beiden Auflagern. Die aktuellen Abmessungen und Auflagerpositionen stehen im Abschnitt zum Laborversuch. EI ist die Biegesteifigkeit des Holms. Die Formel setzt kleine Verformungen und eine über die Länge gleichbleibende Biegesteifigkeit voraus; hier wird dafür der Wert an der Wurzel verwendet. Sie dient als einfache Vergleichsrechnung, während die genauere Balkenrechnung die entlang des Holms veränderliche Steifigkeit berücksichtigt. Die Flügelabschnitte außerhalb der Auflager sind freie Überhänge: Ohne Eigengewicht biegen sie sich in diesem Modell nicht zusätzlich, bewegen sich aber durch die Neigung des Holms an den Auflagern mit."
+  ],
+  [
+    "literal",
+    "A verwendet abschnittsweise konstante ganze Lagenzahlen [xᵢ,xᵢ₊₁); der Spitzenwert 0 beschreibt das Ende, kein endliches gurtloses Intervall. Breiten und Höhen werden linear interpoliert. B übernimmt nur die oberen/unteren Wurzellagen; restliche Geometrie bleibt gleich.",
+    "Fall A verwendet abschnittsweise konstante ganze Lagenzahlen [xᵢ,xᵢ₊₁); der Spitzenwert 0 beschreibt das Ende, kein endliches gurtloses Intervall. Breiten und Höhen werden linear interpoliert. Fall B übernimmt nur die oberen/unteren Wurzellagen; restliche Geometrie bleibt gleich."
+  ],
+  [
+    "literal",
+    "1D-Balkenquerschnitt: zₙ=Σ(EAz)/Σ(EA), EI=ΣE[Iₑ+A(z−zₙ)²]. Orthotrope Nachgiebigkeitsmatrix ist symmetrisch (νji=νij Ej/Ei) und muss positiv definit sein. Der Balken setzt ebene vertikale Biegung voraus und erfasst keine Biege-Torsionskopplung; diese Einschränkung gilt nicht als Vorgabe für die räumliche FEM. Ein Verbinder wird ohne bestätigten Schub-/Momentenübertragungsmechanismus nicht addiert.",
+    "1D-Balkenmodell: Für jeden Querschnitt wird berechnet, wo die neutrale Achse liegt, an der durch reine Biegung weder Zug noch Druck entsteht. Daraus wird die Biegesteifigkeit EI des gesamten Querschnitts bestimmt. Dabei zählen die Steifigkeit der einzelnen Materialien, ihre Querschnittsflächen und ihr Abstand zur neutralen Achse. Bei CFK werden die unterschiedlichen Materialeigenschaften längs und quer zur Faserrichtung berücksichtigt und auf physikalische Konsistenz geprüft. Das Balkenmodell beschreibt die vertikale Biegung; eine damit verbundene Verdrehung wird darin nicht erfasst. Die räumliche FEM hat diese Einschränkung nicht. Ein Verbinder wird erst als mittragend berücksichtigt, wenn geklärt ist, wie er Kräfte und Biegemomente überträgt."
+  ],
+  [
+    "literal",
+    "bei ±pL (oder expliziten Koordinaten)",
+    "links und rechts von der Flügelmitte, jeweils im konfigurierten prozentualen Abstand der Halbspannweite"
+  ],
+  [
+    "literal",
+    "Bei bottom_contact_line werden nur die Unterseitenknoten auf einer Linie je Auflager vertikal fixiert; die konfigurierte 20-mm-Breite dient dann ausschließlich der Netzunterteilung.",
+    "An jedem Auflager werden die Knoten auf einer quer über die Holm-Unterseite verlaufenden Linie in vertikaler Richtung festgehalten (Modellbezeichnung: bottom_contact_line). Damit wird verhindert, dass der Holm in der Simulation in Nickrichtung verkippt, also um die in Spannweitenrichtung verlaufende Holm-Längsachse kippt. Im praktischen Laborversuch wird diese Stabilisierung durch die Auflage über die Flügeltiefe und die geeignete Platzierung des Zusatzgewichts erreicht. Die konfigurierte 20-mm-Breite legt lediglich die Unterteilung des Rechennetzes um das Auflager fest; sie ist keine 20 mm breite, festgehaltene Auflagefläche."
+  ],
+  [
+    "literal",
+    "also um seine Längsachse rollt, die in Spannweitenrichtung verläuft und damit der Nickachse des Flugzeugs entspricht",
+    "also um die in Spannweitenrichtung verlaufende Holm-Längsachse kippt"
+  ],
+  [
+    "literal",
+    "Rayleigh: statische Einheitslast-Biegelinie als zulässige Ansatzfunktion; ω²=φᵀKφ/(φᵀMφ). Effektive Masse m_eff=φᵀMφ/φ(0)². Der mit derselben Ansatzfunktion gebildete Feder-Masse-Wert ist mathematisch identisch und kein unabhängiger Genauigkeitsnachweis. Numerische Eigenwerte sind keine geschlossene Formel.",
+    "Abschätzung der Schwingungsfrequenz nach Rayleigh: Als vereinfachte Schwingungsform wird die Biegelinie verwendet, die eine mittige Kraft im Laborversuch erzeugt. Aus der Steifigkeit des Holms und der mitbewegten Masse wird dann die Frequenz abgeschätzt. Dabei wird berücksichtigt, dass sich die einzelnen Bereiche des Holms unterschiedlich stark bewegen und deshalb unterschiedlich zur Schwingung beitragen. Die ebenfalls angegebene Feder-Masse-Abschätzung verwendet dieselben Annahmen und liefert daher denselben Wert; sie ist keine unabhängige Kontrolle. Die genauere Eigenfrequenzberechnung bestimmt die Schwingungsformen und Frequenzen direkt aus dem Rechenmodell."
+  ],
+  [
+    "literal",
+    "Schub: optionaler Fluganteil ∫V/(κGA)dx wird separat ausgegeben. Laborversuch und Eigenwerte bleiben Euler-Bernoulli; keine behauptete Timoshenko-Validierung.",
+    "Zusätzliche Verformung durch Schub: Neben der Biegung kann sich der Holm auch dadurch verformen, dass sich seine Querschnitte gegeneinander verschieben. Dieser zusätzliche Anteil kann für den Fluglastfall optional abgeschätzt und getrennt ausgegeben werden. In der 1D-Balkenrechnung für den Laborversuch und die Eigenfrequenzen wird dieser Anteil nicht berücksichtigt. Eine Überprüfung eines um Schubverformung erweiterten Balkenmodells ist damit nicht erfolgt."
+  ],
+  [
+    "literal",
+    "unten links Flugverformung w [mm],",
+    "unten links Flugverformung w [mm] einschließlich der Excel-Näherung (schwarz strichpunktiert),"
+  ],
+  [
+    "literal",
+    "Der Excel-Gesamtauftrieb bleibt erhalten; die früher verwendete Gleichlast ist jetzt nur noch eine Referenz.",
+    "Der Gesamtauftrieb entspricht dem Excel-Wert. Für die räumliche Lastverteilung wird die örtliche Flächentiefe verwendet."
+  ],
+  [
+    "literal",
+    "die frühere Excel-Gleichlastnäherung",
+    "die Excel-Vergleichsrechnung mit Gleichlast"
+  ],
+  [
+    "literal",
+    "das frühere Excel-Gleichlast-Wurzelmoment",
+    "das Excel-Wurzelmoment bei Gleichlast"
+  ],
+  [
+    "literal",
+    "Das Wurzelmoment beträgt 670.83 N·m, gegenüber 759.79 N·m bei der früheren Gleichlast.",
+    "Das Wurzelmoment beträgt 670,83 N·m."
+  ],
+  [
+    "literal",
+    " Vorläufe mit linearen C3D8I-Elementen wurden wegen auffälliger lokaler Niedrigfrequenzformen verworfen und werden nicht als validierte Ergebnisse gezeigt.",
+    ""
+  ],
+  [
+    "literal",
+    "; der frühere stegfreie Bereich entfällt",
+    ""
+  ],
+  [
+    "literal",
+    "; der alte freie Gurtauslauf ist beseitigt",
+    ""
+  ],
+  [
+    "literal",
+    "eine durchgehende Verbindung ersetzt den früheren freien Gurtauslauf",
+    "der Steg verbindet Ober- und Untergurt durchgehend bis zur Spitze"
+  ],
+  [
+    "literal",
+    "**Geänderte Spitzengeometrie:**",
+    "**Spitzengeometrie:**"
+  ],
+  [
+    "literal",
+    "Frühere Messwerte dienen nur bei identischem tatsächlichem Bauzustand zur Validierung dieser neuen Variante.",
+    "Für den Vergleich mit Messwerten müssen Bauzustand und Versuchsaufbau dem Modell entsprechen."
+  ],
+  [
+    "literal",
+    "Das ist keine reine Geometrieänderung.",
+    ""
+  ],
+  [
+    "regex",
+    "(?m)^- (?:Excel-Flugn\\u00e4herung|Einordnung der Excel-Flugn\\u00e4herung)[^\\n]*",
+    "- Einordnung der Excel-Flugnäherung: Für eine Gleichlast (gleichmäßig über die Halbspannweite verteilter Auftrieb) gilt bei gleichbleibender Biegesteifigkeit eigentlich M₀L²/(4EI) für die Durchbiegung der Flügelspitze. Die verwendete Excel-Formel M₀L²/(2EI) ergibt eine doppelt so große Durchbiegung. Dies ist als Näherung für Fall A zu begründen: Die Auslegung reduziert von der Wurzel bis zur Flügelspitze die Anzahl der UD-Lagen und macht den Holm dadurch zunehmend biegeweicher. So bleibt die Krümmung trotz abnehmendem Biegemoment über einen weiten Bereich annähernd konstant, wie der Krümmungsgraph für Fall A zeigt."
+  ]
+]
