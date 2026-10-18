@@ -14,7 +14,7 @@ x=0 an der Wurzel, x=L an der Halbflügelspitze. Gesamtspannweite 2.8 m; Halbspa
 | Varianten A/B: Statik, Masse, Eigenwertlösung | ausgeführt |
 | Räumliche FreeCAD/CalculiX-FEM | ausgeführt |
 
-Originaldatei: `C:\Users\USER\Documents\ChatGPT\Holmberechnung1\Holmberechnung_deutsch_korrigiert3_Biest.xls`  
+Originaldatei: `C:\Users\USER\Documents\ChatGPT\Erweiterte_Holmberechnung_nach_Christian_Baron\Holmberechnung_deutsch_korrigiert3_Biest.xls`  
 SHA-256: `310f7fe670c74eb42d6dfe5a9c250a67c4957ffa026299d3ba60b1b76c17d7b0`
 
 Vollständige Daten: [Inventur](excel_inventory.json), [SI-Modell](normalized_input.json), [Konfiguration](used_config.yaml), [Diagnose](diagnostics.json), [Ergebnisse](summary.json).
@@ -281,7 +281,7 @@ Status: **ausgeführt**.
 Änderung der letzten beiden Stufen, bezogen auf die feinste: flight_tip_m: 0.503 %, test_root_m: 6.85 %, frequency_Hz: 6.14 %.
 Eigenfrequenzen 1–6 nach Index: 6.14 %, 1.62 %, 2.33 %, 4.49 %, 1.62 %, 1.45 %. Ein Modenwechsel wird damit nicht ausgeschlossen.
 
-**Netz 1: nicht erfolgreich abgeschlossen:** Nichtlinearer Vergleich: Zeitlimit 600s überschritten; kein abgeschlossenes Volllastergebnis. Siehe C:\Users\USER\Documents\ChatGPT\Holmberechnung1\results\fem_sandwich_q20\A\level_1\flight\nonlinear.log
+**Netz 1: nicht erfolgreich abgeschlossen:** Nichtlinearer Vergleich: Zeitlimit 600s überschritten; kein abgeschlossenes Volllastergebnis. Siehe C:\Users\USER\Documents\ChatGPT\Erweiterte_Holmberechnung_nach_Christian_Baron\results\fem_sandwich_q20\A\level_1\flight\nonlinear.log
 
 FEM-Strukturmasse: Halbflügel 0.140465 kg; Vollflügel 0.280931 kg. Enthält Gurte, CFK-Schläuche und Depron, keine Flügelschale und keine zentrale Zusatzmasse.
 

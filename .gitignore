@@ -4,3 +4,6 @@ __pycache__/
 *.pyc
 *.egg-info/
 benchmark_results/
+results_before_*/
+results_partial_section_supports/
+results_uniform_load/

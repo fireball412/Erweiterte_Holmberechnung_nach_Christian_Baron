@@ -6462,7 +6462,7 @@
     }
   ],
   "partitioned_only": true,
-  "fcstd": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\A\\level_2\\test\\spar.FCStd",
-  "step": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\A\\level_2\\test\\spar.step",
-  "version_file": "C:\\Users\\USER\\Documents\\ChatGPT\\Holmberechnung1\\results\\fem_sandwich_q20\\A\\level_2\\test\\freecad_version.json"
+  "fcstd": "C:\\Users\\USER\\Documents\\ChatGPT\\Erweiterte_Holmberechnung_nach_Christian_Baron\\results\\fem_sandwich_q20\\A\\level_2\\test\\spar.FCStd",
+  "step": "C:\\Users\\USER\\Documents\\ChatGPT\\Erweiterte_Holmberechnung_nach_Christian_Baron\\results\\fem_sandwich_q20\\A\\level_2\\test\\spar.step",
+  "version_file": "C:\\Users\\USER\\Documents\\ChatGPT\\Erweiterte_Holmberechnung_nach_Christian_Baron\\results\\fem_sandwich_q20\\A\\level_2\\test\\freecad_version.json"
 }
