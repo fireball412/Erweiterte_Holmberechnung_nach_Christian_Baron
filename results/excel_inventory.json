@@ -1,6 +1,6 @@
 {
   "path": "C:\\Users\\USER\\Documents\\ChatGPT\\Erweiterte_Holmberechnung_nach_Christian_Baron\\Holmberechnung_deutsch_korrigiert3_Biest.xls",
-  "sha256": "310f7fe670c74eb42d6dfe5a9c250a67c4957ffa026299d3ba60b1b76c17d7b0",
+  "sha256": "c582c8d43a10cf6281d080ffa221974e8e7c4943d7736e48863fdf59875e8223",
   "sheets": [
     {
       "name": "Berechnung der Werte",
@@ -8557,7 +8557,7 @@
     {
       "sheet": "Berechnung der Werte",
       "cell": "G128",
-      "value": "Kommentar: Es geht hier um 220kg Last!",
+      "value": "Kommentar: Es geht hier um eine statische Last von 220kg! Die genauere Rechnung und die FEM Rechnung ergeben bei diesem Beispiel ungefähr 80% des Wertes",
       "type": 1,
       "comment": null,
       "error": false
@@ -8790,12 +8790,12 @@
     {
       "sheet": "Berechnung der Werte",
       "cell": "D146",
-      "value": 7.019999999999996,
+      "value": 6.700000000000003,
       "type": 2,
       "comment": null,
       "error": false,
-      "formula_tokens_hex": "1f6666666666e64b401fa4703d0ad763484004",
-      "formula": "55.8-48.78",
+      "formula_tokens_hex": "1fae47e17a14ae43401f14ae47e17a5440400415",
+      "formula": "39.36-32.66",
       "cached": true
     },
     {
@@ -8820,12 +8820,12 @@
     {
       "sheet": "Berechnung der Werte",
       "cell": "D147",
-      "value": 5.984999999999999,
+      "value": 6.829999999999998,
       "type": 2,
       "comment": null,
       "error": false,
-      "formula_tokens_hex": "1f0000000000205e401f0000000000705c4004151f713d0ad7a3505b401fc3f5285c8f025a40041503151e020006",
-      "formula": "(120.5-113.75+109.26-104.04)/2.0",
+      "formula_tokens_hex": "1fae47e17a143e5f401f5c8fc2f5287c5d4004151f295c8fc2f5285c401f713d0ad7a3805a40041503151e020006",
+      "formula": "(124.97-117.94+112.64-106.01)/2.0",
       "cached": true
     },
     {
@@ -8877,7 +8877,7 @@
     {
       "sheet": "Berechnung der Werte",
       "cell": "D149",
-      "value": 5.310256410256413,
+      "value": 5.563880597014923,
       "type": 2,
       "comment": null,
       "error": false,
@@ -8955,7 +8955,7 @@
     {
       "sheet": "Berechnung der Werte",
       "cell": "C172",
-      "value": 4.909765819278596,
+      "value": 5.025646447006905,
       "type": 2,
       "comment": null,
       "error": false,
@@ -8974,7 +8974,7 @@
     {
       "sheet": "Berechnung der Werte",
       "cell": "C173",
-      "value": 4.5,
+      "value": 4.65,
       "type": 2,
       "comment": null,
       "error": false

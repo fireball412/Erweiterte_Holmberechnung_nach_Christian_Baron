@@ -302,4 +302,7 @@ def write_report(out,model,cfg,analysis,fem,diagnostics,images,source):
         for variant,record in fem['variants'].items():
             before=previous[variant]['meshes'][-1]['flight_tip_m'];after=record['meshes'][-1]['flight_tip_m']
             lines += [f'| {variant} | {before:.6g} | {after:.6g} | {(after/before-1)*100:.3g} % |']
+    measurement = out/'phyphox_measurement.md'
+    if measurement.exists():
+        lines += ['', measurement.read_text(encoding='utf-8'), '']
     (out/'report.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
